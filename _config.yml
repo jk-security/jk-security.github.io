@@ -1,0 +1,9 @@
+title: Security Engineering Technical Residency
+description: Ongoing technical practice across security engineering, application security, systems thinking, and AI-enabled development governance.
+theme: minima
+
+header_pages:
+
+* projects/index.md
+* reading/index.md
+* notes/index.md
