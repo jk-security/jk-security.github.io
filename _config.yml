@@ -3,7 +3,6 @@ description: Ongoing technical practice across security engineering, application
 theme: minima
 
 header_pages:
-
-* projects/index.md
-* reading/index.md
-* notes/index.md
+  - projects/index.md
+  - reading/index.md
+  - notes/index.md
