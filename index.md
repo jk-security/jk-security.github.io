@@ -51,9 +51,3 @@ Some related repositories are private because they contain rough work, experimen
 Public material will be published selectively as it becomes useful and safe to share. This may include sanitized diagrams, design notes, written analysis, selected code excerpts, architecture summaries, and retrospective writeups.
 
 The goal is not to expose every working file. The goal is to provide a useful public record of technical practice, reasoning quality, and progression over time.
-
-## Disclaimer
-
-This is a personal technical practice space. It does not represent the work, systems, architecture, controls, or confidential information of any employer or client.
-
-Where examples resemble enterprise scenarios, they are fictionalized, simulated, or intentionally generalized.

@@ -1,0 +1,25 @@
+<header class="site-header" role="banner">
+  <div class="wrapper site-header-wrapper">
+    <a class="site-title" rel="author" href="{{ '/' | relative_url }}">
+      {{ site.title | escape }}
+    </a>
+
+    <nav class="site-nav-custom" aria-label="Main navigation">
+      <div class="nav-item nav-dropdown">
+        <a class="page-link" href="{{ '/projects/' | relative_url }}">Projects</a>
+
+        <div class="dropdown-menu" aria-label="Projects submenu">
+          <a href="{{ '/projects/mockco/' | relative_url }}">MockCo</a>
+          <a href="{{ '/projects/mockco/architecture/' | relative_url }}">MockCo Architecture</a>
+          <a href="{{ '/projects/mockco/member-portal/' | relative_url }}">Member Portal</a>
+          <a href="{{ '/projects/mockco/security-operations-platform/' | relative_url }}">Security Operations Platform</a>
+          <a href="{{ '/projects/agentic-development-governance/' | relative_url }}">Agentic Development Governance</a>
+          <a href="{{ '/projects/appsec-dvwa/' | relative_url }}">AppSec DVWA</a>
+        </div>
+      </div>
+
+      <a class="page-link" href="{{ '/reading/' | relative_url }}">Reading and Technical Reasoning</a>
+      <a class="page-link" href="{{ '/notes/' | relative_url }}">Notes</a>
+    </nav>
+  </div>
+</header>

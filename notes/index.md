@@ -1,4 +1,8 @@
-# Notes
+---
+layout: page
+title: Notes
+permalink: /notes/
+---
 
 This section contains dated notes, short reflections, and progress updates from the technical residency.
 
@@ -34,5 +38,3 @@ Notes may cover:
 ## Publication Standard
 
 Notes should be safe to make public, clearly separated from employer or client work, and written in a way that is useful without exposing raw implementation details.
-
-Where examples resemble enterprise scenarios, they are fictionalized, simulated, or intentionally generalized.

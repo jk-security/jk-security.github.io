@@ -1,4 +1,8 @@
-# Reading and Technical Reasoning
+---
+layout: page
+title: Reading
+permalink: /reading/
+---
 
 This section contains structured notes from technical reading completed as part of the residency.
 

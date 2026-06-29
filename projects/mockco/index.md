@@ -174,9 +174,3 @@ Planned diagrams include:
 2. Member portal encrypted data flow: browser, DMZ portal, Production broker, Crown-Jewel encrypted store, wrapped DEK and key metadata handling.
 3. Security Operations collection and correlation flow: endpoint inventory, vulnerability intelligence, DMZ staging, Production retrieval, normalization, correlation, and analyst triage.
 4. Current vs. target-state application map: what exists in the most complete MockCo iteration versus the current design direction.
-
-## Disclaimer
-
-MockCo is a synthetic lab environment. It does not contain real PHI, PII, secrets, credentials, private keys, plaintext DEKs, or production-like key material.
-
-Where the project resembles enterprise healthcare or insurance systems, those examples are fictionalized and intentionally generalized.

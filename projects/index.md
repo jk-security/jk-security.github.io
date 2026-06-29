@@ -1,4 +1,8 @@
-# Projects
+---
+layout: page
+title: Projects
+permalink: /projects/
+---
 
 This section contains the hands-on workstreams for the technical residency.
 
@@ -12,7 +16,7 @@ MockCo is a simulated company environment used to reason through practical secur
 
 The work includes secure system design, internal security tooling, vulnerability management workflows, remediation patterns, architecture documentation, and operational tradeoff analysis.
 
-[View project](mockco.md)
+[View project](/projects/mockco/)
 
 ### Agentic Development Governance and Structure
 
@@ -20,7 +24,7 @@ This workstream explores how AI-assisted and agentic development should be struc
 
 The focus is not simply whether AI can generate code. The more important question is how engineering teams can use agentic development practices while preserving accountability, maintainability, security discipline, and human judgment.
 
-[View project](agentic-development-governance.md)
+[View project]([View project](/projects/agentic-development-governance.md)
 
 ### AppSec Practice: DVWA Scan, Fix, Re-Scan
 
@@ -28,7 +32,7 @@ This project uses DVWA and related tooling to practice the full application secu
 
 The goal is to strengthen practical AppSec judgment: understanding findings, validating exploitability, fixing underlying issues, and documenting evidence of remediation.
 
-[View project](appsec-dvwa.md)
+[View project](/projects/appsec-dvwa.md)
 
 ## Publication Model
 
