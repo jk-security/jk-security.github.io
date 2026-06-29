@@ -1,4 +1,8 @@
-﻿# Security Engineering Technical Residency
+﻿---
+layout: home
+---
+
+## Technical Residency
 
 This page is a public index of my ongoing technical residency work across security engineering, application security, software systems, and AI-enabled development practices.
 
