@@ -8,6 +8,9 @@ This section contains dated notes, short reflections, and progress updates from 
 
 These notes are intentionally lighter-weight than the project pages. They are meant to capture movement over time: what changed, what I learned, what I am currently questioning, and where the work is going next.
 
+This security engineering upskilling work is a long-running technical residency effort, starting in May 2026, with an end of year (2026) goal tracked by time spent in pursuit, rather than achievement of completion metrics. As of end June, this is 75 of planned 450 sessions complete (~110 hrs).
+
+
 ## Current Notes
 
 ### 2026-05 — Technical Residency Start
