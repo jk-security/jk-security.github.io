@@ -1,4 +1,3 @@
-````markdown
 ---
 layout: page
 title: AppSec DVWA
@@ -612,4 +611,3 @@ The intended takeaway is:
 > I am not only interested in identifying vulnerabilities. I am practicing how to understand them, fix them, and prove that the fix worked.
 
 That is the difference between tool operation and application security engineering.
-````
