@@ -3,62 +3,60 @@
 
 @import "minima";
 
-.site-header-wrapper {
+.site-header .wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1040px;
+}
+
+.site-title {
+  white-space: nowrap;
 }
 
 .site-nav-custom {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 28px;
+  margin-left: 32px;
 }
 
-.site-nav-custom .page-link {
+.site-nav-custom a {
   color: #111;
-  line-height: 1.5;
   text-decoration: none;
 }
 
-.site-nav-custom .page-link:hover,
-.site-nav-custom .page-link:focus {
+.site-nav-custom a:hover,
+.site-nav-custom a:focus {
   text-decoration: underline;
 }
 
-.nav-item {
-  position: relative;
-}
-
 .nav-dropdown {
-  display: inline-block;
+  position: relative;
 }
 
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 1.8rem;
+  top: 28px;
   left: 0;
-  min-width: 260px;
-  padding: 0.5rem 0;
+  min-width: 280px;
+  padding: 8px 0;
   background: #fff;
   border: 1px solid #e8e8e8;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 100;
 }
 
 .dropdown-menu a {
   display: block;
-  padding: 0.45rem 0.8rem;
-  color: #111;
-  text-decoration: none;
+  padding: 7px 12px;
   white-space: nowrap;
 }
 
 .dropdown-menu a:hover,
 .dropdown-menu a:focus {
   background: #f7f7f7;
-  text-decoration: underline;
 }
 
 .nav-dropdown:hover .dropdown-menu,
@@ -67,7 +65,7 @@
 }
 
 .site-footer {
-  padding: 1.5rem 0;
+  padding: 24px 0;
 }
 
 .footer-disclaimer {
@@ -76,20 +74,25 @@
   margin-bottom: 0;
 }
 
-@media screen and (max-width: 700px) {
-  .site-header-wrapper {
+@media screen and (max-width: 800px) {
+  .site-header .wrapper {
     display: block;
+  }
+
+  .site-title {
+    white-space: normal;
   }
 
   .site-nav-custom {
     display: block;
-    margin-top: 1rem;
+    margin-left: 0;
+    margin-top: 12px;
   }
 
-  .site-nav-custom .page-link,
+  .site-nav-custom > a,
   .nav-dropdown {
     display: block;
-    margin: 0.35rem 0;
+    margin: 6px 0;
   }
 
   .dropdown-menu {
@@ -97,6 +100,6 @@
     display: block;
     box-shadow: none;
     border: none;
-    padding-left: 1rem;
+    padding-left: 16px;
   }
 }
