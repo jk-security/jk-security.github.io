@@ -45,11 +45,11 @@ The intended learning outcomes are
 
 > Validated remediation proves understanding of an exploit.
 
-A <b>junior</b> analyst can run a scanner and produce findings and "remediation recommendations" from the solution.
+- At a basic level, an analyst can run a scanner and reproduce its remediation recommendation.
 
-A <b>journeyman</b> analyst can also explain the finding, evaluate if the finding matters, and validate through exploit testing.
+- At an intermediate level, an analyst can explain the finding, evaluate whether it matters, and validate exploitability through testing.
 
-A <b> senior </b> analyst can also remeidate the vulnerability, rebuild the application, re-test the exploit path, and explain why the fix works.
+- At an advanced level, an analyst can remediate the vulnerability in code, rebuild the application, re-test the exploit path, and explain why the fix works.
 
 This project is designed around that full loop.
 
@@ -70,10 +70,10 @@ This project was developed primarily in GitHub Codespaces, as the lab is intende
 
 Other non-functional requirements included:
 
-11. work at their pace
-12. follow a curriculum, each expanding capability and understanding (easiest and foundation > hardest and more esoteric)
-13. be able to self-service solutions through review of a hardened instance ("Secure" instance).
-14. use a framework for journalling and notes on progress as they worked through the lab exercises
+- allowing learners to work at their own pace;
+- providing a progressive curriculum from foundational to more complex topics;
+- enabling self-service comparison against a hardened reference implementation;
+- giving learners a framework for notes, journaling, and progress tracking.
 
 In the broader technical residency, this is an example of an early V0-style development pattern: human-led development with ChatGPT used for design support, troubleshooting, code review, and explanation, but with the human developer applying and validating changes directly.
 
@@ -96,7 +96,7 @@ Important differences from stock DVWA include:
 - The `Insecure` mode is curated to preserve and showcase only the vulnerabilities intended for demonstration in each exercise.
 - Lower-value incidental findings are cleaned up where they distract from the target lesson.
 - Security tooling is used as feedback, not as the source of truth.
-- Supporting services (stubbed user endpoint, "webwolf" attacker machine instance are added where DVWA alone cannot demonstrate realistic cross-boundary behavior.
+- Supporting services are being added where DVWA alone cannot demonstrate realistic cross-boundary behavior, including an Observer service and future WebWolf-style attacker/user simulation components.
 
 The result is closer to a miniature AppSec remediation environment than a traditional vulnerable-app playground.
 
@@ -206,7 +206,7 @@ The infrastructure work included:
 - using bind mounts so code changes are visible in the running container;
 - preserving a single-repository workflow for learners.
 
-This was important because the lab should teach AppSec, not environment/IaC troubleshooting.
+This was important because the lab should teach AppSec, not environment/Infrastructure-as-Code (IaC) troubleshooting.
 
 The training experience should feel like:
 
@@ -265,7 +265,7 @@ The intended curation model is:
 - avoid accidental secondary vulnerabilities where possible;
 - make each module teach a distinct AppSec concept.
 
-_(Future work)_ Likely would include some chained exploit path (such as those more commonly exploited by mythos-like platforms), which would showcase that a series of lower-severity findings could result in compromise similar to an exploited High or Critical.
+_(Future work)_ Likely would include some chained exploit path (such as those more commonly exploited by automated exploit-chain tooling), which would showcase that a series of lower-severity findings could result in compromise similar to an exploited High or Critical.
 
 This matters because noisy labs teach the wrong instinct. If every page has many incidental findings, learners can mistake scanner volume for security understanding.
 
@@ -360,7 +360,7 @@ The lab uses a simple state model for each vulnerability.
 | Working | Remediation is in progress. |
 | Secure | The vulnerability has been remediated and validated. |
 
-Status is intentionally simple and student-controlled. It is informational rather than enforced. Changes in state are reflected in the UI of DVWA to show student progress. Automated validation of remeidation is _not_ a component of this project (i.e., if the student doesn't fix something, but changes the state to "Secure", it'll show "Secure").
+Status is intentionally simple and student-controlled. It is informational rather than enforced. Changes in state are reflected in the UI of DVWA to show student progress. Automated validation of remediation is _not_ a component of this project (i.e., if the student doesn't fix something, but changes the state to "Secure", it'll show "Secure").
 
 The point is to reinforce ownership. Security remediation should be visible and intentional, not implied.
 
@@ -621,3 +621,11 @@ Together, these projects cover different layers of security engineering:
 - hands-on vulnerability remediation.
 
 AppSec DVWA is the most directly code-remediation-oriented of the three.
+
+## Reader Takeaway
+
+The intended takeaway is:
+
+> I am not only interested in identifying vulnerabilities. I am practicing how to understand them, fix them, and prove that the fix worked.
+
+That distinction matters. Application security is not just tool operation. It is evidence-driven reasoning about software behavior, exploitability, remediation quality, and validation.
