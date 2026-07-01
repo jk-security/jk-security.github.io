@@ -4,17 +4,17 @@ title: AppSec DVWA
 permalink: /projects/appsec-dvwa/
 ---
 
-AppSec DVWA is a hands-on application security upskilling project built around a modified version of Damn Vulnerable Web Application.
+AppSec DVWA is a hands-on application security upskilling project built around a modified version of [Damn Vulnerable Web Application](https://github.com/digininja/DVWA).
 
-The goal is to provide a realistic practice environment for security analysts and security engineers who want to move beyond identifying vulnerabilities and toward understanding, fixing, rebuilding, and validating vulnerable application behavior.
+The goal is to provide a realistic practice environment for security analysts and security engineers who want to move beyond identifying vulnerabilities and toward understanding, fixing, rebuilding, and validating vulnerable application behavior. 
 
 The core learning loop is:
 
 ```text
-test exploit -> scan -> fix in code -> rebuild -> re-test
+test exploit -> scan -> remediate in code -> rebuild -> validate remediation
 ```
 
-This project is older than my current MockCo and agentic development governance work, but it remains one of the clearest examples of the kind of technical practice this residency is meant to capture: take a vulnerable application, inspect the code, reason about the flaw, make a targeted fix, and prove that the behavior changed.
+This project is older than my current MockCo and agentic development governance work (I started work on it in early 2025, then returned to it in 2026 - perhaps an annual refresh, of sorts), but it fits well within the goals of "Technical Upskilling", as it's intended for both me and others (teams that I've worked with who have existing security experience, want to get into application security, and don't know where to start or what the "day to day" work will be).
 
 ## Purpose
 
@@ -22,35 +22,40 @@ The purpose of this project is to help learners practice the work that applicati
 
 That means learning how to:
 
+- run application security scans;
 - interpret security findings;
 - trace a finding to concrete application behavior;
 - distinguish tool signal from tool noise;
 - understand why a vulnerability exists;
 - make safe, targeted code changes;
-- rebuild or refresh the application;
+- rebuild the application;
 - re-run scans and manual tests;
+- validate that the application still works as intended;
 - validate that exploitation no longer works;
-- explain the security tradeoff clearly.
+- explain the remediation clearly, in technical terms.
 
-The project is not meant to be a point-and-click scanner demo. It is also not a capture-the-flag exercise where the goal is simply to find the payload that works.
+The project is not meant to be a point-and-click scanner demo. It is also not a capture-the-flag exercise where the goal is simply to find the payload that works, rather the opposite.
 
-The intended learning outcome is stronger AppSec judgment.
+The intended learning outcomes are
+1. better understanding of DevSecOps workflows
+2. better developer perspective
+3. stronger AppSec judgment.
 
 ## Core Thesis
 
-The central thesis is:
+> Validated remediation proves understanding of an exploit.
 
-> Exploitation demonstrates understanding, but remediation proves it.
+A <b>junior</b> analyst can run a scanner and produce findings and "remediation recommendations" from the solution.
 
-A security analyst can run a scanner and produce findings. A stronger analyst can explain whether those findings matter. A stronger still analyst can inspect the vulnerable code, fix the issue, rebuild the application, re-test the exploit path, and explain why the fix works.
+A <b>journeyman</b> analyst can also explain the finding, evaluate if the finding matters, and validate through exploit testing.
+
+A <b> senior </b> analyst can also remeidate the vulnerability, rebuild the application, re-test the exploit path, and explain why the fix works.
 
 This project is designed around that full loop.
 
 ## Development Context
 
-This project was developed primarily in GitHub Codespaces.
-
-That mattered because the project was intended to be a reproducible training environment, not just a local personal lab. The development goal was to make it possible for a learner to:
+This project was developed primarily in GitHub Codespaces, as the lab is intended to be a reproducible training environment, which learners could clone to their own contexts and run at their pace, rather than a local personal lab. The development goal was to make it possible for a learner to:
 
 1. fork or clone the training repository;
 2. open the project in Codespaces;
@@ -62,6 +67,13 @@ That mattered because the project was intended to be a reproducible training env
 8. apply a code fix;
 9. rebuild or refresh the running environment;
 10. re-test and validate the fix.
+
+Other non-functional requirements included:
+
+11. work at their pace
+12. follow a curriculum, each expanding capability and understanding (easiest and foundation > hardest and more esoteric)
+13. be able to self-service solutions through review of a hardened instance ("Secure" instance).
+14. use a framework for journalling and notes on progress as they worked through the lab exercises
 
 In the broader technical residency, this is an example of an early V0-style development pattern: human-led development with ChatGPT used for design support, troubleshooting, code review, and explanation, but with the human developer applying and validating changes directly.
 
@@ -80,11 +92,11 @@ Important differences from stock DVWA include:
 - Learners edit vulnerable application code directly.
 - The application is intended to run cleanly in Codespaces.
 - Security levels are collapsed into two modes: `Insecure` and `Secure`.
-- The `Secure` mode is aligned to DVWA's original `Impossible` level.
-- The `Insecure` mode is curated to preserve the vulnerabilities intended for demonstration.
+- The `Secure` mode is aligned to DVWA's original `Impossible` level, then further hardened.
+- The `Insecure` mode is curated to preserve and showcase only the vulnerabilities intended for demonstration in each exercise.
 - Lower-value incidental findings are cleaned up where they distract from the target lesson.
 - Security tooling is used as feedback, not as the source of truth.
-- Supporting services are added where DVWA alone cannot demonstrate realistic cross-boundary behavior.
+- Supporting services (stubbed user endpoint, "webwolf" attacker machine instance are added where DVWA alone cannot demonstrate realistic cross-boundary behavior.
 
 The result is closer to a miniature AppSec remediation environment than a traditional vulnerable-app playground.
 
@@ -194,7 +206,7 @@ The infrastructure work included:
 - using bind mounts so code changes are visible in the running container;
 - preserving a single-repository workflow for learners.
 
-This was important because the lab should teach AppSec, not environment troubleshooting.
+This was important because the lab should teach AppSec, not environment/IaC troubleshooting.
 
 The training experience should feel like:
 
@@ -209,6 +221,8 @@ spend two hours fixing local PHP, Apache, MySQL, Docker, and path issues
 ```
 
 The environment is not perfect, but the infrastructure direction is correct: reduce setup variance so learners can focus on application behavior and remediation.
+
+A future version of this will likely include vulnerabilities in IaC, but that's out of scope for now, as it's not built into DVWA, and these vulns would have to be coded new, rather than inherited from that project.
 
 ## DVWA Mode Redesign
 
@@ -241,7 +255,7 @@ The goal is not to preserve every DVWA teaching level. The goal is to create a c
 
 Another major part of the work was cleaning up the vulnerable baseline.
 
-The `Insecure` mode should not be a dumping ground for every possible weakness. It should preserve the vulnerabilities that the lab intentionally wants to demonstrate.
+The `Insecure` mode should not be a dumping ground for every possible weakness. It should preserve the vulnerabilities that the lab intentionally wants to demonstrate in each exercise.
 
 The intended curation model is:
 
@@ -250,6 +264,8 @@ The intended curation model is:
 - keep the vulnerable behavior clear, exploitable, and explainable;
 - avoid accidental secondary vulnerabilities where possible;
 - make each module teach a distinct AppSec concept.
+
+_(Future work)_ Likely would include some chained exploit path (such as those more commonly exploited by mythos-like platforms), which would showcase that a series of lower-severity findings could result in compromise similar to an exploited High or Critical.
 
 This matters because noisy labs teach the wrong instinct. If every page has many incidental findings, learners can mistake scanner volume for security understanding.
 
@@ -284,7 +300,7 @@ The intended student journey is:
 13. Update status.
 14. Commit the change with a short explanation.
 
-Some of this guidance remains work in progress. The direction is clear, but the public learner path should eventually be consolidated into cleaner exercise instructions.
+Some of this guidance remains work in progress. The direction is clear, but the public learner path should eventually be consolidated into cleaner exercise instructions. This should feel like a professional training, not something the student has to wrestle with every step of the way. We want them to struggle with the right things.
 
 ## The Observer Service
 
@@ -311,6 +327,8 @@ This matters for vulnerability classes like:
 
 The Observer is not intended to be an exploit framework. Its purpose is evidentiary: show what happened, when it happened, and how the application behaved across a boundary.
 
+Observer is also a staging space for external exploit / recon activities. _(Future State)_ The application should support DAST scanning (likely OWASP ZAP) from outside DVWA, which should identify some unique, exploitable vulnerabilities.
+
 ## Learning Workflow
 
 A typical exercise should work like this:
@@ -330,7 +348,7 @@ A typical exercise should work like this:
 12. Commit the fix with a short explanation.
 ```
 
-The important part is not that every tool becomes clean. The important part is that the learner can explain what changed and why the system is safer.
+The important part is that the learner can explain what changed and why the system is safer.
 
 ## Vulnerability State Model
 
@@ -342,7 +360,7 @@ The lab uses a simple state model for each vulnerability.
 | Working | Remediation is in progress. |
 | Secure | The vulnerability has been remediated and validated. |
 
-Status is intentionally simple and student-controlled. It is informational rather than enforced.
+Status is intentionally simple and student-controlled. It is informational rather than enforced. Changes in state are reflected in the UI of DVWA to show student progress. Automated validation of remeidation is _not_ a component of this project (i.e., if the student doesn't fix something, but changes the state to "Secure", it'll show "Secure").
 
 The point is to reinforce ownership. Security remediation should be visible and intentional, not implied.
 
@@ -548,7 +566,7 @@ Current status:
 
 ## Known Limitations
 
-This project is useful, but not complete.
+This project is interesting, but not yet accessible, fully useful, or complete.
 
 ### Tooling wrappers need consolidation
 
@@ -568,7 +586,7 @@ The project vendors DVWA intentionally, but upstream commit/tag metadata should 
 
 ### The lab is intentionally insecure
 
-The runtime must remain clearly scoped to local training only. It should not be presented as production-safe infrastructure.
+The runtime must remain clearly scoped to local training only. It should not be presented as production-safe infrastructure. (Not unlike DVWA itself).
 
 ## Planned Improvements
 
@@ -603,11 +621,3 @@ Together, these projects cover different layers of security engineering:
 - hands-on vulnerability remediation.
 
 AppSec DVWA is the most directly code-remediation-oriented of the three.
-
-## Reader Takeaway
-
-The intended takeaway is:
-
-> I am not only interested in identifying vulnerabilities. I am practicing how to understand them, fix them, and prove that the fix worked.
-
-That is the difference between tool operation and application security engineering.
