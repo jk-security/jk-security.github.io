@@ -1,12 +1,18 @@
 ---
 layout: page
-title: Agentic Development Governance
+title: Agentic Development Operating Model
 permalink: /projects/agentic-development-governance/
 ---
 
-Agentic Development Governance is the operating-model track for my technical residency. It explores how AI coding agents can be used for real software work without turning the repository into an unreviewable pile of generated code, hidden assumptions, stale instructions, and accidental risk.
+Agentic Development Operating Model is the agent-assisted development track for my technical residency. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
 
-This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. Agentic Development Governance is the meta-layer: how the work is assigned, bounded, reviewed, validated, logged, and improved when AI agents are part of the development process.
+This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. The agentic development track is the meta-layer: how the work is assigned, bounded, reviewed, validated, logged, and improved when AI agents are part of the development process.
+
+The focus is not governance for its own sake. In fact, one of the clearest lessons so far is that governance can be over-scoped. V1 was intentionally restrictive because it was my first serious experience with concurrent agentic development. That was appropriate at the time, but it created too much process weight.
+
+V2 is pushing back in the other direction: fewer personas, fewer standing gates, stronger models, and more room for agents to choose useful implementation slices inside clear boundaries.
+
+V3 may push further still. I do not think this project has yet found the point where agents are running as autonomously as they reasonably can while still producing reviewable, secure, architecture-aligned work.
 
 ## Core Question
 
@@ -14,23 +20,27 @@ The central question is:
 
 > How can a solo developer use multiple AI coding agents productively while preserving scope control, security discipline, reviewability, and architectural intent?
 
-The project is not about whether an agent can generate code. That is already obvious.
+This is a fast-moving field, and many enterprise patterns are still emerging. The goal here is not to claim a final answer. The goal is to get hands-on experience with the practical challenges of using agents for real development work.
 
-The harder questions are:
+A direct engineering challenge is:
+
+> How can we optimize agent autonomy while maintaining human visibility and control — closer to human-on-the-loop than human-in-the-loop?
+
+Some follow-on questions include:
 
 - What should the agent be allowed to decide?
 - What must remain a Human Lead decision?
-- How does the agent know which workflow applies?
 - How do concurrent agents avoid stepping on each other?
-- How do we prevent unsafe shortcuts around secrets, dependencies, trust boundaries, and Git history?
+- How do we reduce logic flaws, stubbed code, test-only behavior, and incomplete implementations from agent output?
 - What evidence should an agent produce before work is considered reviewable?
-- How much governance is enough, and how much governance slows the work down without improving safety?
+- How much process is enough, and how much process slows development without improving safety, consistency, or project progress?
+- Where is the practical boundary where an agent is operating as autonomously as it can without becoming unsafe or unreviewable?
 
 ## Why This Exists
 
 Agent-assisted development can move very quickly. That is useful, but speed creates its own failure modes.
 
-Without explicit guardrails, agents can:
+Without explicit boundaries, agents can:
 
 - broaden scope without noticing;
 - modify unrelated files;
@@ -42,15 +52,17 @@ Without explicit guardrails, agents can:
 - introduce unsafe data paths;
 - commit secrets or sensitive material;
 - produce large changes that are difficult to review;
-- optimize for "task completion" rather than system correctness.
+- optimize for task completion rather than system correctness.
 
-This project treats those risks as engineering problems. The goal is to make safe work fast and unsafe work obvious.
+Some of these actions may be acceptable when they are explicit, scoped, reviewed, and approved. They are dangerous when they happen accidentally or invisibly.
+
+This project treats those risks as engineering problems. The goal is to make useful autonomous work easier while making unsafe or ambiguous work obvious.
 
 ## Relationship to MockCo
 
-MockCo is the main system under development. It is a synthetic health-insurance enterprise with public-facing member workflows, internal security tooling, DMZ / Production / Crown-Jewel zones, sensitive data, endpoint simulation, and future cloud deployment.
+MockCo is the main system under agentic development. It is a synthetic health-insurance enterprise with public-facing member workflows, internal security tooling, DMZ / Production / Crown-Jewel zones, sensitive data, endpoint simulation, and future cloud deployment.
 
-That makes it a useful testbed for agentic development governance because many MockCo changes are not simple code-generation tasks. They can affect:
+That makes it a useful testbed for agentic development because many MockCo changes are not simple code-generation tasks. They can affect:
 
 - trust boundaries;
 - authentication and authorization;
@@ -63,13 +75,13 @@ That makes it a useful testbed for agentic development governance because many M
 - security operations workflows;
 - logs, diagnostics, and auditability.
 
-Those are exactly the areas where unbounded agent autonomy is risky.
+Those are exactly the areas where unbounded agent autonomy is risky, but over-governance can also slow useful work. MockCo gives the agentic development track a realistic environment for testing that balance.
 
 ## Development Iterations
 
-The governance model has evolved through several iterations.
+The operating model has evolved through several iterations.
 
-## V0 — Manual ChatGPT-Assisted Development
+### V0 — Manual ChatGPT-Assisted Development
 
 V0 was not agentic in the strict sense. I used ChatGPT as a coding and design assistant while making changes manually in VS Code.
 
@@ -83,13 +95,13 @@ The workflow looked roughly like this:
 
 This version had the lowest automation risk because no agent directly modified the repository. It also had the highest manual overhead.
 
-### What V0 Taught
+#### What V0 Taught
 
 V0 was useful because it forced me to stay close to the code. I had to read changes, paste them, adapt them, and debug them myself.
 
-It also showed the limitation of a pure chat-assisted workflow. As the project grew, the loop became slow. ChatGPT could help with a file, a route, or a design question, but it was not operating as a bounded developer inside the repository.
+It also showed the limitation of a pure chat-assisted workflow. The loop was slow: much faster than developing entirely alone, but much slower than agentic development. ChatGPT could help with a file, a route, or a design question, but it was not operating as a bounded developer inside the repository.
 
-### Governance Level
+#### Governance Level
 
 V0 needed relatively little formal governance because the assistant had no direct write access.
 
@@ -101,6 +113,14 @@ The main governance burden was on me:
 - run validation;
 - avoid copying unsafe patterns;
 - keep the architecture coherent.
+
+#### Environment Controls
+
+V0 controls mostly consisted of working in GitHub Codespaces.
+
+That virtualized environment was useful because it reduced concern about running in-progress, intentionally vulnerable, or only partially secure applications directly on my local host machine.
+
+Most work was done in userspace, with root escalation only when required for package installation or environment setup.
 
 ## V1 — Multi-Agent Codex Development
 
@@ -116,21 +136,40 @@ The operating model used three active instances:
 
 LEFT and RIGHT were bounded workers. UNBOUND had broader implementation authority and was intended to choose larger coherent slices with less hand-holding.
 
-This was the first version where governance became a serious project requirement.
+The smaller model choice for LEFT and RIGHT was partly cost-driven. The goal was to keep experimentation within reasonable usage limits while testing whether smaller agents could handle bounded development work.
 
-## What V1 Tried To Solve
+This was the first version where an explicit operating model became necessary.
+
+#### What V1 Tried To Solve
 
 V1 attempted to answer:
 
 - Can multiple agents work on different parts of the same repository concurrently?
-- Can one broader agent make larger implementation decisions while bounded agents handle narrower slices?
-- How much instruction is needed to prevent unsafe edits?
+- Where are the tangible performance boundaries between smaller models and stronger models?
+- Can governance files reliably prevent unsafe edits?
 - How do we preserve Human Lead authority while still getting useful agent autonomy?
 - How do we make agent work reviewable after the fact?
+- How much can I trust agents to develop code?
 
-## V1 Governance Shape
+Because this was my first serious exposure to agentic development, V1 was intentionally cautious.
 
-V1 used a larger governance model with many specialized roles. The model included roles such as Planner, Architect, Builder, Test, PR Reviewer, Docs, DevEx, Dependency Reviewer, Debug, Agent Surveyor, and Agent Manager.
+#### V1 Governance Shape
+
+V1 used a large governance model with many specialized roles.
+
+The model included roles such as:
+
+- Planner;
+- Architect;
+- Builder;
+- Test;
+- PR Reviewer;
+- Docs;
+- DevEx;
+- Dependency Reviewer;
+- Debug;
+- Agent Surveyor;
+- Agent Manager.
 
 The intent was reasonable: different kinds of work need different kinds of review.
 
@@ -142,7 +181,7 @@ For example:
 - documentation changes may need docs review;
 - repeated agent failures may need retrospective review.
 
-The v1 model also established several important durable rules:
+The v1 model also established several durable rules:
 
 - Human Lead remains accountable for final decisions.
 - Agents operate only within approved scope.
@@ -155,36 +194,40 @@ The v1 model also established several important durable rules:
 
 Those rules remain directionally correct.
 
-## What V1 Revealed
+#### What V1 Revealed
 
-V1 also exposed a governance cost problem.
+V1 exposed a governance cost problem.
 
-The model was safe-minded, but heavy. The number of personas and workflows created a lot of context load. For a solo developer trying to move quickly, too much governance can become a second project competing with the actual engineering work.
+The model was safety-minded, but heavy. The number of personas and workflows created context load through extra reading, routing, and instructions at the start of each prompt. In practice, many personas quickly became unnecessary. Most useful work centered around architecture, build, and test responsibilities.
 
-The UNBOUND instance was especially instructive. It was useful to have a more autonomous agent that could inspect the repo, infer patterns, choose a slice, implement, validate, and report. But the stronger the autonomy, the more important the stop conditions, scope boundaries, and reporting requirements became.
+The UNBOUND instance was especially instructive. It was useful to have a more autonomous agent that could inspect the repo, infer patterns, choose a slice, implement, validate, and report.
+
+I did not encounter many cases where the agent materially over-scoped or over-worked the task. That made me suspect I had been overly cautious about the likelihood of agents going rogue when given bounded autonomy.
 
 The practical lesson was:
 
-> More autonomous agents need clearer boundaries, but clearer boundaries do not necessarily require more roles.
+> Agentic systems still need clear authority, scope, validation, and stop conditions, but they may not need as many standing personas, review gates, and procedural controls as I initially assumed.
 
 ## V2 — Simplified LEFT / RIGHT Developer Instances
 
-V2 simplifies the model.
+V2 is not simply a cleaner governance model. It is a deliberate counter-pressure against V1's over-governance.
+
+The experiment is whether stronger agents, clearer task framing, and simpler instance isolation can produce better work with fewer procedural constraints.
 
 The active instance model is now:
 
 | Instance | Role |
 |---|---|
-| LEFT | Bounded developer instance |
-| RIGHT | Bounded developer instance |
+| LEFT | Developer instance |
+| RIGHT | Developer instance |
 
-Both use the same general developer-instance framework. At the time of this writeup, both are intended to run stronger models than the original v1 LEFT/RIGHT setup.
+Both use the same general developer-instance framework. At the time of this writeup, both are intended to run stronger models than the original v1 LEFT and RIGHT setup, closer to what UNBOUND was running.
 
-UNBOUND is not part of the active v2 operating model.
+The main v2 design goal is to run concurrent instances of more autonomous agents with fewer governance requirements and better data collection around output, lines of code, token usage, review quality, and validation quality.
 
-The main v2 design goal is to preserve the useful discipline from UNBOUND without keeping a separate high-governance autonomous instance.
+Thus far, this has been successful, though the evidence is still mostly qualitative rather than rigorously measured.
 
-## V2 Operating Model
+#### V2 Operating Model
 
 The active persona model is:
 
@@ -202,17 +245,17 @@ This reduces the number of active roles while keeping the core separation of con
 
 The Human Lead remains accountable for final scope, final design, autonomy-budget approval, risk acceptance, governance changes, dependency/tooling approval, trust-boundary changes, merge decisions, release decisions, incident decisions, and destructive actions.
 
-## Why V2 Is Simpler
+#### Why V2 Is Simpler
 
-V2 tries to reduce governance overhead in three ways.
+V2 tries to reduce process overhead in three ways.
 
-### 1. Fewer active personas
+##### 1. Fewer active personas
 
 Instead of routing every task through many possible specialist agents, V2 collapses the normal flow into Designer, Builder, and Tester.
 
 Specialized concerns still exist, but they are represented through workflows, guardrails, and stop conditions rather than a large standing cast of personas.
 
-### 2. Clearer workflow routing
+##### 2. Clearer workflow routing
 
 V2 uses a workflow router that asks the agent to select one primary workflow before substantive work begins.
 
@@ -233,11 +276,11 @@ Current workflows include:
 
 The agent must confirm the workflow before substantive work. If the task changes character, the agent must reassess and stop for Human Lead direction.
 
-### 3. Explicit autonomy budgets
+##### 3. Explicit autonomy budgets
 
-V2 introduces the idea of an autonomy budget.
+V2 introduces the idea of an autonomy budget, but in practice I have not yet leveraged it meaningfully.
 
-The autonomy budget defines how much freedom the Builder has during implementation. It should be set during design work and approved before autonomous build work begins.
+The autonomy budget was intended to define how much freedom the Builder has during implementation. It should be set during design work and approved before autonomous build work begins.
 
 This matters because "implement this" can mean very different things:
 
@@ -248,9 +291,16 @@ This matters because "implement this" can mean very different things:
 - add new services;
 - change trust boundaries.
 
-The autonomy budget makes that implicit scope explicit.
+The autonomy budget was supposed to make that implicit scope explicit.
 
-## V2 Developer Instance Rules
+The idea is sound, but my implementation has been blunt:
+
+1. It became an extra constraint rather than a permissioning mechanism. In practice, it was "same controls plus autonomy limit" rather than "fewer controls, with autonomy limits to compensate."
+2. The concept was not defined clearly enough and proved hard to measure.
+
+This is a likely V3 improvement area.
+
+#### V2 Developer Instance Rules
 
 Each v2 developer instance must confirm:
 
@@ -267,9 +317,9 @@ LEFT and RIGHT must not inspect, modify, coordinate through, stage, or write log
 
 This prevents a common multi-agent failure mode: one agent accidentally assumes context from another agent's work and creates a merge or review problem.
 
-## Git Authority Model
+#### Git Authority Model
 
-V2 makes Git authority more practical than v1.
+V2 makes Git authority more practical than V1.
 
 Agents may run Git inspection commands inside their assigned working copy and branch. They may also stage or unstage approved in-scope files for commit-ready review.
 
@@ -279,35 +329,35 @@ That means agents may inspect and prepare, but the Human Lead controls publicati
 
 Allowed by default:
 
-- `git status`
-- `git branch`
-- `git log`
-- `git remote -v`
-- `git diff`
-- `git diff --stat`
-- `git diff --name-only`
-- scoped `git add`
-- scoped `git restore --staged`
+- `git status`;
+- `git branch`;
+- `git log`;
+- `git remote -v`;
+- `git diff`;
+- `git diff --stat`;
+- `git diff --name-only`;
+- scoped `git add`;
+- scoped `git restore --staged`.
 
 Requires explicit Human Lead approval:
 
-- `git commit`
-- `git push`
-- `git pull`
-- `git fetch`
-- `git merge`
-- `git rebase`
-- `git reset`
-- `git clean`
-- branch creation or deletion
-- PR creation, update, merge, or closure
-- remote or credential changes
-- Git identity or config changes
-- release or publication actions
+- `git commit`;
+- `git push`;
+- `git pull`;
+- `git fetch`;
+- `git merge`;
+- `git rebase`;
+- `git reset`;
+- `git clean`;
+- branch creation or deletion;
+- PR creation, update, merge, or closure;
+- remote or credential changes;
+- Git identity or config changes;
+- release or publication actions.
 
 This is a useful middle ground. Agents can help prepare reviewable work without becoming the authority that publishes it.
 
-## Commit-Ready Logs
+#### Commit-Ready Logs
 
 V2 treats agent logs as review artifacts.
 
@@ -320,7 +370,9 @@ This has two benefits:
 
 Logs must be sanitized. They must not include secrets, real sensitive data, private keys, plaintext DEKs, full encrypted envelopes, `.env` contents, credential material, real PHI/PII, payment data, or production-like credentials.
 
-## Guardrail Categories
+The logs performed better in V2 than in V1, but they still need significant improvement in V3.
+
+#### Guardrail Categories
 
 V2 separates cross-cutting controls into guardrails.
 
@@ -335,9 +387,9 @@ Important guardrail categories include:
 | Validation rules | Honest reporting, command evidence, test results, validation gaps. |
 | Concurrency rules | LEFT/RIGHT isolation, branch/log boundaries, merge-risk control. |
 
-This is an improvement over making every prompt carry all instructions all the time. The agent loads the guardrail when the work implicates that risk area.
+This is better than making every prompt carry all instructions all the time. The agent loads the guardrail when the work implicates that risk area.
 
-## Sensitive Change Handling
+#### Sensitive Change Handling
 
 Sensitive changes are treated as gating events.
 
@@ -367,9 +419,9 @@ If a gating workflow applies, the stricter rule wins.
 
 This is especially important for MockCo because many tasks touch security-sensitive areas even when they appear to be ordinary implementation work.
 
-## Largest Governance-Safe Slice
+#### Largest Governance-Safe Slice
 
-One useful concept from the v2 prompt model is the "largest governance-safe slice."
+One useful concept inherited from UNBOUND in V1 is the "largest governance-safe slice."
 
 After reading the design document and repository context, an agent may choose the largest coherent implementation slice that:
 
@@ -387,7 +439,7 @@ The point is not to make agents timid. The point is to let them choose useful wo
 
 ## What This Project Is Measuring
 
-The next version of this work should collect more explicit performance data.
+The next version of this effort, V3, should collect better performance data and organize that data more deliberately.
 
 Useful metrics include:
 
@@ -400,7 +452,7 @@ Useful metrics include:
 | Boundary discipline | Stop-condition triggers; trust-boundary issues caught before implementation. |
 | Dependency discipline | Unapproved dependency requests; `.off-limits` checks; avoided package sprawl. |
 | Concurrency safety | LEFT/RIGHT overlap incidents; branch/log mistakes; merge friction. |
-| Prompt/governance overhead | Time spent reading instructions; time spent reporting; useful work per session. |
+| Prompt / governance overhead | Time spent reading instructions; time spent reporting; useful work per session. |
 | Human Lead load | Number of clarifying decisions required; number of avoidable interruptions. |
 | Agent autonomy quality | Whether the agent chose a coherent slice without over-scaffolding or unsafe shortcuts. |
 
@@ -444,7 +496,21 @@ But it simplifies the active model:
 - explicit autonomy budgets;
 - better metrics orientation.
 
-## Design Principles
+### What V3 may test
+
+V3 will likely test whether the model can be pushed further toward autonomy:
+
+- less front-loaded reading;
+- lighter reporting;
+- stronger task packets;
+- better metrics;
+- better log structure;
+- clearer evidence of when the agent should stop rather than ask preemptively;
+- fewer controls where prior work shows they are not adding value.
+
+The current direction is not "more governance." The current direction is better autonomy with enough structure to preserve reviewability and safety.
+
+## Operating Principles
 
 The project currently follows these principles.
 
@@ -478,23 +544,49 @@ The purpose of governance is not to create ceremonial checklists. The purpose is
 
 The best agent is not the one with the fewest rules. The best agent is the one that can make meaningful progress without crossing boundaries the Human Lead did not intend to delegate.
 
+### Autonomy should be tested, not assumed
+
+V1 assumed more governance was necessary than may have been true. V2 is testing whether stronger models and simpler rules can support more useful autonomy. V3 should push that test further with better measurement.
+
 ## Open Questions
 
 ### How much governance is enough?
 
-V1 probably had too much standing governance. V2 is simpler, but still may be heavy. The next step is to measure which instructions materially improve output quality.
+V1 had too much standing governance. V2 is simpler, but still may be heavy. V3 should reduce governance further where possible and add better structure for efficient logging and metrics.
+
+We still need better tracking to distinguish useful governance from process overhead.
 
 ### Should logs always be committed?
 
-Commit-ready logs improve reviewability, but they also add noise. The default should probably remain "include logs," but this should be measured against actual reviewer usefulness.
+Commit-ready logs improve reviewability for external review, including review by me and ChatGPT outside the VM. They also add noise.
+
+The default will remain "include logs," but this should continue to be evaluated against actual usefulness.
 
 ### How should agent performance be compared?
 
-Raw lines of code are not useful enough. Better measures include accepted slices, validation quality, rework rate, review friction, and Human Lead decision load.
+Raw lines of code are not useful enough.
+
+Better measures include:
+
+- accepted implementation slices;
+- validation quality;
+- rework rate;
+- review friction;
+- Human Lead decision load;
+- number of avoided or unnecessary interruptions;
+- ability to preserve architecture intent without repeated correction.
+
+V3 should explore this more deliberately.
 
 ### When should a third instance return?
 
-V1 used LEFT, RIGHT, and UNBOUND. V2 uses only LEFT and RIGHT. A future V3 may reintroduce a third instance if there is a clear role that improves throughput without increasing governance overhead too much.
+V1 used LEFT, RIGHT, and UNBOUND.
+
+V2 uses only LEFT and RIGHT.
+
+V2's LEFT and RIGHT instances seem like a good optimization on cost. I am rarely running up against token limits, and there is still meaningful design and project-management work I can do in the 10–15 minutes between agent runs.
+
+A future V3 will likely retain the current two-instance model unless a third instance has a clear role that improves throughput without adding too much governance overhead.
 
 ### What should V3 optimize for?
 
@@ -505,7 +597,8 @@ Possible V3 directions include:
 - automated report extraction;
 - tighter build-packet templates;
 - improved agent log schema;
-- clearer autonomy-budget levels;
+- more autonomy;
+- better identification of where autonomy starts to produce inappropriate work;
 - selective reintroduction of an autonomous review or surveyor role.
 
 ## Current Status
@@ -519,7 +612,7 @@ Possible V3 directions include:
 | Guardrails | Designed | Trust boundaries, dependencies, secrets, logging, validation, and concurrency controls are separated. |
 | Commit-ready logs | Designed / active | Logs are intended as review artifacts by default. |
 | Metrics collection | Planned | Needs more structured capture across sessions. |
-| V3 | Future | Not yet defined. Likely driven by what V2 metrics reveal. |
+| V3 | Future | Likely focused on more autonomy, better metrics, and lighter process. |
 
 ## What This Project Should Demonstrate
 
@@ -535,7 +628,8 @@ The core skills being developed are:
 - collecting useful validation evidence;
 - managing concurrent agent work;
 - turning agent logs into review artifacts;
-- measuring whether the process is actually improving.
+- measuring whether the process is actually improving;
+- finding the practical boundary between useful agent autonomy and unsafe delegation.
 
 The goal is not to prove that agents can replace software engineering judgment.
 

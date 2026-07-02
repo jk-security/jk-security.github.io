@@ -621,11 +621,3 @@ Together, these projects cover different layers of security engineering:
 - hands-on vulnerability remediation.
 
 AppSec DVWA is the most directly code-remediation-oriented of the three.
-
-## Reader Takeaway
-
-The intended takeaway is:
-
-> I am not only interested in identifying vulnerabilities. I am practicing how to understand them, fix them, and prove that the fix worked.
-
-That distinction matters. Application security is not just tool operation. It is evidence-driven reasoning about software behavior, exploitability, remediation quality, and validation.
