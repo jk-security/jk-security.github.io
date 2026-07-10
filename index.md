@@ -6,7 +6,7 @@ layout: home
 
 This page is a public index of my ongoing technical residency work across security engineering, application security, software systems, and AI-enabled development practices.
 
-The purpose is simple: security leaders need to remain technically current. This residency is a structured way to keep building, studying, testing, documenting, and reasoning through modern technical problems rather than relying on past experience or indirect exposure through technical work of individual contributors on my teams.
+The purpose is simple: security leaders need to remain technically current. This residency is a structured way to keep building, studying, testing, documenting, and reasoning through modern technical problems rather than relying on past experience or indirect exposure through the technical work of individual contributors on my teams.
 
 The work here is intentionally iterative. Most projects are incomplete, some repositories are private, and some artifacts are still rough. That is part of the point. This page is meant to show active technical practice: what I am building, what I am studying, what I am testing, and how my thinking is developing over time.
 
@@ -14,21 +14,33 @@ The work here is intentionally iterative. Most projects are incomplete, some rep
 
 ### MockCo Development Work
 
-MockCo is a simulated company environment used to reason through practical security engineering problems in a realistic enterprise context. The work includes secure system design, custom-written internal security tooling, vulnerability management workflows, remediation patterns, architecture documentation, and tradeoff analysis.
+MockCo is a simulated company environment used to reason through practical security engineering problems in a realistic enterprise context.
 
-[Read more](projects/mockco.md)
+The work includes secure system design, custom-written internal security tooling, vulnerability management workflows, remediation patterns, architecture documentation, and operational tradeoff analysis.
 
-### Agentic Development Governance and Structure
+[Read more](/projects/mockco/)
 
-This workstream explores how AI-assisted and agentic development should be structured so that it remains useful, reviewable, auditable, and controlled. The focus is not simply whether AI can generate code, but how teams can govern AI-assisted engineering work without losing accountability, maintainability, or security discipline.
+### Agentic Development Operating Model
 
-[Read more](projects/agentic-development-governance.md)
+This workstream explores how AI-assisted and agentic development can be treated as an engineering system rather than only a productivity tool.
+
+The focus includes bounded autonomy, concurrent agent work, workflow selection, validation evidence, human authority, and agent observability. V1 intentionally used heavy governance, V2 reduced that process burden, and V3 introduces LogQ as a structured event stream for capturing and analyzing agent activity.
+
+The goal is not to add governance for its own sake. The goal is to determine how autonomously agents can operate while still producing secure, reviewable, architecture-aligned work.
+
+[Read more](/projects/agentic-development-governance/)
 
 ### AppSec Practice: DVWA Scan, Fix, Re-Scan
 
-This project uses DVWA and related tooling to practice the full application security remediation loop: identify vulnerabilities, scan, validate findings, remediate issues, re-scan, and document the outcome. The purpose is to strengthen practical AppSec judgment, not just tool familiarity.
+This project uses a modified version of DVWA and related tooling to practice the full application security remediation loop:
 
-[Read more](projects/appsec-dvwa.md)
+```text
+test exploit -> scan -> remediate in code -> rebuild -> validate remediation
+```
+
+The purpose is to strengthen practical AppSec judgment: understanding findings, validating exploitability, fixing underlying issues, and proving that the remediation works without breaking intended application behavior.
+
+[Read more](/projects/appsec-dvwa/)
 
 ## Reading and Technical Reasoning
 
@@ -36,13 +48,13 @@ Technical reading is part of this residency, but the goal is not book summary. T
 
 Current reading begins with *Designing Data-Intensive Applications*.
 
-[View reading notes](reading/index.md)
+[View reading notes](/reading/)
 
 ## Notes
 
 The notes section contains dated reflections, progress updates, and short-form technical reasoning from the residency.
 
-[View notes](notes/index.md)
+[View notes](/notes/)
 
 ## Public / Private Artifact Model
 
