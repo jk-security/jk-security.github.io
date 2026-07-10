@@ -6,14 +6,13 @@ permalink: /projects/agentic-development-governance/
 
 Agentic Development Operating Model is the agent-assisted development track for my technical residency. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
 
-This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. The agentic development track is the meta-layer: how the work is assigned, bounded, reviewed, validated, logged, and improved when AI agents are part of the development process.
+This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. The agentic development track is the meta-layer: how the work is assigned, bounded, reviewed, validated, observed, measured, and improved when AI agents are part of the development process.
 
 The focus is not governance for its own sake. In fact, one of the clearest lessons so far is that governance can be over-scoped. V1 was intentionally restrictive because it was my first serious experience with concurrent agentic development. That was appropriate at the time, but it created too much process weight.
 
-V2 is pushing back in the other direction: fewer personas, fewer standing gates, stronger models, and more room for agents to choose useful implementation slices inside clear boundaries.
+V2 pushed back in the other direction: fewer personas, fewer standing gates, stronger models, and more room for agents to choose useful implementation slices inside clear boundaries.
 
-<!-- TODO: Update with v3 actual targets - LogQ, parser, materialized views. No changes to agent governance, though. Also an update in v3 is that we're not _restarting_ the mockco project each time - for v0, v1, v2 we did those from ground up each time. v3 mockco will be working from existing state in v2, just implementing the updated agent logging. -->
-V3 may push further still. I do not think this project has yet found the point where agents are running as autonomously as they reasonably can while still producing reviewable, secure, architecture-aligned work.
+V3 continues that direction. It does not reset MockCo or add another heavy governance layer. Instead, it introduces LogQ: a structured event stream for agent activity. The goal is to make agent work more observable and measurable so that future versions can reduce unnecessary process rather than add more of it.
 
 ## Core Question
 
@@ -36,6 +35,7 @@ Some follow-on questions include:
 - What evidence should an agent produce before work is considered reviewable?
 - How much process is enough, and how much process slows development without improving safety, consistency, or project progress?
 - Where is the practical boundary where an agent is operating as autonomously as it can without becoming unsafe or unreviewable?
+- Can structured agent telemetry replace some of the manual reporting and front-loaded governance burden?
 
 ## Why This Exists
 
@@ -123,7 +123,7 @@ That virtualized environment was useful because it reduced concern about running
 
 Most work was done in userspace, with root escalation only when required for package installation or environment setup.
 
-## V1 — Multi-Agent Codex Development
+### V1 — Multi-Agent Codex Development
 
 V1 introduced concurrent Codex development.
 
@@ -209,34 +209,34 @@ The practical lesson was:
 
 > Agentic systems still need clear authority, scope, validation, and stop conditions, but they may not need as many standing personas, review gates, and procedural controls as I initially assumed.
 
-## V2 — Simplified LEFT / RIGHT Developer Instances
+### V2 — Simplified LEFT / RIGHT Developer Instances
 
-V2 is not simply a cleaner governance model. It is a deliberate counter-pressure against V1's over-governance.
+V2 was not simply a cleaner governance model. It was a deliberate counter-pressure against V1's over-governance.
 
-The experiment is whether stronger agents, clearer task framing, and simpler instance isolation can produce better work with fewer procedural constraints.
+The experiment was whether stronger agents, clearer task framing, and simpler instance isolation could produce better work with fewer procedural constraints.
 
-The active instance model is now:
+The active instance model was:
 
 | Instance | Role |
 |---|---|
 | LEFT | Developer instance |
 | RIGHT | Developer instance |
 
-Both use the same general developer-instance framework. At the time of this writeup, both are intended to run stronger models than the original v1 LEFT and RIGHT setup, closer to what UNBOUND was running.
+Both used the same general developer-instance framework. Both were intended to run stronger models than the original v1 LEFT and RIGHT setup, closer to what UNBOUND was running.
 
-The main v2 design goal is to run concurrent instances of more autonomous agents with fewer governance requirements and better data collection around output, lines of code, token usage, review quality, and validation quality.
+The main v2 design goal was to run concurrent instances of more autonomous agents with fewer governance requirements and better data collection around output, lines of code, token usage, review quality, and validation quality.
 
-Thus far, this has been successful, though the evidence is still mostly qualitative rather than rigorously measured.
+V2 was directionally successful, though the evidence was still mostly qualitative rather than rigorously measured.
 
 #### V2 Operating Model
 
-The active persona model is:
+The active persona model was:
 
 ```text
 Designer -> Builder -> Tester
 ```
 
-This reduces the number of active roles while keeping the core separation of concerns:
+This reduced the number of active roles while keeping the core separation of concerns:
 
 | Persona | Responsibility |
 |---|---|
@@ -244,23 +244,23 @@ This reduces the number of active roles while keeping the core separation of con
 | Builder | Implements approved work inside scope, guardrails, workflow rules, and autonomy budget. |
 | Tester | Validates behavior, evidence, boundary expectations, and validation gaps. |
 
-The Human Lead remains accountable for final scope, final design, autonomy-budget approval, risk acceptance, governance changes, dependency/tooling approval, trust-boundary changes, merge decisions, release decisions, incident decisions, and destructive actions.
+The Human Lead remained accountable for final scope, final design, autonomy-budget approval, risk acceptance, governance changes, dependency/tooling approval, trust-boundary changes, merge decisions, release decisions, incident decisions, and destructive actions.
 
-#### Why V2 Is Simpler
+#### Why V2 Was Simpler
 
-V2 tries to reduce process overhead in three ways.
+V2 tried to reduce process overhead in three ways.
 
 ##### 1. Fewer active personas
 
-Instead of routing every task through many possible specialist agents, V2 collapses the normal flow into Designer, Builder, and Tester.
+Instead of routing every task through many possible specialist agents, V2 collapsed the normal flow into Designer, Builder, and Tester.
 
-Specialized concerns still exist, but they are represented through workflows, guardrails, and stop conditions rather than a large standing cast of personas.
+Specialized concerns still existed, but they were represented through workflows, guardrails, and stop conditions rather than a large standing cast of personas.
 
 ##### 2. Clearer workflow routing
 
-V2 uses a workflow router that asks the agent to select one primary workflow before substantive work begins.
+V2 used a workflow router that asked the agent to select one primary workflow before substantive work began.
 
-Current workflows include:
+Current workflows included:
 
 | Workflow | Purpose |
 |---|---|
@@ -275,13 +275,13 @@ Current workflows include:
 | Incident or Recovery Work | Suspected exposure, corruption, destructive actions, rule violations, or approved recovery. |
 | Release or Versioning Work | Release notes, changelogs, versioning, and release readiness. |
 
-The agent must confirm the workflow before substantive work. If the task changes character, the agent must reassess and stop for Human Lead direction.
+The agent had to confirm the workflow before substantive work. If the task changed character, the agent had to reassess and stop for Human Lead direction.
 
 ##### 3. Explicit autonomy budgets
 
-V2 introduces the idea of an autonomy budget, but in practice I have not yet leveraged it meaningfully.
+V2 introduced the idea of an autonomy budget, but in practice I did not leverage it meaningfully.
 
-The autonomy budget was intended to define how much freedom the Builder has during implementation. It should be set during design work and approved before autonomous build work begins.
+The autonomy budget was intended to define how much freedom the Builder had during implementation. It should have been set during design work and approved before autonomous build work began.
 
 This matters because "implement this" can mean very different things:
 
@@ -294,16 +294,16 @@ This matters because "implement this" can mean very different things:
 
 The autonomy budget was supposed to make that implicit scope explicit.
 
-The idea is sound, but my implementation has been blunt:
+The idea was sound, but my implementation was blunt:
 
 1. It became an extra constraint rather than a permissioning mechanism. In practice, it was "same controls plus autonomy limit" rather than "fewer controls, with autonomy limits to compensate."
 2. The concept was not defined clearly enough and proved hard to measure.
 
-This is a likely V3 improvement area.
+This remains a V3 improvement area.
 
 #### V2 Developer Instance Rules
 
-Each v2 developer instance must confirm:
+Each v2 developer instance had to confirm:
 
 - assigned side: LEFT or RIGHT;
 - assigned working copy;
@@ -312,21 +312,21 @@ Each v2 developer instance must confirm:
 - primary design document;
 - primary implementation objective.
 
-Each instance must stay inside its own working copy, branch, scope, instance file, and log root.
+Each instance had to stay inside its own working copy, branch, scope, instance file, and log root.
 
-LEFT and RIGHT must not inspect, modify, coordinate through, stage, or write logs for the other instance unless explicitly instructed by the Human Lead.
+LEFT and RIGHT could not inspect, modify, coordinate through, stage, or write logs for the other instance unless explicitly instructed by the Human Lead.
 
-This prevents a common multi-agent failure mode: one agent accidentally assumes context from another agent's work and creates a merge or review problem.
+This prevented a common multi-agent failure mode: one agent accidentally assumes context from another agent's work and creates a merge or review problem.
 
 #### Git Authority Model
 
-V2 makes Git authority more practical than V1.
+V2 made Git authority more practical than V1.
 
-Agents may run Git inspection commands inside their assigned working copy and branch. They may also stage or unstage approved in-scope files for commit-ready review.
+Agents could run Git inspection commands inside their assigned working copy and branch. They could also stage or unstage approved in-scope files for commit-ready review.
 
-Agents may not perform Git publication or history-changing actions without explicit Human Lead approval.
+Agents could not perform Git publication or history-changing actions without explicit Human Lead approval.
 
-That means agents may inspect and prepare, but the Human Lead controls publication.
+That meant agents could inspect and prepare, but the Human Lead controlled publication.
 
 Allowed by default:
 
@@ -340,7 +340,7 @@ Allowed by default:
 - scoped `git add`;
 - scoped `git restore --staged`.
 
-Requires explicit Human Lead approval:
+Required explicit Human Lead approval:
 
 - `git commit`;
 - `git push`;
@@ -356,111 +356,168 @@ Requires explicit Human Lead approval:
 - Git identity or config changes;
 - release or publication actions.
 
-This is a useful middle ground. Agents can help prepare reviewable work without becoming the authority that publishes it.
+This was a useful middle ground. Agents could help prepare reviewable work without becoming the authority that published it.
 
-#### Commit-Ready Logs
+#### Commit-Ready Markdown Logs
 
-V2 treats agent logs as review artifacts.
+V2 treated agent logs as review artifacts.
 
-The default rule is that logs under the active instance path are included in commit-ready file lists unless the Human Lead explicitly omits them.
+The default rule was that logs under the active instance path were included in commit-ready file lists unless the Human Lead explicitly omitted them.
 
-This has two benefits:
+This had two benefits:
 
-1. The reviewer can see what the agent believed it was doing, what commands it ran, what validation passed or failed, and where it stopped.
-2. The repo retains decision context instead of relying on hidden chat history.
+1. The reviewer could see what the agent believed it was doing, what commands it ran, what validation passed or failed, and where it stopped.
+2. The repo retained decision context instead of relying on hidden chat history.
 
-Logs must be sanitized. They must not include secrets, real sensitive data, private keys, plaintext DEKs, full encrypted envelopes, `.env` contents, credential material, real PHI/PII, payment data, or production-like credentials.
+Logs had to be sanitized. They could not include secrets, real sensitive data, private keys, plaintext DEKs, full encrypted envelopes, `.env` contents, credential material, real PHI/PII, payment data, or production-like credentials.
 
-The logs performed better in V2 than in V1, but they still need significant improvement in V3.
-
-#### Guardrail Categories
-
-V2 separates cross-cutting controls into guardrails.
-
-Important guardrail categories include:
-
-| Guardrail | Purpose |
-|---|---|
-| Trust boundaries | Zone rules, data-flow constraints, protected-data movement, service boundaries. |
-| Dependency rules | Packages, tools, downloads, base images, external services, system changes. |
-| Secrets rules | Credentials, tokens, private keys, DEKs, session material, controlled values. |
-| Logging rules | Safe agent logs, application logs, audit logs, validation logs. |
-| Validation rules | Honest reporting, command evidence, test results, validation gaps. |
-| Concurrency rules | LEFT/RIGHT isolation, branch/log boundaries, merge-risk control. |
-
-This is better than making every prompt carry all instructions all the time. The agent loads the guardrail when the work implicates that risk area.
-
-#### Sensitive Change Handling
-
-Sensitive changes are treated as gating events.
-
-A task may require sensitive-change handling if it affects:
-
-- trust boundaries;
-- authentication;
-- authorization;
-- identity;
-- encryption;
-- key management;
-- controlled material;
-- sensitive data;
-- public API contracts;
-- persistence;
-- schema;
-- CI/CD;
-- environment;
-- logging exposure;
-- recovery;
-- retention;
-- payment;
-- audit behavior;
-- network topology.
-
-If a gating workflow applies, the stricter rule wins.
-
-This is especially important for MockCo because many tasks touch security-sensitive areas even when they appear to be ordinary implementation work.
-
-#### Largest Governance-Safe Slice
-
-One useful concept inherited from UNBOUND in V1 is the "largest governance-safe slice."
-
-After reading the design document and repository context, an agent may choose the largest coherent implementation slice that:
-
-- directly advances the assigned design document;
-- preserves trust boundaries;
-- can be reviewed in the assigned branch;
-- can be validated;
-- avoids unapproved dependencies or controlled material;
-- avoids unapproved schema, Docker, topology, CI/CD, or environment changes;
-- avoids unapproved auth, cryptography, payment, recovery, audit, Crown-Jewel, or sensitive-data behavior;
-- avoids coordination with another active instance;
-- avoids broad unfinished scaffolding.
-
-The point is not to make agents timid. The point is to let them choose useful work inside well-defined boundaries.
-
-## V3 — LogQ and Improved Metrics
-
-<!-- Update with changes from v3
+The Markdown logs performed better in V2 than in V1, but they were still limited. They were useful to read, but difficult to query, aggregate, compare, or analyze over time.
 
 ### V3 — LogQ Event Stream and Agent Observability
 
-Key points to add:
+V3 keeps the V2 controlled-autonomy direction, but changes the logging model.
 
-V3 keeps the V2 controlled-autonomy model.
-The major change is replacing commit-ready Markdown logs with LogQ, a local event-sourced logging process.
-Codex agents emit structured events through logq_emit.sh / logq_emit.py to a Unix datagram socket.
-The collector writes append-only .open.jsonl and .closed.jsonl event segments.
-Closed segments become the future source for parsing, analytics, materialized views, and performance reporting.
-This shifts logging from “human-readable session notes” toward “machine-readable operational evidence.”
+The major addition is **LogQ**, a local event-sourced logging process for Codex and agent activity.
 
-The v3 README supports this directly: it says v3 replaces v2 Markdown log roots with LogQ and shows the Codex → emitter → Unix datagram socket → collector → JSONL segment flow. It also lists implemented v3.0 features such as the Unix datagram socket listener, compact JSON payloads, collector sequence numbers, timestamps, segment rotation, and .open / .closed JSONL segments.
+V2 used bounded Markdown log roots:
 
--->
+```text
+.agents/logs/LEFT/
+.agents/logs/RIGHT/
+```
 
+V3 replaces those with a structured event stream:
+
+```text
+Codex / agent
+  -> logq_emit.sh
+  -> logq_emit.py
+  -> Unix datagram socket
+  -> LogQ collector
+  -> active .open.jsonl segment
+  -> closed .closed.jsonl segment
+  -> future parser
+  -> future database-backed analytics
+  -> future materialized views and reports
+```
+
+The important change is that logging becomes machine-readable operational evidence rather than only human-readable session notes.
+
+#### Why LogQ Matters
+
+V2 showed that logs are useful, but Markdown logs do not scale well as an analysis substrate.
+
+They are difficult to answer questions like:
+
+- How many runs selected each workflow?
+- How often did validation fail?
+- How often did agents request Human Lead intervention?
+- Which workflows create the most rework?
+- Which agents or lanes produce the most useful implementation slices?
+- How often do agents stop correctly rather than continuing through ambiguity?
+- How much reporting overhead exists per useful change?
+
+LogQ is intended to make those questions answerable later.
+
+The point is not to create more governance. The point is to improve observability so that future versions can remove unnecessary process with evidence.
+
+#### Current LogQ Model
+
+The current V3.0 LogQ flow is:
+
+```text
+Codex / agent
+  -> logq_emit.sh
+  -> logq_emit.py
+  -> Unix datagram socket
+  -> LogQ collector
+  -> .open.jsonl segment
+  -> .closed.jsonl segment
+```
+
+Implemented capabilities include:
+
+- Unix datagram socket listener;
+- lightweight event emission wrapper;
+- compact JSON event payloads;
+- collector-assigned sequence numbers;
+- collector receive timestamps;
+- valid event normalization;
+- invalid event wrapping into the same stream;
+- base64 encoding of invalid raw payloads;
+- batched JSONL writes;
+- active `.open.jsonl` segments;
+- completed `.closed.jsonl` segments;
+- segment rotation by age, record count, or byte count;
+- graceful shutdown with a final lifecycle event;
+- governance guidance for LogQ event emission.
+
+Generated LogQ stream files are not normal source artifacts. They should not be committed unless the Human Lead explicitly requests event-stream evidence for a task.
+
+#### Event Identity
+
+V2 used `LEFT` and `RIGHT` as both work lanes and log roots. That was useful, but too coarse for durable event-stream identity.
+
+V3 keeps work lanes such as `LEFT` and `RIGHT`, but LogQ events should also carry identity metadata such as:
+
+```text
+agent_instance_id
+agent_role
+work_lane
+run_id
+workflow.primary
+```
+
+This separates the durable identity of an agent run from the human-assigned work lane.
+
+That distinction matters once multiple runs, repeated sessions, future review lanes, or additional agents are introduced.
+
+#### Parser and Analytics Direction
+
+V3.0 creates the event stream foundation.
+
+The next slices are expected to add:
+
+```text
+.closed.jsonl segments
+  -> parser
+  -> normalized event tables
+  -> parser checkpoints
+  -> replay support
+  -> materialized views
+  -> reports
+```
+
+Possible derived outputs include:
+
+```text
+runs by workflow
+completion and failure rate
+validation failure rate
+human intervention count
+budget pressure by workflow
+recovery state freshness
+native Codex diagnostic correlation
+collector health and ingestion gaps
+segment processing checkpoints
+agent instance activity
+```
+
+The event stream should remain the durable source of truth. Databases, reports, and analytics views are rebuildable read models.
+
+#### What V3 Is Testing
+
+V3 is testing whether better observability can support more autonomy.
+
+The hypothesis is:
+
+> If agent activity is captured as structured events, I can reduce some front-loaded process while improving after-the-fact review, measurement, and comparison.
+
+That means V3 is not a retreat back into heavier governance. It is an attempt to make the operating model more measurable so that future iterations can be lighter, faster, and more empirically grounded.
 
 ## What This Project Is Measuring
 
-The next version of this effort, V3, should collect better performance data and organize that data more deliberately.
+The next version of this effort should collect better performance data and organize that data more deliberately.
 
 Useful metrics include:
 
@@ -476,6 +533,7 @@ Useful metrics include:
 | Prompt / governance overhead | Time spent reading instructions; time spent reporting; useful work per session. |
 | Human Lead load | Number of clarifying decisions required; number of avoidable interruptions. |
 | Agent autonomy quality | Whether the agent chose a coherent slice without over-scaffolding or unsafe shortcuts. |
+| Observability quality | Whether LogQ events provide enough evidence to reconstruct what happened and compare runs. |
 
 The goal is not just to ask whether agents are faster. The better question is whether they produce more reviewable, validated, architecture-aligned work per unit of Human Lead attention.
 
@@ -493,9 +551,9 @@ V1 carried too much governance weight. The persona model was comprehensive, but 
 
 UNBOUND was powerful, but the amount of instruction required to keep it safe made it less obviously better than improving the normal LEFT/RIGHT model.
 
-### What V2 is trying to improve
+### What V2 improved
 
-V2 is trying to keep the useful parts:
+V2 kept the useful parts:
 
 - Human Lead authority;
 - explicit scope;
@@ -508,7 +566,7 @@ V2 is trying to keep the useful parts:
 - final reports;
 - commit-ready logs.
 
-But it simplifies the active model:
+But it simplified the active model:
 
 - two active instances instead of three;
 - three personas instead of many;
@@ -517,19 +575,18 @@ But it simplifies the active model:
 - explicit autonomy budgets;
 - better metrics orientation.
 
-### What V3 may test
+### What V3 is adding
 
-V3 will likely test whether the model can be pushed further toward autonomy:
+V3 adds structured observability:
 
-- less front-loaded reading;
-- lighter reporting;
-- stronger task packets;
-- better metrics;
-- better log structure;
-- clearer evidence of when the agent should stop rather than ask preemptively;
-- fewer controls where prior work shows they are not adding value.
+- LogQ event emission;
+- Unix datagram socket ingestion;
+- append-only JSONL event segments;
+- agent identity metadata;
+- future parsing into normalized tables;
+- future materialized views and reports.
 
-The current direction is not "more governance." The current direction is better autonomy with enough structure to preserve reviewability and safety.
+The current direction is not "more governance." The current direction is better autonomy with enough observability to preserve reviewability, safety, and measurement.
 
 ## Operating Principles
 
@@ -553,6 +610,8 @@ If workflow selection feels clever, the process is probably too vague.
 
 Agent logs should explain the work well enough that a future reviewer can understand what happened without relying on chat memory.
 
+In V3, this shifts from Markdown-only logs toward structured LogQ events that can be parsed and analyzed.
+
 ### Self-validation is useful but not independent review
 
 An agent can run tests and check its work. That does not mean the work is independently reviewed or ready to merge.
@@ -567,21 +626,29 @@ The best agent is not the one with the fewest rules. The best agent is the one t
 
 ### Autonomy should be tested, not assumed
 
-V1 assumed more governance was necessary than may have been true. V2 is testing whether stronger models and simpler rules can support more useful autonomy. V3 should push that test further with better measurement.
+V1 assumed more governance was necessary than may have been true. V2 tested whether stronger models and simpler rules could support more useful autonomy. V3 should push that test further with better measurement.
+
+### Observability should enable less process, not more theater
+
+Structured logging is useful only if it helps reduce ambiguity, compare outcomes, or remove unnecessary manual reporting. LogQ should support better autonomy; it should not become another ceremonial layer.
 
 ## Open Questions
 
 ### How much governance is enough?
 
-V1 had too much standing governance. V2 is simpler, but still may be heavy. V3 should reduce governance further where possible and add better structure for efficient logging and metrics.
+V1 had too much standing governance. V2 was simpler, but still may be heavy. V3 should reduce governance further where possible and add better structure for efficient logging and metrics.
 
 We still need better tracking to distinguish useful governance from process overhead.
 
 ### Should logs always be committed?
 
-Commit-ready logs improve reviewability for external review, including review by me and ChatGPT outside the VM. They also add noise.
+Commit-ready Markdown logs improved reviewability for external review, including review by me and ChatGPT outside the VM. They also added noise.
 
-The default will remain "include logs," but this should continue to be evaluated against actual usefulness.
+V3 changes the question. Generated LogQ event streams should not normally be committed as source artifacts. The better long-term pattern is likely:
+
+```text
+agent emits events -> LogQ persists local stream -> parser builds reports -> selected summaries or evidence are committed when useful
+```
 
 ### How should agent performance be compared?
 
@@ -595,7 +662,8 @@ Better measures include:
 - review friction;
 - Human Lead decision load;
 - number of avoided or unnecessary interruptions;
-- ability to preserve architecture intent without repeated correction.
+- ability to preserve architecture intent without repeated correction;
+- quality and completeness of emitted LogQ evidence.
 
 V3 should explore this more deliberately.
 
@@ -605,9 +673,9 @@ V1 used LEFT, RIGHT, and UNBOUND.
 
 V2 uses only LEFT and RIGHT.
 
-V2's LEFT and RIGHT instances seem like a good optimization on cost. I am rarely running up against token limits, and there is still meaningful design and project-management work I can do in the 10–15 minutes between agent runs.
+V2's LEFT and RIGHT instances seemed like a good optimization on cost. I rarely ran up against token limits, and there was still meaningful design and project-management work I could do in the 10–15 minutes between agent runs.
 
-A future V3 will likely retain the current two-instance model unless a third instance has a clear role that improves throughput without adding too much governance overhead.
+A future V3 operating pattern will likely retain the current two-instance model unless a third instance has a clear role that improves throughput without adding too much coordination or observability overhead.
 
 ### What should V3 optimize for?
 
@@ -617,7 +685,7 @@ Possible V3 directions include:
 - explicit benchmark tasks;
 - automated report extraction;
 - tighter build-packet templates;
-- improved agent log schema;
+- improved LogQ event schema;
 - more autonomy;
 - better identification of where autonomy starts to produce inappropriate work;
 - selective reintroduction of an autonomous review or surveyor role.
@@ -627,13 +695,15 @@ Possible V3 directions include:
 | Area | Status | Notes |
 |---|---|---|
 | V0 manual assisted workflow | Historical | Useful baseline for understanding manual ChatGPT-assisted development. |
-| V1 multi-agent model | Completed experiment | LEFT, RIGHT, and UNBOUND model demonstrated both useful concurrency and governance overhead. |
-| V2 simplified model | Current direction | LEFT and RIGHT developer instances with Designer / Builder / Tester personas. |
+| V1 multi-agent model | Completed experiment | LEFT, RIGHT, and UNBOUND demonstrated both useful concurrency and governance overhead. |
+| V2 simplified model | Completed / foundation | LEFT and RIGHT developer instances with Designer / Builder / Tester personas. |
+| V3 LogQ model | Current direction | Replaces Markdown log roots with structured agent event emission and local JSONL streams. |
 | Workflow router | Designed | Agents select one primary workflow and any required gating workflow before substantive work. |
 | Guardrails | Designed | Trust boundaries, dependencies, secrets, logging, validation, and concurrency controls are separated. |
-| Commit-ready logs | Designed / active | Logs are intended as review artifacts by default. |
-| Metrics collection | Planned | Needs more structured capture across sessions. |
-| V3 | Future | Likely focused on more autonomy, better metrics, and lighter process. |
+| Commit-ready Markdown logs | Superseded by V3 direction | Useful in V2, but not ideal for analytics or cross-run comparison. |
+| LogQ event stream | Implemented foundation | Unix datagram socket, emitter wrapper, collector, and open/closed JSONL segments. |
+| Metrics collection | Planned / emerging | LogQ provides the substrate for structured metrics and later reports. |
+| Parser and analytics | Future | Closed JSONL segments should feed normalized tables, materialized views, and reports. |
 
 ## What This Project Should Demonstrate
 
@@ -648,9 +718,10 @@ The core skills being developed are:
 - preventing dependency and secret-handling mistakes;
 - collecting useful validation evidence;
 - managing concurrent agent work;
-- turning agent logs into review artifacts;
+- turning agent activity into reviewable evidence;
 - measuring whether the process is actually improving;
-- finding the practical boundary between useful agent autonomy and unsafe delegation.
+- finding the practical boundary between useful agent autonomy and unsafe delegation;
+- using observability to reduce unnecessary process rather than adding process for its own sake.
 
 The goal is not to prove that agents can replace software engineering judgment.
 
