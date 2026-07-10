@@ -18,13 +18,13 @@ The work includes secure system design, internal security tooling, vulnerability
 
 [View project](/projects/mockco/)
 
-### Agentic Development Governance and Structure
+### Agentic Development Operating Model
 
-This workstream explores how AI-assisted and agentic development should be structured so that it remains useful, reviewable, auditable, and controlled.
+This workstream explores how AI-assisted and agentic development can be structured as an engineering system: assigned work, bounded autonomy, workflow selection, validation evidence, agent observability, and human authority.
 
-The focus is not simply whether AI can generate code. The more important question is how engineering teams can use agentic development practices while preserving accountability, maintainability, security discipline, and human judgment.
+The current focus is not adding more governance. V1 over-scoped controls, V2 pushed toward simpler concurrent agents, and V3 introduces LogQ as a structured event stream for measuring and reviewing agent activity.
 
-[View project]([View project](/projects/agentic-development-governance.md)
+[View project](/projects/agentic-development-governance/)
 
 ### AppSec Practice: DVWA Scan, Fix, Re-Scan
 
@@ -32,7 +32,7 @@ This project uses DVWA and related tooling to practice the full application secu
 
 The goal is to strengthen practical AppSec judgment: understanding findings, validating exploitability, fixing underlying issues, and documenting evidence of remediation.
 
-[View project](/projects/appsec-dvwa.md)
+[View project](/projects/appsec-dvwa/)
 
 ## Publication Model
 
