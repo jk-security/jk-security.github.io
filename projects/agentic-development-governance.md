@@ -12,6 +12,7 @@ The focus is not governance for its own sake. In fact, one of the clearest lesso
 
 V2 is pushing back in the other direction: fewer personas, fewer standing gates, stronger models, and more room for agents to choose useful implementation slices inside clear boundaries.
 
+<!-- TODO: Update with v3 actual targets - LogQ, parser, materialized views. No changes to agent governance, though. Also an update in v3 is that we're not _restarting_ the mockco project each time - for v0, v1, v2 we did those from ground up each time. v3 mockco will be working from existing state in v2, just implementing the updated agent logging. -->
 V3 may push further still. I do not think this project has yet found the point where agents are running as autonomously as they reasonably can while still producing reviewable, secure, architecture-aligned work.
 
 ## Core Question
@@ -436,6 +437,26 @@ After reading the design document and repository context, an agent may choose th
 - avoids broad unfinished scaffolding.
 
 The point is not to make agents timid. The point is to let them choose useful work inside well-defined boundaries.
+
+## V3 — LogQ and Improved Metrics
+
+<!-- Update with changes from v3
+
+### V3 — LogQ Event Stream and Agent Observability
+
+Key points to add:
+
+V3 keeps the V2 controlled-autonomy model.
+The major change is replacing commit-ready Markdown logs with LogQ, a local event-sourced logging process.
+Codex agents emit structured events through logq_emit.sh / logq_emit.py to a Unix datagram socket.
+The collector writes append-only .open.jsonl and .closed.jsonl event segments.
+Closed segments become the future source for parsing, analytics, materialized views, and performance reporting.
+This shifts logging from “human-readable session notes” toward “machine-readable operational evidence.”
+
+The v3 README supports this directly: it says v3 replaces v2 Markdown log roots with LogQ and shows the Codex → emitter → Unix datagram socket → collector → JSONL segment flow. It also lists implemented v3.0 features such as the Unix datagram socket listener, compact JSON payloads, collector sequence numbers, timestamps, segment rotation, and .open / .closed JSONL segments.
+
+-->
+
 
 ## What This Project Is Measuring
 
