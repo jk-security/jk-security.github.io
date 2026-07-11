@@ -3,7 +3,7 @@ layout: page
 title: About Jonathan Kelly
 permalink: /about/
 description: >-
-  Security engineering leader and hands-on practitioner focused on application
+  Security engineering leader and practitioner focused on application
   security, vulnerability management, secure software delivery, security
   automation, and governed AI-assisted development.
 ---
@@ -24,6 +24,8 @@ My work sits at the intersection of:
 I have led and built multinational security engineering functions across Singapore, Macau, and the United States, supporting distributed development organizations, hundreds of applications, hybrid infrastructure, and multiple software-development lifecycles.
 
 My professional is security as an engineering capability: integrated into development workflows, supported by scalable platforms, measurable through operational evidence, and designed to help remediating teams - both software and information technology - make better decisions earlier.
+
+[LinkedIn](https://www.linkedin.com/in/jonathanakelly/)
 
 ## Professional Focus
 
@@ -178,13 +180,3 @@ My professional certifications include CISSP, CCSP, CEH, EnCE, GCFA, and GCSA.
 - [Projects](/projects/)
 - [Reading and Technical Reasoning](/reading/)
 - [Residency Notes](/notes/)
-
-## About the Published Work
-
-This site is a personal technical-practice portfolio.
-
-Projects, architectures, organizations, data, identities, credentials, and operational scenarios published here are synthetic, simulated, mocked, sanitized, or intentionally generalized.
-
-Nothing on this site represents the systems, controls, architecture, confidential information, or official views of an employer or client.
-
-Views are my own.

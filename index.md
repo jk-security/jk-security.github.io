@@ -2,6 +2,8 @@
 layout: home
 ---
 
+# Technical Portfolio
+
 I am a security engineering leader maintaining a hands-on technical residency across secure architecture, application security, software systems, distributed systems, and AI-assisted development.
 
 The technical work exists to keep technical judgment grounded in implementation, and act as a workshop for technical upskilling on topics I find current and relevant to my personal or professional interests.

@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Agentic Development Operating Model
-permalink: /projects/agentic-development/
+permalink: /projects/agentic-development-governance/
 ---
 
-Agentic Development Operating Model is the agent-assisted development track for my technical residency. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
+Agentic Development Operating Model is the agent-assisted development track for my technical portfolio. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
 
 This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. The agentic development track is the meta-layer: how the work is assigned, bounded, reviewed, validated, observed, measured, and improved when AI agents are part of the development process.
 

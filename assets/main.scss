@@ -91,13 +91,15 @@ body {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   left: 0;
   min-width: 280px;
+  margin: 0;
   padding: 8px 0;
   background: $portfolio-white;
   border: 1px solid $portfolio-border;
   border-top: 3px solid $portfolio-red;
+  border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
   z-index: 100;
 }
@@ -119,6 +121,11 @@ body {
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu {
   display: block;
+}
+
+.nav-dropdown > .page-link {
+  display: inline-block;
+  padding: 10px 0;
 }
 
 h1,
