@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Jonathan Kelly
+# title: About Jonathan Kelly
 permalink: /about/
 description: >-
   Security engineering leader and hands-on practitioner focused on application
