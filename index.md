@@ -1,5 +1,6 @@
 ﻿---
 layout: home
+title: JK Security Technical Portfolio
 ---
 
 I am a security engineering leader maintaining a hands-on technical residency across secure architecture, application security, software systems, distributed systems, and AI-assisted development.
