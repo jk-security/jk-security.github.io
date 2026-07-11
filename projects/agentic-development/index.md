@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Agentic Development Operating Model
-permalink: /projects/agentic-development-governance/
+permalink: /projects/agentic-development/
 ---
 
 Agentic Development Operating Model is the agent-assisted development track for my technical residency. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jk-security.github.io/sitemap.xml

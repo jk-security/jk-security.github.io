@@ -36,7 +36,7 @@ V3 introduces LogQ, a local event-stream logging process for Codex agent activit
 
 The primary change is the replacement of per-agent Markdown log roots with structured events emitted through a Unix datagram socket and persisted as append-only JSONL segments.
 
-The objective is not to add more governance. It is to improve observability and measurement so that future versions can reduce unnecessary reporting and process while allowing agents to operate more autonomously.
+The objective is to improve observability and measurement so that future versions can reduce unnecessary reporting and process while allowing agents to operate more autonomously.
 
 [Read note](/notes/2026-07-agentic-development-v3-logq/)
 

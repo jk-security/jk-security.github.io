@@ -1,22 +1,54 @@
 <header class="site-header" role="banner">
   <div class="wrapper site-header-wrapper">
-    <a class="site-title" rel="author" href="{{ '/' | relative_url }}">
+    <a
+      class="site-title"
+      rel="author"
+      href="{{ '/' | relative_url }}"
+      aria-label="{{ site.title | escape }} home"
+    >
       {{ site.title | escape }}
     </a>
 
-    <nav class="site-nav-custom" aria-label="Main navigation">
-      <div class="nav-item nav-dropdown">
-        <a class="page-link" href="{{ '/projects/' | relative_url }}">Projects</a>
+    <nav class="site-nav-custom" aria-label="Primary navigation">
+      <a class="page-link" href="{{ '/' | relative_url }}">Home</a>
 
-        <div class="dropdown-menu" aria-label="Projects submenu">
-          <a href="{{ '/projects/mockco/' | relative_url }}">MockCo</a>
-          <a href="{{ '/projects/agentic-development-governance/' | relative_url }}">Agentic Development Operating Model</a>
-          <a href="{{ '/projects/appsec-dvwa/' | relative_url }}">AppSec DVWA</a>
+      <a class="page-link" href="{{ '/about/' | relative_url }}">About Me</a>
+
+      <div class="nav-item nav-dropdown">
+        <a
+          class="page-link"
+          href="{{ '/projects/' | relative_url }}"
+          aria-haspopup="true"
+        >
+          Projects
+        </a>
+
+        <div class="dropdown-menu" aria-label="Project navigation">
+          <a href="{{ '/projects/mockco/' | relative_url }}">
+            MockCo
+          </a>
+
+          <a href="{{ '/projects/agentic-development-governance/' | relative_url }}">
+            Agentic Development
+          </a>
+
+          <a href="{{ '/projects/appsec-dvwa/' | relative_url }}">
+            AppSec DVWA
+          </a>
         </div>
       </div>
 
-      <a class="page-link" href="{{ '/reading/' | relative_url }}">Reading and Technical Reasoning</a>
-      <a class="page-link" href="{{ '/notes/' | relative_url }}">Notes</a>
+      <a
+        class="page-link"
+        href="{{ '/reading/' | relative_url }}"
+        aria-label="Reading and Technical Reasoning"
+      >
+        Reading
+      </a>
+
+      <a class="page-link" href="{{ '/notes/' | relative_url }}">
+        Notes
+      </a>
     </nav>
   </div>
 </header>

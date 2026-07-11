@@ -1,8 +1,42 @@
 title: Security Engineering Technical Residency
-description: Ongoing technical practice across security engineering, application security, systems thinking, and AI-enabled development governance.
+description: >-
+  Hands-on technical practice across security architecture, application security,
+  distributed systems, secure software design, and governed AI-assisted development.
+
+url: "https://jk-security.github.io"
+baseurl: ""
+
+author:
+  name: Jon Kelly
+  github: jk-security
+
 theme: minima
 
+markdown: kramdown
+timezone: Asia/Singapore
+
 header_pages:
+  - about.md
   - projects/index.md
   - reading/index.md
   - notes/index.md
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+
+minima:
+  social_links:
+    - platform: github
+      user_url: "https://github.com/jk-security"
+
+exclude:
+  - drafts/
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .jekyll-cache/
+  - .sass-cache/
