@@ -1,13 +1,13 @@
-title: Security Engineering Technical Residency
+title: JK Security Technical Portfolio
 description: >-
-  Hands-on technical practice across security architecture, application security,
-  distributed systems, secure software design, and governed AI-assisted development.
+  A technical portfolio covering security architecture, application security,
+  software systems, distributed systems, and governed AI-assisted development.
 
 url: "https://jk-security.github.io"
 baseurl: ""
 
 author:
-  name: Jon Kelly
+  name: Jonathan Kelly
   github: jk-security
 
 theme: minima

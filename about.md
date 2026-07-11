@@ -1,14 +1,12 @@
 ---
 layout: page
-# title: About Jonathan Kelly
+title: About Jonathan Kelly
 permalink: /about/
 description: >-
   Security engineering leader and hands-on practitioner focused on application
   security, vulnerability management, secure software delivery, security
   automation, and governed AI-assisted development.
 ---
-
-## About
 
 I am a security engineering leader and hands-on technical practitioner based in Singapore.
 

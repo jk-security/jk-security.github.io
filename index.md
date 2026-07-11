@@ -2,11 +2,9 @@
 layout: home
 ---
 
-## Security Engineering Technical Residency
-
 I am a security engineering leader maintaining a hands-on technical residency across secure architecture, application security, software systems, distributed systems, and AI-assisted development.
 
-The residency exists to keep technical judgment grounded in implementation, and act as a workshop for technical upskilling on topics I find current and relevant to my personal or professional interests.
+The technical work exists to keep technical judgment grounded in implementation, and act as a workshop for technical upskilling on topics I find current and relevant to my personal or professional interests.
 
 Rather than relying only on prior experience or indirect exposure through engineering teams, I continue to build systems, test controls, inspect failures, read deeply, document tradeoffs, and refine my understanding through repeated technical work.
 
@@ -14,7 +12,7 @@ This site is the public portfolio for that work.
 
 ## Current Focus
 
-The current residency is organized around three main technical programs.
+The current portfolio is organized around three main technical programs.
 
 ### MockCo Enterprise Security Lab
 

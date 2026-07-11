@@ -8,11 +8,12 @@ This section contains structured notes from technical reading completed as part 
 
 The goal is not to produce book summaries. The goal is to strengthen practical reasoning about systems, architecture, reliability, data models, operability, security tradeoffs, and engineering leadership.
 
-For each book or major reading thread, I am trying to capture three things:
+For each book or major reading thread, I am trying to capture:
 
-1. The core technical ideas.
-2. The system design or security implications.
-3. How the material changes my judgment as a security engineering leader.
+1. The foundational technical ideas.
+2. Additional research or reading from the core concepts.
+3. The system design or security implications.
+4. What I could implement _right now_ personally (here) or professionally.
 
 ## Current Reading
 

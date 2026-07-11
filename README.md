@@ -1,6 +1,6 @@
-﻿# Security Engineering Technical Residency
+﻿# JK Security Technical Portfolio
 
-This repository contains the public site for my ongoing technical residency across security engineering, application security, secure software design, distributed systems, and AI-assisted development.
+This repository contains the public site for my ongoing technical portfolio across security engineering, application security, secure software design, distributed systems, and AI-assisted development.
 
 The site is published through GitHub Pages at:
 
@@ -10,9 +10,9 @@ https://jk-security.github.io/
 
 ## Purpose
 
-Security leaders need to remain technically current.
+As a security and technology leader, I need to remain technically current.
 
-This residency is a structured way to keep building, testing, studying, documenting, and reasoning through modern technical problems rather than relying only on prior experience or indirect exposure through the work of engineering teams.
+This portfolio documents ongoing work in building, testing, studying, documenting, and reasoning through modern technical problems. It provides a public record of current technical practice rather than relying only on prior experience or indirect exposure through the work of engineering teams.
 
 The work is intentionally iterative. Some projects are incomplete, some supporting repositories remain private, and some artifacts are published only after they are useful and safe to share.
 
@@ -33,7 +33,7 @@ The site currently covers:
 - **LogQ** — a local append-only event stream for capturing structured agent activity and supporting future metrics, replay, and analysis, as a part of Agentic Develpoment.
 - **Application security practice** — exploit validation, scanning, source-code remediation, rebuilding, and proof of remediation using a modified DVWA environment.
 - **Technical reading and systems reasoning** — applied notes from distributed systems, reliability, cloud infrastructure, software architecture, and modernization literature.
-- **Residency notes** — dated reflections, project milestones, technical decisions, and changes in approach.
+- **Technical notes** — dated reflections, project milestones, technical decisions, and changes in approach.
 
 ## Repository Structure
 
@@ -137,7 +137,7 @@ These are not intended to summarize books. They capture how the material changes
 
 ### `notes/`
 
-Dated residency updates, reflections, and milestone records.
+Dated technical updates, reflections, and milestone records.
 
 ### `assets/diagrams/`
 

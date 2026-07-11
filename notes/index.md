@@ -10,7 +10,7 @@ These notes are intentionally lighter-weight than the project pages. They are me
 
 This security engineering upskilling work is a long-running technical residency effort that began in May 2026. The end-of-year goal is tracked primarily through time spent in deliberate technical practice rather than a fixed completion metric.
 
-As of the end of June 2026, I had completed 75 of 450 planned sessions, representing approximately 110 hours of work.
+As of the end of June 2026, I had completed 88 of 450 planned sessions, representing approximately 130 hours of work.
 
 ## Current Notes
 
