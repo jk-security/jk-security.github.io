@@ -1,16 +1,18 @@
 ---
 layout: page
-title: MockCo Security Operations Platform
+title: SecApp
+subtitle: Security Operations and Exposure Management Platform
+status: Work in progress
 permalink: /projects/mockco/security-operations-platform/
 ---
 
-The MockCo Security Operations Platform is the internal security tooling track for the lab. It is intended to model exposure management rather than simple vulnerability scanning.
+SecApp is MockCo's internal security operations and exposure management platform. It is intended to model exposure management rather than simple vulnerability scanning.
 
 The platform combines vulnerability intelligence, endpoint software inventory, DMZ staging, Production-controlled promotion, software-to-vulnerability correlation, and analyst triage workflows.
 
 ## Design Goal
 
-The Security Operations Platform tests this question:
+SecApp tests this question:
 
 > How should internal security tooling convert external vulnerability intelligence and endpoint-originated inventory into trusted, explainable, auditable exposure findings?
 
@@ -198,7 +200,7 @@ The exact lifecycle may change, but the important point is that decisions should
 
 ## Deliberate Non-Goals
 
-The first Security Operations Platform implementation should not try to do everything.
+The first SecApp implementation should not try to do everything.
 
 Current non-goals include:
 
@@ -230,11 +232,11 @@ The platform should preserve these rules:
 
 ## Why This Matters
 
-This application is the internal security-tooling counterpart to the Public Member Portal.
+This application is the internal security-tooling counterpart to the Member Portal.
 
 The Member Portal asks how to protect sensitive member data from catastrophic disclosure.
 
-The Security Operations Platform asks how to protect the enterprise by understanding its exposure to vulnerabilities across software, endpoints, and time.
+SecApp asks how to protect the enterprise by understanding its exposure to vulnerabilities across software, endpoints, and time.
 
 Together, they create a useful architecture lab:
 
@@ -272,6 +274,6 @@ Ticketing is useful, but it should come after the core exposure model is stable.
 
 ## Relationship to MockCo Architecture
 
-The Security Operations Platform is a Production internal security application. It is separate from the Public Member Portal and should not become a PHI access surface.
+SecApp is a Production internal security application. It is separate from the Member Portal and should not become a PHI access surface.
 
 Its purpose is to model internal exposure management and security operations, not customer-facing healthcare workflows.

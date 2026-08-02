@@ -10,7 +10,7 @@ These projects are intentionally iterative. Some related repositories are privat
 
 ## Current Projects
 
-### MockCo Development Work
+### MockCo Enterprise Context
 
 MockCo is a simulated company environment used to reason through practical security engineering problems in a realistic enterprise context.
 
@@ -18,15 +18,15 @@ The work includes secure system design, internal security tooling, vulnerability
 
 [View project](/projects/mockco/)
 
-### Agentic Development Operating Model
+### Agent Harness
 
 This workstream explores how AI-assisted and agentic development can be structured as an engineering system: assigned work, bounded autonomy, workflow selection, validation evidence, agent observability, and human authority.
 
 The current focus is not adding more governance. V1 over-scoped controls, V2 pushed toward simpler concurrent agents, and V3 introduces LogQ as a structured event stream for measuring and reviewing agent activity.
 
-[View project](/projects/agentic-development-governance/)
+[View Agent Harness](/projects/agentic-development-governance/)
 
-### AppSec Practice: DVWA Scan, Fix, Re-Scan
+### AppSec DVWA
 
 This project uses DVWA and related tooling to practice the full application security remediation loop: identify vulnerabilities, scan, validate findings, remediate issues, re-scan, and document the outcome.
 

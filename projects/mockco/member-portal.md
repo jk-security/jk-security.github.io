@@ -1,10 +1,12 @@
 ---
 layout: page
-title: MockCo Member Portal
+title: Member Portal
+subtitle: Secure Member-Facing Application and Protected Data Architecture
+status: Work in progress
 permalink: /projects/mockco/member-portal/
 ---
 
-The MockCo Public Member Portal is the customer-facing application for the synthetic health-insurance enterprise. It is designed to handle sensitive member data while preserving strict boundaries between the public UI, Production application logic, and Crown-Jewel protected storage.
+Member Portal is MockCo's customer-facing application for the synthetic health-insurance enterprise. It is designed to handle sensitive member data while preserving strict boundaries between the public UI, Production application logic, and Crown-Jewel protected storage.
 
 The design goal is not simply to make a working portal. The goal is to explore what a member-facing application looks like when sensitive-data protection is treated as a primary architecture constraint.
 
@@ -183,11 +185,11 @@ Homomorphic encryption or other privacy-preserving methods may be explored later
 
 ## Relationship to MockCo Architecture
 
-The Member Portal is one application inside MockCo. It should not share the Security Operations Platform's databases, triage workflows, or vulnerability-ingestion trust paths.
+The Member Portal is one application inside MockCo. It should not share the SecApp's databases, triage workflows, or vulnerability-ingestion trust paths.
 
 The two systems are intentionally different:
 
 - the Member Portal focuses on member-sensitive data and customer-facing workflows;
-- the Security Operations Platform focuses on internal vulnerability exposure management.
+- the SecApp focuses on internal vulnerability exposure management.
 
 Both use the same underlying architectural discipline: trust boundaries first, then data movement.

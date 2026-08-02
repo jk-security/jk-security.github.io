@@ -1,6 +1,8 @@
 ---
 layout: page
 title: LogQ
+subtitle: Append-Only Observability for AI Coding Agents
+status: Work in progress
 permalink: /projects/agentic-development/logq/
 description: >-
   A local append-only event stream for observing, measuring, and analyzing
@@ -569,7 +571,7 @@ The first goal is a trustworthy event path that makes agent behavior easier to i
 
 ## Related Pages
 
-- [Agentic Development Overview](/projects/agentic-development/)
+- [Agent Harness overview](/projects/agentic-development-governance/)
 - [Operating Model](/projects/agentic-development/operating-model/)
 - [Measurement Roadmap](/projects/agentic-development/measurement-roadmap/)
 - [Lessons Learned](/projects/agentic-development/lessons-learned/)

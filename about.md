@@ -84,8 +84,8 @@ MockCo is a synthetic health-insurance enterprise used to practice secure archit
 The project includes:
 
 - Internet, DMZ, Production, and Crown-Jewel trust zones;
-- a Public Member Portal;
-- a Security Operations Platform;
+- a Member Portal;
+- a SecApp;
 - vulnerability-intelligence ingestion;
 - endpoint and software-inventory collection;
 - sensitive-data protection;
@@ -95,7 +95,7 @@ The project includes:
 
 [Explore MockCo](/projects/mockco/)
 
-### Agentic Development
+### Agent Harness
 
 This workstream treats AI-assisted development as an engineering and operating-model problem.
 
@@ -113,7 +113,7 @@ It explores:
 
 The current V3 model introduces LogQ, an append-only event stream used to capture agent lifecycle and validation activity for later analysis.
 
-[Explore Agentic Development](/projects/agentic-development/)
+[Explore Agent Harness](/projects/agentic-development-governance/)
 
 ### Application Security Practice
 

@@ -1,10 +1,12 @@
 ---
 layout: page
-title: Agentic Development Operating Model
+title: Agent Harness
+subtitle: Multi-Agent Development Governance and Observability
+status: Work in progress
 permalink: /projects/agentic-development-governance/
 ---
 
-Agentic Development Operating Model is the agent-assisted development track for my technical portfolio. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
+Agent Harness is the multi-agent development governance and observability workstream for my technical portfolio. It explores how far AI coding agents can be trusted to perform real software work autonomously while preserving enough visibility, reviewability, and human authority to keep the system safe.
 
 This project runs alongside MockCo. MockCo is the architecture and enterprise systems lab. The agentic development track is the meta-layer: how the work is assigned, bounded, reviewed, validated, observed, measured, and improved when AI agents are part of the development process.
 
@@ -726,3 +728,10 @@ The core skills being developed are:
 The goal is not to prove that agents can replace software engineering judgment.
 
 The goal is to use agents while making the judgment visible.
+## Related Pages
+
+- [LogQ](/projects/agentic-development/logq/)
+- [Operating Model](/projects/agentic-development/operating-model/)
+- [Measurement Roadmap](/projects/agentic-development/measurement-roadmap/)
+- [Lessons Learned](/projects/agentic-development/lessons-learned/)
+- [MockCo](/projects/mockco/)

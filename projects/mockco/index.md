@@ -18,7 +18,7 @@ The project is intentionally architecture-first. The goal is not only to build w
 
 Application development is performed primarily through Codex agents so that I can focus more of my own effort on architecture, requirements, security decisions, testing strategy, and review.
 
-The operating model for that work is documented separately in [Agentic Development Operating Model](/projects/agentic-development-governance/).
+The operating model for that work is documented separately in [Agent Harness](/projects/agentic-development-governance/).
 
 ## Applications and Goals
 
@@ -26,8 +26,8 @@ MockCo will likely include six to ten major applications or service families ove
 
 | Area | Current status | Link | Concepts demonstrated |
 |---|---|---|---|
-| Public Member Portal | In development | [Member Portal](/projects/mockco/member-portal/) | DMZ presentation, Production broker, Crown-Jewel encrypted storage, browser-side plaintext boundary |
-| Security Operations Platform | In development | [Security Operations Platform](/projects/mockco/security-operations-platform/) | Exposure management, endpoint inventory, vulnerability intelligence, Production-controlled correlation |
+| Member Portal | In development | [Member Portal](/projects/mockco/member-portal/) | DMZ presentation, Production broker, Crown-Jewel encrypted storage, browser-side plaintext boundary |
+| SecApp | In development | [SecApp](/projects/mockco/security-operations-platform/) | Exposure management, endpoint inventory, vulnerability intelligence, Production-controlled correlation |
 | Identity and Access | Planned | | Account-user versus member-subject separation, session control, step-up authentication, delegated access |
 | Key Management and Recovery | Planned | | Wrapped DEKs, recovery grants, audited re-wrapping, no routine enterprise plaintext access |
 | Observability Platform | Planned | | Service health, traceability, operational signals, failure-mode visibility |
@@ -99,7 +99,7 @@ MockCo has gone through several development iterations: V0, V1, V2, and V3.
 
 The versions are not traditional product releases. They represent changes in development method, repository structure, agent operating model, and architectural maturity.
 
-The agent-specific changes are covered more directly in [Agentic Development Operating Model](/projects/agentic-development-governance/).
+The agent-specific changes are covered more directly in [Agent Harness](/projects/agentic-development-governance/).
 
 ### V0 — Manual ChatGPT-Assisted Development
 
@@ -117,12 +117,12 @@ I applied and validated all changes manually.
 
 This version progressed furthest in some early implementation areas and helped establish the two primary MockCo applications:
 
-1. the Public Member Portal;
-2. the internal Security Operations Platform.
+1. the Member Portal;
+2. the internal SecApp.
 
 Neither application was complete.
 
-V0 also included initial work on an endpoint agent for collecting software inventory from Linux and Windows systems, normalizing records toward CPE-style identities, and sending inventory to the Security Operations Platform ingress.
+V0 also included initial work on an endpoint agent for collecting software inventory from Linux and Windows systems, normalizing records toward CPE-style identities, and sending inventory to the SecApp ingress.
 
 ### V1 — Concurrent Codex Agents
 
@@ -179,7 +179,7 @@ Agent validates and reports
 Human Lead reviews and integrates
 ```
 
-The Public Member Portal and Security Operations Platform were developed as separate workstreams, with each Codex instance operating in a separate working copy.
+The Member Portal and SecApp were developed as separate workstreams, with each Codex instance operating in a separate working copy.
 
 V2 also simplified the agent model by removing the standing UNBOUND instance and making LEFT and RIGHT more autonomous.
 
@@ -187,7 +187,7 @@ V2 also simplified the agent model by removing the standing UNBOUND instance and
 
 V3 does not restart MockCo.
 
-Unlike the transitions from V0 to V1 and from V1 to V2, the application architecture and current implementation state carry forward. V3 picks up the existing Public Member Portal and Security Operations Platform work where V2 left off.
+Unlike the transitions from V0 to V1 and from V1 to V2, the application architecture and current implementation state carry forward. V3 picks up the existing Member Portal and SecApp work where V2 left off.
 
 The primary V3 change is to the agent operating environment rather than the MockCo application architecture.
 
@@ -274,19 +274,19 @@ architecture review
 design correction
 ```
 
-For the Public Member Portal, the main design question is:
+For the Member Portal, the main design question is:
 
 > How should a customer-facing application handle sensitive health-insurance data if the enterprise wants to minimize the blast radius of database compromise?
 
-For the Security Operations Platform, the main design question is:
+For the SecApp, the main design question is:
 
 > How should internal security tooling convert external vulnerability intelligence and endpoint-originated inventory into trusted, explainable, and auditable exposure findings?
 
 These are different problems.
 
-The Public Member Portal emphasizes protection of sensitive customer data and controlled decryption boundaries.
+The Member Portal emphasizes protection of sensitive customer data and controlled decryption boundaries.
 
-The Security Operations Platform emphasizes normalization, correlation, trust establishment, explainability, and analyst workflows.
+The SecApp emphasizes normalization, correlation, trust establishment, explainability, and analyst workflows.
 
 MockCo is useful because it contains both.
 

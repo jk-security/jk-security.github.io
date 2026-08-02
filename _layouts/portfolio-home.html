@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  {%- include head.html -%}
+
+  <body>
+    {%- include header.html -%}
+
+    <main
+      id="main-content"
+      class="portfolio-home"
+      aria-labelledby="portfolio-home-title"
+    >
+      <section class="portfolio-hero">
+        <div class="layout-landing">
+          <h1 id="portfolio-home-title">{{ page.title }}</h1>
+
+          {% if page.introduction %}
+            <p class="portfolio-hero__intro">
+              {{ page.introduction }}
+            </p>
+          {% endif %}
+        </div>
+      </section>
+
+      {% if page.status %}
+      <section
+        class="portfolio-status"
+        aria-labelledby="portfolio-status-title"
+      >
+        <div class="layout-landing">
+          <h2 id="portfolio-status-title">Current work</h2>
+          <div class="portfolio-status__content">
+            {{ page.status | markdownify }}
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+      <section
+        class="portfolio-projects"
+        aria-labelledby="portfolio-projects-title"
+      >
+        <div class="layout-landing">
+          <h2 id="portfolio-projects-title">Selected systems work</h2>
+
+          <div class="portfolio-projects__grid">
+            {{ content }}
+          </div>
+        </div>
+      </section>
+
+      {% if page.architecture %}
+      <section
+        class="portfolio-architecture"
+        aria-labelledby="portfolio-architecture-title"
+      >
+        <div class="layout-content">
+          <h2 id="portfolio-architecture-title">
+            Architecture feature
+          </h2>
+          {{ page.architecture | markdownify }}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if page.decision %}
+      <section
+        class="portfolio-decision"
+        aria-labelledby="portfolio-decision-title"
+      >
+        <div class="layout-content">
+          <h2 id="portfolio-decision-title">Technical decision</h2>
+          {{ page.decision | markdownify }}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if page.progress %}
+      <section
+        class="portfolio-progress"
+        aria-labelledby="portfolio-progress-title"
+      >
+        <div class="layout-content">
+          <h2 id="portfolio-progress-title">Current progress</h2>
+          {{ page.progress | markdownify }}
+        </div>
+      </section>
+      {% endif %}
+    </main>
+
+    {%- include footer.html -%}
+  </body>
+</html>

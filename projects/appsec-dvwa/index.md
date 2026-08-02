@@ -1,6 +1,8 @@
 ---
 layout: page
 title: AppSec DVWA
+subtitle: Exploit Validation and Secure Remediation Lab
+status: Work in progress
 permalink: /projects/appsec-dvwa/
 ---
 

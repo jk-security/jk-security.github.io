@@ -1,4 +1,4 @@
-﻿# JK Security Technical Portfolio
+# JK Security Technical Portfolio
 
 This repository contains the public site for my ongoing technical portfolio across security engineering, application security, secure software design, distributed systems, and AI-assisted development.
 
@@ -70,8 +70,8 @@ MockCo is a synthetic health-insurance enterprise used to practice secure archit
 The project includes:
 
 - Internet, DMZ, Production, and Crown-Jewel trust zones;
-- a Public Member Portal;
-- a Security Operations Platform;
+- a Member Portal;
+- a SecApp;
 - vulnerability and software-inventory workflows;
 - sensitive-data protection;
 - service-to-service security;
@@ -82,11 +82,11 @@ Project pages:
 
 - [MockCo overview](/projects/mockco/)
 - [Architecture](/projects/mockco/architecture/)
-- [Public Member Portal](/projects/mockco/member-portal/)
-- [Security Operations Platform](/projects/mockco/security-operations-platform/)
+- [Member Portal](/projects/mockco/member-portal/)
+- [SecApp](/projects/mockco/security-operations-platform/)
 - [Lessons learned](/projects/mockco/lessons-learned/)
 
-#### Agentic Development Operating Model
+#### Agent Harness
 
 This workstream explores how AI coding agents can perform meaningful software-engineering work while remaining bounded, observable, reviewable, and subordinate to human authority.
 
@@ -101,7 +101,7 @@ V3: structured LogQ event-stream observability
 
 Project pages:
 
-- [Agentic Development overview](/projects/agentic-development/)
+- [Agent Harness overview](/projects/agentic-development-governance/)
 - [Operating model](/projects/agentic-development/operating-model/)
 - [LogQ](/projects/agentic-development/logq/)
 - [Measurement roadmap](/projects/agentic-development/measurement-roadmap/)
@@ -165,7 +165,7 @@ The project includes:
 
 [View MockCo](/projects/mockco/)
 
-### Agentic Development Operating Model
+### Agent Harness
 
 This workstream explores how AI coding agents can perform meaningful software-engineering work while remaining bounded, observable, reviewable, and subordinate to human authority.
 
@@ -182,7 +182,7 @@ The current focus is not adding governance for its own sake.
 
 The focus is determining how much process can be safely removed when agent behavior becomes measurable.
 
-[View the Agentic Development Operating Model](/projects/agentic-development-governance/)
+[View the Agent Harness](/projects/agentic-development-governance/)
 
 ### AppSec DVWA
 

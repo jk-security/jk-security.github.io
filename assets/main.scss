@@ -3,21 +3,85 @@
 
 @import "minima";
 
-$portfolio-content-width: 1040px;
-$portfolio-black: #111;
-$portfolio-red: #800000;
-$portfolio-white: #fff;
-$portfolio-muted: #666;
-$portfolio-border: #d9d9d9;
-$portfolio-hover: #f7f7f7;
+// -----------------------------------------------------------------------------
+// JKS-005 design tokens
+// -----------------------------------------------------------------------------
 
+// Color
+$color-page: #f7f5f2;
+$color-surface: #ffffff;
+$color-text: #202833;
+$color-text-muted: #66717d;
+$color-accent: #7d1113;
+$color-accent-hover: #5f0c0e;
+$color-border: #d9dde2;
+$color-surface-hover: #f1eee9;
+$color-success: #3f6f4c;
+$color-success-surface: #edf5ef;
+$color-warning: #8a6418;
+$color-warning-surface: #fbf4df;
+$color-code-background: #20262d;
+$color-code-text: #f4f1eb;
+
+// Typography
+$font-size-display: clamp(2.25rem, 5vw, 4rem);
+$font-size-h1: clamp(2rem, 4vw, 3rem);
+$font-size-h2: clamp(1.5rem, 3vw, 2rem);
+$font-size-h3: 1.25rem;
+$font-size-body: 1rem;
+$font-size-small: 0.9375rem;
+$font-size-meta: 0.875rem;
+
+$line-height-heading: 1.2;
+$line-height-body: 1.65;
+$line-height-compact: 1.4;
+
+// Spacing
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+
+// Layout
+$width-landing: 1280px;
+$width-content: 1040px;
+$width-article: 760px;
+$width-narrow: 640px;
+$gutter-mobile: 20px;
+$width-dropdown: 280px;
+$width-footer-copy: 900px;
+$breakpoint-tablet: 800px;
+$breakpoint-mobile: 480px;
+
+// Borders, radii, shadows, focus
+$border-standard: 1px solid $color-border;
+$border-accent: 3px solid $color-accent;
+$radius-small: 4px;
+$radius-medium: 8px;
+$shadow-subtle: 0 2px 8px rgba(32, 40, 51, 0.08);
+$shadow-elevated: 0 8px 24px rgba(32, 40, 51, 0.12);
+$focus-ring: 3px solid rgba(125, 17, 19, 0.35);
+$focus-offset: 3px;
+
+// Compatibility aliases
+$portfolio-content-width: $width-content;
+$portfolio-black: $color-text;
+$portfolio-red: $color-accent;
+$portfolio-white: $color-surface;
+$portfolio-muted: $color-text-muted;
+$portfolio-border: $color-border;
+$portfolio-hover: $color-surface-hover;
 body {
   color: $portfolio-black;
   background: $portfolio-white;
 }
 
 .site-header {
-  border-top: 4px solid $portfolio-red;
+  border-top: $border-accent;
 }
 
 .site-header .wrapper,
@@ -29,7 +93,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  gap: $space-6;
 }
 
 .site-title {
@@ -46,7 +110,7 @@ body {
 .site-nav-custom {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: $space-5;
   margin-left: auto;
 }
 
@@ -67,8 +131,8 @@ body {
 .site-nav-custom a:focus-visible,
 .footer-nav a:focus-visible,
 .site-title:focus-visible {
-  outline: 2px solid $portfolio-red;
-  outline-offset: 3px;
+  outline: $focus-ring;
+  outline-offset: $focus-offset;
 }
 
 .page-content a {
@@ -93,20 +157,20 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 280px;
+  min-width: $width-dropdown;
   margin: 0;
-  padding: 8px 0;
+  padding: $space-2 0;
   background: $portfolio-white;
-  border: 1px solid $portfolio-border;
-  border-top: 3px solid $portfolio-red;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+  border: $border-standard;
+  border-top: $border-accent;
+  border-radius: 0 0 $radius-small $radius-small;
+  box-shadow: $shadow-elevated;
   z-index: 100;
 }
 
 .dropdown-menu a {
   display: block;
-  padding: 8px 14px;
+  padding: $space-2 $space-3;
   color: $portfolio-black;
   white-space: nowrap;
 }
@@ -125,7 +189,7 @@ body {
 
 .nav-dropdown > .page-link {
   display: inline-block;
-  padding: 10px 0;
+  padding: $space-3 0;
 }
 
 h1,
@@ -136,13 +200,13 @@ h4 {
 }
 
 h2 {
-  padding-bottom: 0.25rem;
-  border-bottom: 2px solid $portfolio-red;
+  padding-bottom: $space-1;
+  border-bottom: 2px solid $color-accent;
 }
 
 blockquote {
   color: $portfolio-black;
-  border-left: 4px solid $portfolio-red;
+  border-left: 4px solid $color-accent;
 }
 
 table th {
@@ -163,33 +227,33 @@ pre code {
 }
 
 .site-footer {
-  padding: 28px 0;
-  border-top: 3px solid $portfolio-red;
+  padding: $space-6 0;
+  border-top: $border-accent;
 }
 
 .footer-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $space-4;
 }
 
 .footer-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
+  gap: $space-3 $space-5;
 }
 
 .footer-disclaimer {
-  max-width: 900px;
+  max-width: $width-footer-copy;
   color: $portfolio-muted;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: $font-size-small;
+  line-height: $line-height-body;
   margin: 0;
 }
 
 .footer-meta {
   color: $portfolio-muted;
-  font-size: 0.9rem;
+  font-size: $font-size-meta;
   margin: 0;
 }
 
@@ -210,7 +274,7 @@ code {
   overflow-wrap: anywhere;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $breakpoint-tablet) {
   .site-header .wrapper {
     display: block;
   }
@@ -222,40 +286,222 @@ code {
   .site-nav-custom {
     display: block;
     margin-left: 0;
-    margin-top: 14px;
+    margin-top: $space-3;
   }
 
   .site-nav-custom > a,
   .nav-dropdown {
     display: block;
-    margin: 8px 0;
+    margin: $space-2 0;
   }
 
   .dropdown-menu {
     position: static;
     display: block;
     min-width: 0;
-    margin-top: 4px;
-    padding: 4px 0 4px 16px;
+    margin-top: $space-1;
+    padding: $space-1 0 $space-1 $space-4;
     border: 0;
-    border-left: 3px solid $portfolio-red;
+    border-left: $border-accent;
     box-shadow: none;
   }
 
   .dropdown-menu a {
-    padding: 6px 0;
+    padding: $space-2 0;
     white-space: normal;
   }
 
   .footer-nav {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 16px;
+    gap: $space-3 $space-4;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: $breakpoint-mobile) {
   .footer-nav {
+    grid-template-columns: 1fr;
+  }
+}
+// -----------------------------------------------------------------------------
+// Shared layout and interaction foundation
+// -----------------------------------------------------------------------------
+
+.wrapper {
+  padding-right: $space-5;
+  padding-left: $space-5;
+}
+
+.page-content .wrapper {
+  max-width: $width-content;
+}
+
+.post-content {
+  max-width: $width-article;
+}
+
+pre {
+  padding: $space-4;
+  color: $color-code-text;
+  background: $color-code-background;
+  border-radius: $radius-small;
+}
+
+code {
+  font-size: $font-size-small;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: $focus-ring;
+  outline-offset: $focus-offset;
+}
+
+
+// -----------------------------------------------------------------------------
+// Layout measures
+// -----------------------------------------------------------------------------
+
+.layout-landing {
+  max-width: $width-landing;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.layout-content {
+  max-width: $width-content;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.layout-article {
+  max-width: $width-article;
+}
+
+.layout-narrow {
+  max-width: $width-narrow;
+}
+
+.layout-article,
+.layout-narrow {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// -----------------------------------------------------------------------------
+// Portfolio landing-page structure
+// -----------------------------------------------------------------------------
+
+.portfolio-home {
+  padding-bottom: $space-8;
+}
+
+.portfolio-home > section {
+  padding-right: $space-5;
+  padding-left: $space-5;
+}
+
+.portfolio-hero {
+  padding-top: $space-8;
+  padding-bottom: $space-7;
+  background: $color-surface;
+  border-bottom: $border-standard;
+}
+
+.portfolio-hero h1 {
+  max-width: $width-article;
+  margin-bottom: $space-4;
+  font-size: $font-size-display;
+}
+
+.portfolio-hero__intro {
+  max-width: $width-article;
+  margin: 0;
+  color: $color-text-muted;
+  font-size: 1.125rem;
+}
+
+.portfolio-status {
+  padding-top: $space-5;
+  padding-bottom: $space-5;
+  background: $color-surface-hover;
+  border-bottom: $border-standard;
+}
+
+.portfolio-status h2 {
+  margin-bottom: $space-2;
+  padding: 0;
+  border: 0;
+  font-size: $font-size-meta;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-status__content p {
+  margin: 0;
+  color: $color-text-muted;
+}
+
+.portfolio-projects {
+  padding-top: $space-7;
+  padding-bottom: $space-7;
+}
+
+.portfolio-projects > .layout-landing > h2 {
+  margin-bottom: $space-5;
+}
+
+.portfolio-projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-5;
+}
+
+.portfolio-project-placeholder {
+  padding: $space-5;
+  background: $color-surface;
+  border: $border-standard;
+  border-radius: $radius-medium;
+  box-shadow: $shadow-subtle;
+}
+
+.portfolio-project-placeholder h3 {
+  margin-top: 0;
+  margin-bottom: $space-3;
+}
+
+.portfolio-project-placeholder p:last-child {
+  margin-bottom: 0;
+}
+
+.portfolio-architecture,
+.portfolio-decision,
+.portfolio-progress {
+  padding-top: $space-7;
+  padding-bottom: $space-7;
+  border-top: $border-standard;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .portfolio-home > section {
+    padding-right: $gutter-mobile;
+    padding-left: $gutter-mobile;
+  }
+
+  .portfolio-projects__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .portfolio-hero {
+    padding-top: $space-7;
+  }
+
+  .portfolio-projects__grid {
     grid-template-columns: 1fr;
   }
 }
