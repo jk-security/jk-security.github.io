@@ -199,10 +199,6 @@ h4 {
   color: $portfolio-black;
 }
 
-h2 {
-  padding-bottom: $space-1;
-  border-bottom: 2px solid $color-accent;
-}
 
 blockquote {
   color: $portfolio-black;
@@ -227,14 +223,21 @@ pre code {
 }
 
 .site-footer {
-  padding: $space-6 0;
-  border-top: $border-accent;
+  padding: $space-5 0;
+  background: $color-surface;
+  border-top: $border-standard;
 }
 
 .footer-wrapper {
+  display: grid;
+  gap: $space-3;
+}
+
+.footer-primary {
   display: flex;
-  flex-direction: column;
-  gap: $space-4;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-5;
 }
 
 .footer-nav {
@@ -244,19 +247,23 @@ pre code {
 }
 
 .footer-disclaimer {
-  max-width: $width-footer-copy;
-  color: $portfolio-muted;
-  font-size: $font-size-small;
-  line-height: $line-height-body;
+  max-width: 78ch;
   margin: 0;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+  line-height: $line-height-compact;
+}
+
+.footer-disclaimer a {
+  white-space: nowrap;
 }
 
 .footer-meta {
-  color: $portfolio-muted;
-  font-size: $font-size-meta;
+  flex-shrink: 0;
   margin: 0;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
 }
-
 table {
   display: block;
   width: 100%;
@@ -310,19 +317,13 @@ code {
     padding: $space-2 0;
     white-space: normal;
   }
-
-  .footer-nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: $space-3 $space-4;
+  .footer-primary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: $space-3;
   }
 }
 
-@media screen and (max-width: $breakpoint-mobile) {
-  .footer-nav {
-    grid-template-columns: 1fr;
-  }
-}
 // -----------------------------------------------------------------------------
 // Shared layout and interaction foundation
 // -----------------------------------------------------------------------------
@@ -452,15 +453,22 @@ textarea:focus-visible {
 
 .portfolio-projects > .layout-landing > h2 {
   margin-bottom: $space-5;
+  padding-bottom: $space-2;
+  border-bottom: 2px solid $color-accent;
 }
 
 .portfolio-projects__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: $space-5;
 }
 
-.portfolio-project-placeholder {
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-column: span 2;
+  min-width: 0;
   padding: $space-5;
   background: $color-surface;
   border: $border-standard;
@@ -468,15 +476,131 @@ textarea:focus-visible {
   box-shadow: $shadow-subtle;
 }
 
-.portfolio-project-placeholder h3 {
-  margin-top: 0;
-  margin-bottom: $space-3;
+.project-card--featured {
+  grid-column: span 3;
 }
 
-.portfolio-project-placeholder p:last-child {
+.project-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-4;
+}
+
+.project-card__icon {
+  display: grid;
+  flex: 0 0 $space-7;
+  width: $space-7;
+  height: $space-7;
+  place-items: center;
+  color: $color-accent;
+  background: $color-surface-hover;
+  border: $border-standard;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.project-card__heading {
+  min-width: 0;
+}
+
+.project-card h3 {
+  margin: 0 0 $space-1;
+  font-size: $font-size-h3;
+}
+
+.project-card h3 a {
+  color: $color-text;
+  text-decoration: none;
+}
+
+
+.project-card h3 a:hover {
+  color: $color-accent;
+}
+
+.project-card__subtitle {
+  margin: 0;
+  color: $color-text-muted;
+  font-size: $font-size-small;
+  line-height: $line-height-compact;
+}
+
+.project-card__status {
+  margin-top: $space-4;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-2;
+  color: $color-warning;
+  background: $color-warning-surface;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: $font-size-meta;
+  font-weight: 600;
+  line-height: $line-height-compact;
+}
+
+.project-card__summary {
+  margin: $space-4 0;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin: auto 0 $space-4;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card__tags li {
+  padding: $space-1 $space-2;
+  color: $color-text-muted;
+  background: $color-surface-hover;
+  border-radius: $radius-small;
+  font-size: $font-size-meta;
+}
+
+.project-card__link {
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+.evidence-figure {
+  margin: 0 0 $space-4;
+}
+
+.evidence-figure img {
+  display: block;
+  width: 100%;
+  border: $border-standard;
+  border-radius: $radius-small;
+}
+
+.evidence-figure figcaption {
+  margin-top: $space-2;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+}
+
+.technical-decision {
+  padding: $space-5;
+  background: $color-surface;
+  border: $border-standard;
+  border-left: $border-accent;
+  border-radius: $radius-small;
+  box-shadow: $shadow-subtle;
+}
+
+.technical-decision h3 {
+  margin-top: 0;
+}
+
+.technical-decision__body > :last-child {
   margin-bottom: 0;
 }
-
 .portfolio-architecture,
 .portfolio-decision,
 .portfolio-progress {
@@ -494,6 +618,11 @@ textarea:focus-visible {
   .portfolio-projects__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .project-card,
+  .project-card--featured {
+    grid-column: span 1;
+  }
 }
 
 @media screen and (max-width: $breakpoint-mobile) {
@@ -503,5 +632,321 @@ textarea:focus-visible {
 
   .portfolio-projects__grid {
     grid-template-columns: 1fr;
+  }
+}
+
+// Card interaction states
+.project-card {
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.project-card:hover {
+  border-color: $color-accent;
+  box-shadow: $shadow-elevated;
+  transform: translateY(-2px);
+}
+
+.project-card:focus-within {
+  border-color: $color-accent;
+  box-shadow:
+    0 0 0 3px rgba(125, 17, 19, 0.18),
+    $shadow-elevated;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    transition: none;
+  }
+
+  .project-card:hover {
+    transform: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Article typography and readability
+// -----------------------------------------------------------------------------
+
+.post-content {
+  max-width: 72ch;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.post-header {
+  max-width: 72ch;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.post-title {
+  margin-bottom: $space-4;
+  font-size: $font-size-h1;
+  line-height: $line-height-heading;
+}
+
+.post-content h2 {
+  margin-top: $space-8;
+  margin-bottom: $space-4;
+  padding-bottom: 0;
+  border-bottom: 0;
+  font-size: $font-size-h2;
+}
+
+.post-content h3 {
+  margin-top: $space-6;
+  margin-bottom: $space-3;
+  font-size: $font-size-h3;
+}
+
+.post-content h4 {
+  margin-top: $space-5;
+  margin-bottom: $space-2;
+}
+
+.post-content p {
+  margin-bottom: $space-4;
+}
+
+.post-content ul,
+.post-content ol {
+  margin-bottom: $space-5;
+  padding-left: $space-6;
+}
+
+.post-content li + li {
+  margin-top: $space-2;
+}
+
+.post-content blockquote {
+  margin: $space-6 0;
+  padding: $space-3 $space-5;
+  color: $color-text;
+  background: $color-surface-hover;
+  border-left: $border-accent;
+}
+
+.post-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.post-content pre {
+  margin: $space-6 0;
+}
+
+.post-content table {
+  margin: $space-6 0;
+}
+
+.post-content figure {
+  margin: $space-7 0;
+}
+
+.post-content figcaption,
+.post-content .caption {
+  margin-top: $space-2;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+  line-height: $line-height-compact;
+}
+
+.lead {
+  max-width: 64ch;
+  margin-bottom: $space-6;
+  color: $color-text-muted;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+// -----------------------------------------------------------------------------
+// JKS-009 header and project navigation
+// -----------------------------------------------------------------------------
+
+.site-header {
+  background: $color-surface;
+  border-top: $border-accent;
+  border-bottom: $border-standard;
+}
+
+.site-header-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  gap: $space-6;
+}
+
+.mobile-nav-toggle {
+  display: none;
+  margin-left: auto;
+  padding: $space-2 $space-3;
+  color: $color-text;
+  background: $color-surface;
+  border: $border-standard;
+  border-radius: $radius-small;
+  font: inherit;
+  cursor: pointer;
+}
+
+.site-nav-custom {
+  display: flex;
+  align-items: center;
+  gap: $space-5;
+  margin-left: auto;
+}
+
+.site-nav-custom .page-link,
+.nav-menu__toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  color: $color-text;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-nav-custom .page-link:hover,
+.site-nav-custom .page-link:focus,
+.nav-menu__toggle:hover,
+.nav-menu__toggle:focus {
+  color: $color-accent;
+  text-decoration: none;
+}
+
+.site-nav-custom [aria-current="page"] {
+  color: $color-accent;
+  font-weight: 600;
+}
+
+.nav-menu {
+  position: relative;
+}
+
+.nav-menu > summary {
+  list-style: none;
+}
+
+.nav-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-menu__toggle::after {
+  width: 0;
+  height: 0;
+  margin-left: $space-2;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 6px solid currentColor;
+  content: "";
+  transition: transform 160ms ease;
+}
+
+.nav-menu[open] .nav-menu__toggle::after {
+  width: 0;
+  height: 0;
+  margin-left: $space-2;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 6px solid currentColor;
+  content: "";
+  transition: transform 160ms ease;
+}
+
+.nav-menu__panel {
+  position: absolute;
+  top: calc(100% + #{$space-1});
+  left: 0;
+  z-index: 100;
+  display: grid;
+  min-width: $width-dropdown;
+  padding: $space-2;
+  background: $color-surface;
+  border: $border-standard;
+  border-top: $border-accent;
+  border-radius: $radius-small;
+  box-shadow: $shadow-elevated;
+}
+
+.nav-menu--more .nav-menu__panel {
+  right: 0;
+  left: auto;
+  min-width: 180px;
+}
+
+.nav-menu__panel a {
+  padding: $space-2 $space-3;
+  color: $color-text;
+  border-radius: $radius-small;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-menu__panel a:hover,
+.nav-menu__panel a:focus {
+  color: $color-accent;
+  background: $color-surface-hover;
+}
+
+.nav-menu__panel a[aria-current="page"] {
+  color: $color-accent;
+  background: $color-surface-hover;
+  font-weight: 600;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .site-header-wrapper {
+    min-height: 64px;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav-custom {
+    position: absolute;
+    top: 100%;
+    right: $gutter-mobile;
+    left: $gutter-mobile;
+    z-index: 200;
+    display: none;
+    margin: 0;
+    padding: $space-3;
+    background: $color-surface;
+    border: $border-standard;
+    border-top: $border-accent;
+    border-radius: 0 0 $radius-medium $radius-medium;
+    box-shadow: $shadow-elevated;
+  }
+
+  .site-nav-custom--open {
+    display: grid;
+    gap: $space-1;
+  }
+
+  .site-nav-custom .page-link,
+  .nav-menu__toggle {
+    width: 100%;
+    min-height: 44px;
+    padding: $space-2;
+  }
+
+  .nav-menu__panel,
+  .nav-menu--more .nav-menu__panel {
+    position: static;
+    min-width: 0;
+    margin: 0 0 $space-2 $space-3;
+    padding: $space-1 0 $space-1 $space-3;
+    border: 0;
+    border-left: $border-accent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .nav-menu__panel a {
+    white-space: normal;
   }
 }

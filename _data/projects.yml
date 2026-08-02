@@ -1,0 +1,79 @@
+- id: secapp
+  name: SecApp
+  subtitle: Security Operations and Exposure Management Platform
+  route: /projects/mockco/security-operations-platform/
+  status: Work in progress
+  summary: >-
+    Correlates promoted vulnerability intelligence and endpoint inventory
+    into explainable security findings and triage workflows.
+  tags:
+    - Security operations
+    - Exposure management
+    - Correlation
+  image: ""
+  image_alt: SecApp correlation and finding workflow
+  featured: true
+
+- id: member-portal
+  name: Member Portal
+  subtitle: Secure Member-Facing Application and Protected Data Architecture
+  route: /projects/mockco/member-portal/
+  status: Work in progress
+  summary: >-
+    Applies explicit trust boundaries and protected-data flows across
+    internet, DMZ, production, and crown-jewel zones.
+  tags:
+    - Secure architecture
+    - Protected data
+    - Trust boundaries
+  image: ""
+  image_alt: Member Portal protected-data flow
+  featured: false
+
+- id: logq
+  name: LogQ
+  subtitle: Append-Only Observability for AI Coding Agents
+  route: /projects/agentic-development/logq/
+  status: Work in progress
+  summary: >-
+    Captures agent lifecycle and validation events as append-only JSONL
+    records with segment closure and reconciliation.
+  tags:
+    - Observability
+    - Event streams
+    - Validation
+  image: ""
+  image_alt: LogQ event ingestion and persistence flow
+  featured: true
+
+- id: agent-harness
+  name: Agent Harness
+  subtitle: Multi-Agent Development Governance and Observability
+  route: /projects/agentic-development-governance/
+  status: Work in progress
+  summary: >-
+    Defines bounded agent workstreams, validation evidence, stop conditions,
+    and Human Lead authority for agent-assisted development.
+  tags:
+    - Agent governance
+    - Bounded autonomy
+    - DevEx
+  image: ""
+  image_alt: Agent Harness governance and review workflow
+  featured: false
+
+- id: appsec-dvwa
+  name: AppSec DVWA
+  subtitle: Exploit Validation and Secure Remediation Lab
+  route: /projects/appsec-dvwa/
+  status: Work in progress
+  summary: >-
+    Exercises the full remediation loop from exploit validation and source
+    inspection through rebuilding and security re-testing.
+  tags:
+    - Application security
+    - Remediation
+    - Validation
+  image: ""
+  image_alt: DVWA exploit-to-remediation lifecycle
+  featured: false

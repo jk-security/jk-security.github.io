@@ -2,31 +2,39 @@
   <data class="u-url" href="{{ '/' | relative_url }}"></data>
 
   <div class="wrapper footer-wrapper">
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="{{ '/' | relative_url }}">Home</a>
-      <a href="{{ '/about/' | relative_url }}">About Me</a>
-      <a href="{{ '/projects/' | relative_url }}">Projects</a>
-      <a href="{{ '/reading/' | relative_url }}">Reading</a>
-      <a href="{{ '/notes/' | relative_url }}">Notes</a>
-      <a
-        href="https://github.com/jk-security"
-        rel="me noopener noreferrer"
-      >
-        GitHub
-      </a>
-    </nav>
+    <div class="footer-primary">
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="{{ '/projects/' | relative_url }}">Projects</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+
+        <a
+          href="https://github.com/jk-security"
+          rel="me noopener noreferrer"
+        >
+          GitHub
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/jonathanakelly/"
+          rel="me noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+      </nav>
+
+      <p class="footer-meta">
+        &copy; {{ site.time | date: "%Y" }}
+        {{ site.author.name | escape }}
+      </p>
+    </div>
 
     <p class="footer-disclaimer">
-      <strong>Disclaimer:</strong>
-      This is a personal technical-practice site. All examples are synthetic,
-      simulated, mocked, or intentionally generalized. Nothing published here
-      represents an employer or client, confidential information, production
-      architecture, production controls, credentials, or real customer data.
-      Views are my own.
-    </p>
-
-    <p class="footer-meta">
-      &copy; {{ site.time | date: "%Y" }} {{ site.title | escape }}
+      Projects use synthetic, simulated, or intentionally generalized systems
+      and data. They do not represent an employer, client, or production
+      environment.
+      <a href="{{ '/about/' | relative_url }}">
+        About this work
+      </a>
     </p>
   </div>
 </footer>

@@ -1,0 +1,5 @@
+{% assign normalized_status = include.status | downcase | replace: " ", "-" %}
+
+<span class="status-pill status-pill--{{ normalized_status }}">
+  {{ include.status }}
+</span>

@@ -10,17 +10,10 @@
       class="portfolio-home"
       aria-labelledby="portfolio-home-title"
     >
-      <section class="portfolio-hero">
-        <div class="layout-landing">
-          <h1 id="portfolio-home-title">{{ page.title }}</h1>
-
-          {% if page.introduction %}
-            <p class="portfolio-hero__intro">
-              {{ page.introduction }}
-            </p>
-          {% endif %}
-        </div>
-      </section>
+      {% include portfolio-hero.html
+        title=page.title
+        introduction=page.introduction
+      %}
 
       {% if page.status %}
       <section
@@ -89,5 +82,6 @@
     </main>
 
     {%- include footer.html -%}
+    <script src="{{ '/assets/js/portfolio-cards.js' | relative_url }}"></script>
   </body>
 </html>

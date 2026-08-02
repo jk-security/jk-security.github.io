@@ -1,0 +1,55 @@
+<article
+  class="project-card{% if include.project.featured %} project-card--featured{% endif %}"
+  aria-labelledby="project-{{ include.project.id }}-title"
+  data-project-url="{{ include.project.route | relative_url }}"
+>
+  <div class="project-card__header">
+    <div class="project-card__icon" aria-hidden="true">
+      {{ include.project.name | slice: 0 }}
+    </div>
+
+    <div class="project-card__heading">
+      <h3 id="project-{{ include.project.id }}-title">
+        <a href="{{ include.project.route | relative_url }}">
+          {{ include.project.name }}
+        </a>
+      </h3>
+
+      <p class="project-card__subtitle">
+        {{ include.project.subtitle }}
+      </p>
+    </div>
+  </div>
+
+  <div class="project-card__status">
+    {% include status-pill.html status=include.project.status %}
+  </div>
+
+  <p class="project-card__summary">
+    {{ include.project.summary }}
+  </p>
+
+  {% if include.project.image != "" %}
+    {% include evidence-figure.html
+      src=include.project.image
+      alt=include.project.image_alt
+      caption=include.project.name
+    %}
+  {% endif %}
+
+  {% if include.project.tags %}
+  <ul class="project-card__tags" aria-label="{{ include.project.name }} topics">
+    {% for tag in include.project.tags %}
+      <li>{{ tag }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <a
+    class="project-card__link"
+    href="{{ include.project.route | relative_url }}"
+    aria-label="View {{ include.project.name }} project"
+  >
+    View project
+  </a>
+</article>
