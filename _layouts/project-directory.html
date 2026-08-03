@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  {%- include head.html -%}
+
+  <body>
+    {%- include header.html -%}
+
+    <main
+      id="main-content"
+      class="project-directory"
+      aria-labelledby="project-directory-title"
+    >
+      <header class="project-directory__header">
+        <div class="layout-landing project-directory__hero">
+          <div class="project-directory__hero-content">
+            <p class="project-directory__eyebrow">Technical portfolio</p>
+
+            <h1 id="project-directory-title">{{ page.title }}</h1>
+
+            <p class="project-directory__introduction">
+              {{ page.introduction }}
+            </p>
+
+            <p class="project-directory__introduction-secondary">
+              {{ page.introduction_secondary }}
+            </p>
+
+            <p class="project-directory__introduction-tertiary">
+              {{ page.introduction_tertiary }}
+            </p>
+          </div>
+
+          <div
+            class="project-directory__context"
+            aria-label="Portfolio program context"
+          >
+            <article class="project-directory__context-card">
+              <h2>MockCo systems engineering</h2>
+
+              <p>
+                A synthetic enterprise environment for secure applications,
+                trust boundaries, security operations workflows, and
+                protected-data architecture.
+              </p>
+
+              <a
+                class="project-directory__context-link"
+                href="{{ '/projects/mockco/' | relative_url }}"
+              >
+                Learn more <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+
+            <article class="project-directory__context-card">
+              <h2>Agentic development program</h2>
+
+              <p>
+                Bounded coding-agent autonomy, validation evidence,
+                operational observability, concurrent work lanes, and
+                explicit Human Lead authority.
+              </p>
+
+              <a
+                class="project-directory__context-link"
+                href="{{ '/projects/agentic-development-governance/' | relative_url }}"
+              >
+                Learn more <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+          </div>
+        </div>
+      </header>
+
+      <section
+        class="project-directory__projects"
+        aria-labelledby="project-directory-projects-title"
+      >
+        <div class="layout-landing">
+          <h2 id="project-directory-projects-title">Project directory</h2>
+
+          <div class="portfolio-projects__grid">
+            {{ content }}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {%- include footer.html -%}
+    <script src="{{ '/assets/js/portfolio-cards.js' | relative_url }}"></script>
+  </body>
+</html>

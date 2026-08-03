@@ -78,6 +78,7 @@ With reliable evidence, the operating model can instead be adjusted based on obs
 ## Current Architecture
 
 ### Event Emission
+{: #event-emission}
 
 Agents emit events through a lightweight shell wrapper:
 
@@ -479,6 +480,7 @@ These questions turn agent governance from a static ruleset into an observable s
 ## Design Tradeoffs
 
 ### Why Unix Datagrams
+{: #why-unix-datagrams}
 
 Unix datagrams provide:
 

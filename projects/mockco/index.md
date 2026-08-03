@@ -20,6 +20,24 @@ Application development is performed primarily through Codex agents so that I ca
 
 The operating model for that work is documented separately in [Agent Harness](/projects/agentic-development-governance/).
 
+
+<figure class="architecture-figure architecture-figure--wide">
+  <a
+    href="/assets/diagrams/mockco-enterprise-overview.png"
+    target="_blank"
+    rel="noopener"
+    aria-label="Open the MockCo enterprise architecture diagram at full resolution"
+  >
+    <img
+      src="/assets/diagrams/mockco-enterprise-overview.png"
+      alt="MockCo enterprise architecture showing the Member Portal and SecApp across Internet, DMZ, Production, and Crown-Jewel trust zones."
+    >
+  </a>
+  <figcaption>
+    MockCo enterprise architecture showing the Member Portal and SecApp across Internet, DMZ, Production, and Crown-Jewel trust zones. Select the diagram to open the full-resolution image.
+  </figcaption>
+</figure>
+
 ## Applications and Goals
 
 MockCo will likely include six to ten major applications or service families over time. The current public writeup focuses on the most developed design areas.

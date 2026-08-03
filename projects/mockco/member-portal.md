@@ -65,6 +65,7 @@ It is not simply:
 - one enterprise key that can decrypt everything routinely.
 
 ## Encrypted Bundle Flow
+{: #encrypted-envelope-flow}
 
 ```mermaid
 sequenceDiagram

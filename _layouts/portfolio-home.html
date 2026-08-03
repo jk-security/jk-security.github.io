@@ -11,25 +11,20 @@
       aria-labelledby="portfolio-home-title"
     >
       {% include portfolio-hero.html
-        title=page.title
-        introduction=page.introduction
-      %}
-
-      {% if page.status %}
-      <section
-        class="portfolio-status"
-        aria-labelledby="portfolio-status-title"
-      >
-        <div class="layout-landing">
-          <h2 id="portfolio-status-title">Current work</h2>
-          <div class="portfolio-status__content">
-            {{ page.status | markdownify }}
-          </div>
-        </div>
-      </section>
+  title=page.title
+  introduction=page.introduction
+  primary_action=page.primary_action
+  secondary_action=page.secondary_action
+%}
+      {% if page.residency %}
+        {% include residency-status.html
+          active_since=page.residency.active_since
+          current_focus=page.residency.current_focus
+          environment=page.residency.environment
+          status=page.residency.status
+        %}
       {% endif %}
-
-      <section
+<section
         class="portfolio-projects"
         aria-labelledby="portfolio-projects-title"
       >
@@ -42,40 +37,26 @@
         </div>
       </section>
 
-      {% if page.architecture %}
+      {% if page.technical_decisions %}
       <section
-        class="portfolio-architecture"
-        aria-labelledby="portfolio-architecture-title"
+        class="portfolio-technical-decisions"
+        aria-labelledby="portfolio-technical-decisions-title"
       >
-        <div class="layout-content">
-          <h2 id="portfolio-architecture-title">
-            Architecture feature
+        <div class="layout-landing">
+          <h2 id="portfolio-technical-decisions-title">
+            Technical decisions
           </h2>
-          {{ page.architecture | markdownify }}
-        </div>
-      </section>
-      {% endif %}
 
-      {% if page.decision %}
-      <section
-        class="portfolio-decision"
-        aria-labelledby="portfolio-decision-title"
-      >
-        <div class="layout-content">
-          <h2 id="portfolio-decision-title">Technical decision</h2>
-          {{ page.decision | markdownify }}
-        </div>
-      </section>
-      {% endif %}
+          <p class="portfolio-technical-decisions__intro">
+            Selected architecture choices, their constraints, and the tradeoffs
+            accepted during implementation.
+          </p>
 
-      {% if page.progress %}
-      <section
-        class="portfolio-progress"
-        aria-labelledby="portfolio-progress-title"
-      >
-        <div class="layout-content">
-          <h2 id="portfolio-progress-title">Current progress</h2>
-          {{ page.progress | markdownify }}
+          <div class="portfolio-technical-decisions__list">
+            {% for decision in page.technical_decisions %}
+              {% include technical-decision-card.html decision=decision %}
+            {% endfor %}
+          </div>
         </div>
       </section>
       {% endif %}

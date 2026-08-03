@@ -78,7 +78,14 @@ flowchart LR
 
 The key boundary principle is that DMZ services stage data, but do not directly write trusted Production state.
 
+## Production-Controlled Promotion
+{: #production-controlled-promotion}
+
 Production owns retrieval, validation, normalization, correlation, persistence, and analyst-facing workflow.
+
+The DMZ remains a staging boundary rather than an authoritative source of operational truth. Production initiates retrieval through narrow interfaces, validates and normalizes the records, and explicitly accepts or rejects them before persistence and correlation.
+
+This adds service contracts, failure modes, and operational overhead, but preserves data ownership and prevents externally influenced staging records from silently becoming trusted Production state.
 
 ## Main Components
 

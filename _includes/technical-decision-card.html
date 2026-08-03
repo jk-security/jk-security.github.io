@@ -1,0 +1,24 @@
+<article class="technical-decision-stripe">
+  <div class="technical-decision-stripe__content">
+    <p class="technical-decision-stripe__project">
+      {{ include.decision.project }}
+    </p>
+
+    <h3 class="technical-decision-stripe__title">
+      {{ include.decision.title }}
+    </h3>
+
+    <p class="technical-decision-stripe__summary">
+      {{ include.decision.summary }}
+    </p>
+  </div>
+
+  <div class="technical-decision-stripe__action">
+    <a
+      class="technical-decision-stripe__link"
+      href="{{ include.decision.route | relative_url }}"
+    >
+      Read the decision <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</article>

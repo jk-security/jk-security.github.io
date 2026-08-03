@@ -601,13 +601,6 @@ textarea:focus-visible {
 .technical-decision__body > :last-child {
   margin-bottom: 0;
 }
-.portfolio-architecture,
-.portfolio-decision,
-.portfolio-progress {
-  padding-top: $space-7;
-  padding-bottom: $space-7;
-  border-top: $border-standard;
-}
 
 @media screen and (max-width: $breakpoint-tablet) {
   .portfolio-home > section {
@@ -948,5 +941,637 @@ textarea:focus-visible {
 
   .nav-menu__panel a {
     white-space: normal;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// JKS-011 homepage hero
+// -----------------------------------------------------------------------------
+
+.portfolio-hero__content {
+  max-width: 820px;
+}
+
+.portfolio-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  margin-top: $space-5;
+}
+
+.portfolio-hero__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: $space-2 $space-4;
+  border-radius: $radius-small;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.portfolio-hero__action--primary {
+  color: $color-surface;
+  background: $color-accent;
+  border: 1px solid $color-accent;
+}
+
+.portfolio-hero__action--primary:visited {
+  color: $color-surface;
+}
+
+.portfolio-hero__action--primary:hover,
+.portfolio-hero__action--primary:focus {
+  color: $color-surface;
+  background: $color-accent-hover;
+  text-decoration: none;
+}
+
+.portfolio-hero__action--secondary {
+  color: $color-text;
+  background: $color-surface;
+  border: $border-standard;
+}
+
+.portfolio-hero__action--secondary:visited {
+  color: $color-text;
+}
+
+.portfolio-hero__action--secondary:hover,
+.portfolio-hero__action--secondary:focus {
+  color: $color-accent;
+  border-color: $color-accent;
+  text-decoration: none;
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .portfolio-hero__actions {
+    display: grid;
+  }
+
+  .portfolio-hero__action {
+    width: 100%;
+  }
+}
+
+// JKS-011 hero refinement
+.portfolio-hero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: center;
+  gap: $space-7;
+}
+
+.portfolio-hero__content {
+  max-width: none;
+}
+
+.portfolio-hero h1 {
+  max-width: 18ch;
+  font-size: clamp(2.25rem, 3.9vw, 3.3rem);
+  line-height: 1.08;
+}
+
+.portfolio-hero__visual {
+  display: grid;
+  min-height: 320px;
+  place-items: center;
+  padding: $space-6;
+  background: $color-surface-hover;
+  border: $border-standard;
+  border-radius: $radius-medium;
+  box-shadow: $shadow-subtle;
+}
+
+.portfolio-hero__flow {
+  display: grid;
+  width: 100%;
+  gap: $space-3;
+}
+
+.portfolio-hero__flow span {
+  position: relative;
+  padding: $space-3 $space-4;
+  color: $color-text;
+  background: $color-surface;
+  border: $border-standard;
+  border-left: $border-accent;
+  border-radius: $radius-small;
+  font-size: $font-size-small;
+  font-weight: 600;
+}
+
+.portfolio-hero__flow span:not(:last-child)::after {
+  position: absolute;
+  top: 100%;
+  left: $space-5;
+  width: 1px;
+  height: $space-3;
+  background: $color-border;
+  content: "";
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .portfolio-hero__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-hero h1 {
+    max-width: 20ch;
+  }
+
+  .portfolio-hero__visual {
+    min-height: 0;
+  }
+}
+
+// JKS-011 final hero sizing
+.portfolio-hero {
+  padding-top: $space-7;
+  padding-bottom: $space-7;
+}
+
+.portfolio-hero__visual {
+  min-height: 280px;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .portfolio-hero__visual {
+    min-height: 240px;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// JKS-012 residency status strip
+// -----------------------------------------------------------------------------
+
+.residency-status {
+  background: $color-surface-hover;
+  border-top: $border-standard;
+  border-bottom: $border-standard;
+}
+
+.residency-status__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.residency-status__item {
+  padding: $space-4 $space-5;
+  border-right: $border-standard;
+}
+
+.residency-status__item:last-child {
+  border-right: 0;
+}
+
+.residency-status dt {
+  margin-bottom: $space-1;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.residency-status dd {
+  margin: 0;
+  color: $color-text;
+  font-size: $font-size-small;
+}
+
+.residency-status a {
+  font-weight: 600;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .residency-status__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .residency-status__item:nth-child(2) {
+    border-right: 0;
+  }
+
+  .residency-status__item:nth-child(-n + 2) {
+    border-bottom: $border-standard;
+  }
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .residency-status__list {
+    grid-template-columns: 1fr;
+  }
+
+  .residency-status__item {
+    border-right: 0;
+    border-bottom: $border-standard;
+  }
+
+  .residency-status__item:last-child {
+    border-bottom: 0;
+  }
+}
+
+// JKS-013 project lifecycle states
+.status-pill--active {
+  color: $color-success;
+  background: $color-success-surface;
+}
+
+.status-pill--complete {
+  color: $color-accent;
+  background: $color-surface-hover;
+}
+
+.status-pill--paused {
+  color: $color-warning;
+  background: $color-warning-surface;
+}
+
+/* Wide architecture diagrams */
+.architecture-figure--wide {
+  position: relative;
+  left: 50%;
+  width: min(1100px, calc(100vw - 3rem));
+  max-width: 1100px;
+  margin: 2rem 0;
+  transform: translateX(-50%);
+}
+
+.architecture-figure--wide > a {
+  display: block;
+}
+
+.architecture-figure--wide img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.architecture-figure--wide figcaption {
+  max-width: 72rem;
+  margin: 0.75rem auto 0;
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+}
+
+@media screen and (max-width: 700px) {
+  .architecture-figure--wide {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+  }
+
+  .architecture-figure--wide > a {
+    overflow-x: auto;
+  }
+
+  .architecture-figure--wide img {
+    width: 1000px;
+    max-width: none;
+  }
+}
+
+/* JKS-016B technical decisions */
+.portfolio-technical-decisions {
+  padding-top: $space-7;
+  padding-bottom: $space-7;
+  border-top: $border-standard;
+}
+
+.portfolio-technical-decisions h2 {
+  margin-bottom: $space-2;
+  padding-bottom: $space-2;
+  border-bottom: 2px solid $color-accent;
+}
+
+.portfolio-technical-decisions__intro {
+  max-width: 68ch;
+  margin-bottom: $space-5;
+  color: $color-text-muted;
+}
+
+.portfolio-technical-decisions__list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.technical-decision-stripe {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: $space-5;
+  align-items: start;
+  padding: $space-4 $space-5;
+  background: $color-surface;
+  border: $border-standard;
+  border-left: 4px solid $color-accent;
+  box-shadow: $shadow-subtle;
+}
+
+.technical-decision-stripe__content {
+  min-width: 0;
+}
+
+.technical-decision-stripe__project {
+  margin: 0 0 $space-2;
+  color: $color-accent;
+  font-size: $font-size-meta;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.technical-decision-stripe__title {
+  margin: 0 0 $space-2;
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+.technical-decision-stripe__summary {
+  margin: 0;
+  max-width: 95ch;
+  color: $color-text-muted;
+  line-height: 1.6;
+}
+
+.technical-decision-stripe__action {
+  display: flex;
+  align-items: start;
+  justify-content: end;
+  min-width: 14rem;
+  padding-top: $space-1;
+}
+
+.technical-decision-stripe__link {
+  color: $color-accent;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.technical-decision-stripe__link:hover,
+.technical-decision-stripe__link:focus {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .technical-decision-stripe {
+    grid-template-columns: 1fr;
+    gap: $space-3;
+  }
+
+  .technical-decision-stripe__title {
+    font-size: 1.55rem;
+  }
+
+  .technical-decision-stripe__action {
+    min-width: 0;
+    padding-top: 0;
+    justify-content: start;
+  }
+}
+
+/* JKS-016C featured LogQ implementation */
+.portfolio-hero__feature {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: $color-text;
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.portfolio-hero__feature:hover,
+.portfolio-hero__feature:focus {
+  color: $color-text;
+  border-color: $color-accent;
+  box-shadow: $shadow-subtle;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.portfolio-hero__feature:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 3px;
+}
+
+.portfolio-hero__feature-heading {
+  width: 100%;
+  margin-bottom: $space-3;
+}
+
+.portfolio-hero__feature-label {
+  margin: 0 0 $space-1;
+  color: $color-accent;
+  font-size: $font-size-meta;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.portfolio-hero__feature h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.portfolio-hero__feature-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: $space-3;
+  background: $color-surface;
+  border: $border-standard;
+}
+
+.portfolio-hero__feature-summary {
+  width: 100%;
+  margin: 0 0 $space-3;
+  color: $color-text-muted;
+  font-size: $font-size-small;
+  line-height: 1.5;
+}
+
+.portfolio-hero__feature-link {
+  align-self: flex-start;
+  color: $color-accent;
+  font-weight: 700;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .portfolio-hero__feature h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* JKS-018 project directory */
+.project-directory__header {
+  padding-top: $space-6;
+  padding-bottom: $space-6;
+  border-bottom: $border-standard;
+}
+
+.project-directory__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: $space-7;
+  align-items: center;
+  box-sizing: border-box;
+  padding-right: $space-5;
+  padding-left: $space-5;
+}
+
+.project-directory__hero-content {
+  min-width: 0;
+}
+
+.project-directory__eyebrow {
+  margin: 0 0 $space-2;
+  color: $color-accent;
+  font-size: $font-size-meta;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.project-directory__header h1 {
+  margin-bottom: $space-3;
+}
+
+.project-directory__introduction {
+  max-width: 58ch;
+  margin-bottom: $space-3;
+  color: $color-text-muted;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.project-directory__introduction-secondary,
+.project-directory__introduction-tertiary {
+  max-width: 58ch;
+  margin-bottom: $space-3;
+  color: $color-text-muted;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.project-directory__introduction-tertiary {
+  margin-bottom: 0;
+}
+
+.project-directory__context {
+  display: grid;
+  gap: $space-3;
+}
+
+.project-directory__context-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+  padding: $space-5;
+  background: $color-surface-hover;
+  border: $border-standard;
+  border-left: $border-accent;
+  border-radius: $radius-small;
+}
+
+.project-directory__context h2 {
+  margin-top: 0;
+  margin-bottom: $space-2;
+  font-size: $font-size-h3;
+}
+
+.project-directory__context p {
+  margin-bottom: $space-3;
+  color: $color-text-muted;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.project-directory__context-link,
+.project-directory__context-link:visited {
+  align-self: flex-start;
+  margin-top: $space-2;
+  padding: $space-2 $space-3;
+  color: $color-surface;
+  background: $color-accent;
+  border: 1px solid $color-accent;
+  border-radius: $radius-small;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.project-directory__context-link:hover,
+.project-directory__context-link:focus,
+.project-directory__context-link:active {
+  color: $color-accent;
+  background: $color-surface;
+  border-color: $color-accent;
+  text-decoration: none;
+}
+
+.project-directory__context-link:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 3px;
+}
+
+.project-directory__projects {
+  padding-top: $space-7;
+  padding-bottom: $space-7;
+}
+
+.project-directory__projects > .layout-landing {
+  box-sizing: border-box;
+  padding-right: $space-5;
+  padding-left: $space-5;
+}
+
+.project-directory__projects > .layout-landing > h2 {
+  margin-bottom: $space-5;
+  padding-bottom: $space-2;
+  border-bottom: 2px solid $color-accent;
+}
+
+.project-card__milestone {
+  margin: 0 0 $space-4;
+  padding: $space-3;
+  background: $color-surface-hover;
+  border-left: $border-accent;
+}
+
+.project-card__milestone-label {
+  margin: 0 0 $space-1;
+  color: $color-accent;
+  font-size: $font-size-meta;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-card__milestone > p:last-child {
+  margin-bottom: 0;
+  font-size: $font-size-small;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .project-directory__hero {
+    grid-template-columns: 1fr;
+    gap: $space-5;
+  }
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .project-directory__hero,
+  .project-directory__projects > .layout-landing {
+    padding-right: $space-4;
+    padding-left: $space-4;
   }
 }

@@ -29,6 +29,13 @@
     {{ include.project.summary }}
   </p>
 
+
+  {% if include.show_milestone and include.project.latest_milestone %}
+    <div class="project-card__milestone">
+      <p class="project-card__milestone-label">Latest milestone</p>
+      <p>{{ include.project.latest_milestone }}</p>
+    </div>
+  {% endif %}
   {% if include.project.image != "" %}
     {% include evidence-figure.html
       src=include.project.image

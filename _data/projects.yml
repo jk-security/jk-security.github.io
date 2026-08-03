@@ -1,79 +1,109 @@
 - id: secapp
+  latest_milestone: "Production-controlled promotion and the exposure-management workflow are documented as the current architectural baseline."
   name: SecApp
   subtitle: Security Operations and Exposure Management Platform
   route: /projects/mockco/security-operations-platform/
-  status: Work in progress
+  status: Active
+  repository_url: ""
   summary: >-
-    Correlates promoted vulnerability intelligence and endpoint inventory
-    into explainable security findings and triage workflows.
+    Builds a controlled path from externally sourced vulnerability and endpoint
+    data to accepted operational state. SecApp promotes reviewed records,
+    correlates software exposure against inventory, and produces explainable
+    findings for triage while preserving source, decision, and audit context.
   tags:
     - Security operations
     - Exposure management
+    - Data promotion
     - Correlation
   image: ""
-  image_alt: SecApp correlation and finding workflow
+  image_alt: SecApp workflow showing reviewed vulnerability and inventory records becoming correlated security findings
+  image_caption: Reviewed inputs are promoted, correlated, and converted into explainable findings.
   featured: true
 
 - id: member-portal
+  latest_milestone: "The encrypted-envelope model and intended browser-side plaintext boundary are documented; browser key handling remains deferred."
   name: Member Portal
   subtitle: Secure Member-Facing Application and Protected Data Architecture
   route: /projects/mockco/member-portal/
-  status: Work in progress
+  status: Active
+  repository_url: ""
   summary: >-
-    Applies explicit trust boundaries and protected-data flows across
-    internet, DMZ, production, and crown-jewel zones.
+    Examines how a public member application should handle sensitive records
+    across internet, DMZ, production, and crown-jewel boundaries. The design
+    keeps protected data encrypted through intermediary systems and restricts
+    plaintext access to explicitly authorized endpoints and workflows.
   tags:
     - Secure architecture
     - Protected data
     - Trust boundaries
+    - Authorization
   image: ""
-  image_alt: Member Portal protected-data flow
+  image_alt: Member Portal data flow showing protected records crossing security zones while remaining encrypted
+  image_caption: Protected records remain encrypted across intermediary trust zones.
   featured: false
 
 - id: logq
+  latest_milestone: "The V3.0 local ingestion foundation is implemented with Unix datagrams, append-only JSONL segments, and reconciliation evidence."
   name: LogQ
   subtitle: Append-Only Observability for AI Coding Agents
   route: /projects/agentic-development/logq/
-  status: Work in progress
+  status: Complete
+  repository_url: ""
   summary: >-
-    Captures agent lifecycle and validation events as append-only JSONL
-    records with segment closure and reconciliation.
+    Captures coding-agent lifecycle, tool, workflow, and validation events as
+    append-only JSONL records. LogQ closes durable event segments, reconciles
+    attempted and persisted records, and provides durable evidence for evaluating agent
+    behavior, failures, throughput, and governance overhead.
   tags:
     - Observability
     - Event streams
-    - Validation
+    - Reconciliation
+    - Agent telemetry
   image: ""
-  image_alt: LogQ event ingestion and persistence flow
+  image_alt: LogQ event flow from coding agents through local collection into closed append-only JSONL segments
+  image_caption: Agent events are collected, persisted, closed into segments, and reconciled.
   featured: true
 
 - id: agent-harness
+  latest_milestone: "The V3 operating model is active with bounded work lanes, explicit Human Lead authority, and LogQ-backed observability."
   name: Agent Harness
   subtitle: Multi-Agent Development Governance and Observability
   route: /projects/agentic-development-governance/
-  status: Work in progress
+  status: Active
+  repository_url: ""
   summary: >-
-    Defines bounded agent workstreams, validation evidence, stop conditions,
-    and Human Lead authority for agent-assisted development.
+    Defines how multiple coding agents operate within bounded workstreams while
+    a Human Lead retains architectural and Git authority. The harness makes
+    roles, allowed actions, validation evidence, stop conditions, and handoffs
+    explicit so autonomy can increase without removing reviewability.
   tags:
     - Agent governance
     - Bounded autonomy
-    - DevEx
+    - Validation evidence
+    - Development workflow
   image: ""
-  image_alt: Agent Harness governance and review workflow
+  image_alt: Agent Harness workflow showing bounded agents producing validated work for Human Lead review
+  image_caption: Bounded agent workstreams converge on validation and Human Lead acceptance.
   featured: false
 
 - id: appsec-dvwa
+  latest_milestone: "Six remediation labs have completed the exploit, correction, rebuild, and security re-test cycle."
   name: AppSec DVWA
   subtitle: Exploit Validation and Secure Remediation Lab
   route: /projects/appsec-dvwa/
-  status: Work in progress
+  status: Paused
+  repository_url: ""
   summary: >-
-    Exercises the full remediation loop from exploit validation and source
-    inspection through rebuilding and security re-testing.
+    Uses a modified, containerized DVWA environment to practice the complete
+    remediation lifecycle: reproduce an exploit, inspect the vulnerable path,
+    change the implementation, rebuild the application, and re-test the result.
+    Six vulnerability labs have completed that cycle, with further modules underway.
   tags:
     - Application security
-    - Remediation
-    - Validation
+    - Exploit validation
+    - Secure remediation
+    - Regression testing
   image: ""
-  image_alt: DVWA exploit-to-remediation lifecycle
+  image_alt: DVWA remediation lifecycle from exploit reproduction through source correction, rebuild, and security re-test
+  image_caption: Each lab moves from confirmed exploit to corrected code and failed re-test.
   featured: false

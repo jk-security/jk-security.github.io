@@ -1,11 +1,60 @@
 <section class="portfolio-hero">
-  <div class="layout-landing">
-    <h1 id="portfolio-home-title">{{ include.title }}</h1>
+  <div class="layout-landing portfolio-hero__layout">
+    <div class="portfolio-hero__content">
+      <h1 id="portfolio-home-title">
+        {{ include.title }}
+      </h1>
 
-    {% if include.introduction %}
-      <p class="portfolio-hero__intro">
-        {{ include.introduction }}
+      {% if include.introduction %}
+        <p class="portfolio-hero__intro">
+          {{ include.introduction }}
+        </p>
+      {% endif %}
+
+      <div class="portfolio-hero__actions">
+        <a
+          class="portfolio-hero__action portfolio-hero__action--primary"
+          href="{{ include.primary_action.route | relative_url }}"
+        >
+          {{ include.primary_action.label }}
+        </a>
+
+        <a
+          class="portfolio-hero__action portfolio-hero__action--secondary"
+          href="{{ include.secondary_action.route | relative_url }}"
+        >
+          {{ include.secondary_action.label }}
+        </a>
+      </div>
+    </div>
+
+    <a
+      class="portfolio-hero__visual portfolio-hero__feature"
+      href="{{ '/projects/agentic-development/logq/#event-emission' | relative_url }}"
+      aria-label="View the LogQ event-ingestion implementation"
+    >
+      <div class="portfolio-hero__feature-heading">
+        <p class="portfolio-hero__feature-label">
+          Featured implementation
+        </p>
+
+        <h2>LogQ event ingestion</h2>
+      </div>
+
+      <img
+        class="portfolio-hero__feature-image"
+        src="{{ '/assets/diagrams/agent-emitter-to-durable-storage.png' | relative_url }}"
+        alt="Multiple agent emitters converge on a Unix datagram socket. A collector service writes events to append-only durable storage using an fsync flush."
+      >
+
+      <p class="portfolio-hero__feature-summary">
+        Concurrent agent telemetry through a lightweight local socket, with
+        collection separated from append-only durable persistence.
       </p>
-    {% endif %}
+
+      <span class="portfolio-hero__feature-link">
+        View implementation <span aria-hidden="true">&rarr;</span>
+      </span>
+    </a>
   </div>
 </section>
