@@ -1575,3 +1575,211 @@ textarea:focus-visible {
     padding-left: $space-4;
   }
 }
+
+/* Reusable article table of contents */
+.page-toc {
+  color: $color-text-muted;
+  font-size: $font-size-meta;
+}
+
+.page-toc__title {
+  margin: 0 0 $space-3;
+  color: $color-text;
+  font-weight: 600;
+}
+
+.page-toc__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-toc__list li {
+  margin: 0;
+}
+
+.page-toc__list a {
+  display: block;
+  padding: 0.35rem 0 0.35rem $space-3;
+  color: $color-text-muted;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  line-height: 1.35;
+}
+
+.page-toc__list a:hover,
+.page-toc__list a:focus {
+  color: $color-text;
+}
+
+.page-toc__list a.is-active {
+  color: $color-accent;
+  border-left-color: $color-accent;
+  font-weight: 600;
+}
+
+.page-toc--desktop {
+  position: fixed;
+  top: 7rem;
+  left: max(1.5rem, calc(50vw - 46rem));
+  width: 13rem;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
+}
+
+.page-toc--mobile {
+  display: none;
+  margin: $space-5 0 $space-6;
+  padding: $space-3 $space-4;
+  background: $color-surface;
+  border: $border-standard;
+  border-radius: $radius-small;
+}
+
+.page-toc--mobile summary {
+  color: $color-text;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.page-toc--mobile[open] summary {
+  margin-bottom: $space-3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.post-content h2 {
+  scroll-margin-top: 6rem;
+}
+
+@media screen and (max-width: 1280px) {
+  .page-toc--desktop {
+    display: none;
+  }
+
+  .page-toc--mobile {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+/* JKS-021 SecApp case-study navigation and architecture layout */
+@media screen and (min-width: 1281px) {
+  .page-toc--desktop {
+    right: calc(50% + 20rem);
+    left: auto;
+    width: 13rem;
+  }
+
+  .architecture-figure--secapp {
+    left: 0;
+    width: min(900px, calc(100% + 50px));
+    max-width: min(900px, calc(100% + 50px));
+    margin-left: -25px;
+    transform: none;
+  }
+
+  .architecture-figure--secapp > a {
+    overflow: hidden;
+  }
+
+  .architecture-figure--secapp img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .architecture-figure--secapp {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
+
+  .architecture-figure--secapp > a {
+    overflow-x: auto;
+  }
+
+  .architecture-figure--secapp img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
+/* Keep the desktop TOC anchored to the viewport rather than the article */
+@media screen and (min-width: 1281px) {
+  .page-toc--desktop {
+    right: auto;
+    left: 2rem;
+    width: 13rem;
+  }
+}
+/* Keep visited TOC links neutral; reserve red for hover and active state */
+.page-toc__list a,
+.page-toc__list a:visited {
+  color: $color-text-muted;
+  border-left-color: transparent;
+  font-weight: 400;
+}
+
+.page-toc__list a:hover,
+.page-toc__list a:focus-visible {
+  color: $color-accent;
+}
+
+.page-toc__list a.is-active,
+.page-toc__list a.is-active:visited {
+  color: $color-accent;
+  border-left-color: $color-accent;
+  font-weight: 600;
+}
+/* JKS-021 SecApp relationship traversal evidence */
+.secapp-evidence-sequence {
+  display: grid;
+  gap: 2rem;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.secapp-evidence-step {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid rgba($color-text, 0.14);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.secapp-evidence-step__label {
+  margin-bottom: 0.75rem;
+  color: $color-accent;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.secapp-evidence-step a {
+  display: block;
+}
+
+.secapp-evidence-step img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba($color-text, 0.12);
+}
+
+.secapp-evidence-step figcaption {
+  margin-top: 0.75rem;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}

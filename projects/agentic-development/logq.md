@@ -3,11 +3,13 @@ layout: page
 title: LogQ
 subtitle: Append-Only Observability for AI Coding Agents
 status: Work in progress
+toc: true
 permalink: /projects/agentic-development/logq/
 description: >-
   A local append-only event stream for observing, measuring, and analyzing
   AI coding-agent activity.
 ---
+{% include page-toc.html %}
 
 ## Overview
 
@@ -33,7 +35,6 @@ LogQ replaces the V2 approach where individual development lanes wrote human-rea
 The change is important because Markdown logs were useful for review, but difficult to compare, query, validate, or measure consistently.
 
 LogQ turns agent activity into structured operational evidence.
-
 ## Why LogQ Exists
 
 The main problem is not that coding agents fail to produce summaries.
@@ -60,7 +61,6 @@ A final summary may say that a task succeeded, but it does not reliably answer:
 - Where are controls adding friction without measurable value?
 
 LogQ is intended to provide the evidence needed to answer those questions.
-
 ## Design Goal
 
 The objective is not to create more process.
@@ -74,7 +74,6 @@ The underlying hypothesis is:
 Without evidence, the safest response to agent uncertainty is often more review, more reporting, and narrower autonomy.
 
 With reliable evidence, the operating model can instead be adjusted based on observed behavior.
-
 ## Current Architecture
 
 ### Event Emission
@@ -137,7 +136,6 @@ The `.closed.jsonl` suffix is the completion marker.
 Future parsers and projectors should consume only completed segments.
 
 They must not assume that reaching EOF on an active `.open.jsonl` file means the writer is finished. The collector may append additional records later.
-
 ## Delivery and Durability
 
 LogQ currently uses a Unix datagram socket.
@@ -171,7 +169,6 @@ It does not prove that:
 For the current design, durability begins after the collector writes the record to the JSONL stream.
 
 A completed `.closed.jsonl` segment is the durable handoff point for downstream processing.
-
 ## Event Model
 
 LogQ records agent lifecycle, workflow, validation, intervention, and terminal-state events.
@@ -191,7 +188,6 @@ run_aborted
 The event schema is intentionally small.
 
 Agents must use only approved event types and fields. They should not invent new fields during ordinary implementation work because silent schema drift makes downstream analysis unreliable.
-
 ## Agent Identity
 
 Work lanes such as `LEFT` and `RIGHT` remain useful for assigning bounded areas of responsibility.
@@ -251,7 +247,6 @@ Example validation event:
   validation.exit_code=0 \
   result=passed
 ```
-
 ## Valid and Invalid Events
 
 The collector stores both valid and invalid inputs in the same append-only stream.
@@ -269,7 +264,6 @@ Invalid-event records may include:
 - enough context to diagnose the failure without placing unsafe binary content directly into JSON.
 
 This design preserves evidence while preventing one malformed event from stopping the collector.
-
 ## Operational Behavior
 
 The collector rotates segments based on configurable thresholds such as:
@@ -287,7 +281,6 @@ Generated runtime artifacts are not normal source files.
 They should not be committed unless event-stream evidence is explicitly required for a particular review.
 
 The Unix socket file must never be committed.
-
 ## Security Boundaries
 
 LogQ is operational telemetry, not a general-purpose application log.
@@ -317,7 +310,6 @@ Event payloads should contain only the minimum metadata needed for:
 - collector health.
 
 Structured observability is useful only when the telemetry itself does not create a new data-exposure path.
-
 ## Relationship to Agent Reporting
 
 LogQ does not eliminate the final agent report.
@@ -354,7 +346,6 @@ It should explain:
 The final report is not a second event store.
 
 It should summarize and reconcile the run rather than reproduce every event.
-
 ## Optional and Required Modes
 
 LogQ may operate in one of two modes.
@@ -377,7 +368,6 @@ When LogQ is an explicit task requirement and unavailable:
 - Human Lead direction is required before continuing.
 
 This avoids silently weakening an acceptance condition.
-
 ## Current Capabilities
 
 The current V3.0 implementation includes:
@@ -396,7 +386,6 @@ The current V3.0 implementation includes:
 - graceful shutdown;
 - agent identity guidance;
 - workflow and persona integration.
-
 ## Planned Parser
 
 The next major stage is a parser that consumes completed segments:
@@ -424,7 +413,6 @@ Expected parser responsibilities include:
 The parser database will be a derived read model.
 
 The completed JSONL segments remain the source of truth.
-
 ## Planned Analytics
 
 The longer-term goal is to build materialized views and reports over normalized events.
@@ -458,7 +446,6 @@ Markdown
 The purpose is not to create a dashboard for its own sake.
 
 The purpose is to measure whether the operating model is helping agents produce useful, safe, reviewable work.
-
 ## Questions LogQ Is Intended to Answer
 
 The most important future questions are operational:
@@ -476,7 +463,6 @@ The most important future questions are operational:
 - Where should stronger stop conditions remain?
 
 These questions turn agent governance from a static ruleset into an observable system.
-
 ## Design Tradeoffs
 
 ### Why Unix Datagrams
@@ -518,7 +504,6 @@ The writer owns `.open.jsonl`.
 Downstream readers own only `.closed.jsonl`.
 
 This avoids coordination problems where a parser mistakes temporary EOF for completion or reads a record while the collector is still appending.
-
 ## Lessons So Far
 
 Several early design lessons are already clear.
@@ -550,7 +535,6 @@ Committing them by default would create noise, repository growth, and possible t
 LogQ would have failed its purpose if it merely added structured events on top of every V2 reporting requirement.
 
 The long-term value comes from replacing manual process with reliable evidence.
-
 ## Current Status
 
 LogQ V3.0 is implemented as a local event-ingestion foundation.
@@ -570,7 +554,6 @@ That phase will test:
 The design remains intentionally modest.
 
 The first goal is a trustworthy event path that makes agent behavior easier to inspect and measure, rather than a comprehensive analytics platform.
-
 ## Related Pages
 
 - [Agent Harness overview](/projects/agentic-development-governance/)

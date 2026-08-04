@@ -1,8 +1,10 @@
 ---
 layout: page
 title: MockCo
+toc: true
 permalink: /projects/mockco/
 ---
+{% include page-toc.html %}
 
 ## MockCo Architecture Lab
 
@@ -37,7 +39,6 @@ The operating model for that work is documented separately in [Agent Harness](/p
     MockCo enterprise architecture showing the Member Portal and SecApp across Internet, DMZ, Production, and Crown-Jewel trust zones. Select the diagram to open the full-resolution image.
   </figcaption>
 </figure>
-
 ## Applications and Goals
 
 MockCo will likely include six to ten major applications or service families over time. The current public writeup focuses on the most developed design areas.
@@ -51,7 +52,6 @@ MockCo will likely include six to ten major applications or service families ove
 | Observability Platform | Planned | | Service health, traceability, operational signals, failure-mode visibility |
 | Simulated Endpoints | Partially implemented | | Endpoint trust levels, software inventory collection, internal and external user behavior simulation |
 | Analytics Platform | Planned | | Homomorphic encryption or related approaches for analytics on regulated data without routine plaintext exposure |
-
 ## Core Thesis
 
 MockCo starts from a security-first architecture position:
@@ -93,7 +93,6 @@ That design creates other tradeoffs:
 - operational troubleshooting requires more deliberate evidence.
 
 Those are explicit tradeoffs, not accidental consequences.
-
 ## Why Health Insurance?
 
 Health insurance is a useful fictional domain because it is understandable while still forcing security-relevant decisions.
@@ -110,7 +109,6 @@ A MockCo member portal naturally involves:
 - strict expectations around audit, access control, and privacy.
 
 The domain is complex enough to require serious architecture decisions without requiring the reader to understand an obscure business model.
-
 ## Version Model
 
 MockCo has gone through several development iterations: V0, V1, V2, and V3.
@@ -255,7 +253,6 @@ V3 should help answer questions such as:
 The V3 development objective remains unchanged:
 
 > Continue building MockCo from its current state while improving the evidence available about how the agents perform the work.
-
 ## What This Project Is Meant to Achieve
 
 MockCo is intended to improve architecture and engineering judgment.
@@ -307,7 +304,6 @@ The Member Portal emphasizes protection of sensitive customer data and controlle
 The SecApp emphasizes normalization, correlation, trust establishment, explainability, and analyst workflows.
 
 MockCo is useful because it contains both.
-
 ## Public and Private Artifact Model
 
 Some MockCo design documents are working materials. They are useful for implementation planning and Codex sessions, but they are not necessarily polished public artifacts.
@@ -337,7 +333,6 @@ Private or unpublished materials may include:
 The goal is not to expose every working file.
 
 The goal is to show reasoning quality, technical progression, and the relationship between architecture intent and implementation.
-
 ## Planned Public Diagrams
 
 Planned diagrams include:

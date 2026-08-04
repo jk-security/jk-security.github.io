@@ -3,6 +3,7 @@ layout: page
 title: Agent Harness
 subtitle: Multi-Agent Development Governance and Observability
 status: Work in progress
+toc: true
 permalink: /projects/agentic-development-governance/
 ---
 
@@ -15,6 +16,7 @@ The focus is not governance for its own sake. In fact, one of the clearest lesso
 V2 pushed back in the other direction: fewer personas, fewer standing gates, stronger models, and more room for agents to choose useful implementation slices inside clear boundaries.
 
 V3 continues that direction. It does not reset MockCo or add another heavy governance layer. Instead, it introduces LogQ: a structured event stream for agent activity. The goal is to make agent work more observable and measurable so that future versions can reduce unnecessary process rather than add more of it.
+{% include page-toc.html %}
 
 ## Core Question
 
@@ -38,7 +40,6 @@ Some follow-on questions include:
 - How much process is enough, and how much process slows development without improving safety, consistency, or project progress?
 - Where is the practical boundary where an agent is operating as autonomously as it can without becoming unsafe or unreviewable?
 - Can structured agent telemetry replace some of the manual reporting and front-loaded governance burden?
-
 ## Why This Exists
 
 Agent-assisted development can move very quickly. That is useful, but speed creates its own failure modes.
@@ -60,7 +61,6 @@ Without explicit boundaries, agents can:
 Some of these actions may be acceptable when they are explicit, scoped, reviewed, and approved. They are dangerous when they happen accidentally or invisibly.
 
 This project treats those risks as engineering problems. The goal is to make useful autonomous work easier while making unsafe or ambiguous work obvious.
-
 ## Relationship to MockCo
 
 MockCo is the main system under agentic development. It is a synthetic health-insurance enterprise with public-facing member workflows, internal security tooling, DMZ / Production / Crown-Jewel zones, sensitive data, endpoint simulation, and future cloud deployment.
@@ -79,7 +79,6 @@ That makes it a useful testbed for agentic development because many MockCo chang
 - logs, diagnostics, and auditability.
 
 Those are exactly the areas where unbounded agent autonomy is risky, but over-governance can also slow useful work. MockCo gives the agentic development track a realistic environment for testing that balance.
-
 ## Development Iterations
 
 The operating model has evolved through several iterations.
@@ -516,7 +515,6 @@ The hypothesis is:
 > If agent activity is captured as structured events, I can reduce some front-loaded process while improving after-the-fact review, measurement, and comparison.
 
 That means V3 is not a retreat back into heavier governance. It is an attempt to make the operating model more measurable so that future iterations can be lighter, faster, and more empirically grounded.
-
 ## What This Project Is Measuring
 
 The next version of this effort should collect better performance data and organize that data more deliberately.
@@ -538,7 +536,6 @@ Useful metrics include:
 | Observability quality | Whether LogQ events provide enough evidence to reconstruct what happened and compare runs. |
 
 The goal is not just to ask whether agents are faster. The better question is whether they produce more reviewable, validated, architecture-aligned work per unit of Human Lead attention.
-
 ## Current Assessment
 
 ### What worked in V1
@@ -589,7 +586,6 @@ V3 adds structured observability:
 - future materialized views and reports.
 
 The current direction is not "more governance." The current direction is better autonomy with enough observability to preserve reviewability, safety, and measurement.
-
 ## Operating Principles
 
 The project currently follows these principles.
@@ -633,7 +629,6 @@ V1 assumed more governance was necessary than may have been true. V2 tested whet
 ### Observability should enable less process, not more theater
 
 Structured logging is useful only if it helps reduce ambiguity, compare outcomes, or remove unnecessary manual reporting. LogQ should support better autonomy; it should not become another ceremonial layer.
-
 ## Open Questions
 
 ### How much governance is enough?
@@ -691,7 +686,6 @@ Possible V3 directions include:
 - more autonomy;
 - better identification of where autonomy starts to produce inappropriate work;
 - selective reintroduction of an autonomous review or surveyor role.
-
 ## Current Status
 
 | Area | Status | Notes |
@@ -706,7 +700,6 @@ Possible V3 directions include:
 | LogQ event stream | Implemented foundation | Unix datagram socket, emitter wrapper, collector, and open/closed JSONL segments. |
 | Metrics collection | Planned / emerging | LogQ provides the substrate for structured metrics and later reports. |
 | Parser and analytics | Future | Closed JSONL segments should feed normalized tables, materialized views, and reports. |
-
 ## What This Project Should Demonstrate
 
 This project should demonstrate that agentic development can be treated as an engineering system, not just a productivity trick.

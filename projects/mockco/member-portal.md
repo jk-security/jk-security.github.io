@@ -3,12 +3,14 @@ layout: page
 title: Member Portal
 subtitle: Secure Member-Facing Application and Protected Data Architecture
 status: Work in progress
+toc: true
 permalink: /projects/mockco/member-portal/
 ---
 
 Member Portal is MockCo's customer-facing application for the synthetic health-insurance enterprise. It is designed to handle sensitive member data while preserving strict boundaries between the public UI, Production application logic, and Crown-Jewel protected storage.
 
 The design goal is not simply to make a working portal. The goal is to explore what a member-facing application looks like when sensitive-data protection is treated as a primary architecture constraint.
+{% include page-toc.html %}
 
 ## Design Goal
 
@@ -25,7 +27,6 @@ The current design uses:
 - encrypted bundles for highly sensitive member content;
 - wrapped data-encryption keys;
 - a future browser-side plaintext boundary for authorized users.
-
 ## Component Model
 
 | Component | Zone | Responsibility |
@@ -37,7 +38,6 @@ The current design uses:
 | Crown-Jewel storage / services | Crown-Jewel | Stores encrypted bundles, wrapped DEKs, key metadata, recovery grants, and protected artifact references. |
 
 The DMZ tier should not hold authoritative business state. It should not decrypt sensitive member data. It should not expose a generic proxy into Production or Crown-Jewel systems.
-
 ## Sensitive Data Posture
 
 The strongest design position is that highly sensitive member data should not be stored as convenience plaintext, even in the Crown-Jewel database.
@@ -63,7 +63,6 @@ It is not simply:
 - `claims` table with all sensitive claim details in plaintext;
 - document bytes in the application database;
 - one enterprise key that can decrypt everything routinely.
-
 ## Encrypted Bundle Flow
 {: #encrypted-envelope-flow}
 
@@ -88,7 +87,6 @@ sequenceDiagram
 The Production backend brokers and maps the envelope. It should not routinely decrypt protected member data.
 
 The browser may become the plaintext boundary for an authorized member. That creates endpoint-specific risk, but it avoids turning enterprise-side databases into large plaintext exposure points.
-
 ## Design Concepts Demonstrated
 
 The Member Portal is meant to demonstrate several technical concepts.
@@ -102,7 +100,6 @@ The Member Portal is meant to demonstrate several technical concepts.
 | Public/internal identifier separation | Public API references should not expose raw database IDs or Crown-Jewel internal row identifiers. |
 | Recovery as exception | Recovery and re-wrapping should be time-bound, audited, and exceptional rather than a standing enterprise decrypt capability. |
 | Data minimization by endpoint | Each route should return only the data required for that workflow. |
-
 ## Current Status
 
 | Area | Status | Notes |
@@ -116,7 +113,6 @@ The Member Portal is meant to demonstrate several technical concepts.
 | Document uploads | Designed for later | Upload requires validation, malware scanning, object storage, encryption, and audit design before implementation. |
 | Billing and payments | Designed for later | Payment workflows should use tokenized references only; no raw card data in MockCo systems. |
 | Member-directed sharing | Future design | Grant metadata can be modeled first; proxy re-encryption or similar models remain future research. |
-
 ## Intended Portal Features
 
 The long-term portal feature set includes:
@@ -135,7 +131,6 @@ The long-term portal feature set includes:
 - member-visible account activity and audit view.
 
 Support case tracking, secure support messaging, callback management, and support attachments are intentionally not part of the current MockCo portal model.
-
 ## Data Classification
 
 | Data type | Example | Intended handling |
@@ -146,7 +141,6 @@ Support case tracking, secure support messaging, callback management, and suppor
 | Cryptographic material | Wrapped DEKs, key metadata, recipient key references | Crown-Jewel / KMS-aligned stores; no plaintext DEKs in API responses or logs. |
 | Audit events | Login, document download, profile update, recovery event | Production or Crown-Jewel audit store, member-safe views where appropriate. |
 | Payment references | Tokenized payment instrument, receipt, invoice status | Production metadata only; no raw card data. |
-
 ## Security Invariants
 
 The Member Portal design should preserve the following invariants:
@@ -161,7 +155,6 @@ The Member Portal design should preserve the following invariants:
 8. Browser storage must not persist plaintext, DEKs, private keys, raw ciphertext, wrapped DEKs, or full sensitive envelopes without explicit design approval.
 9. Recovery workflows are audited, time-bound, and exceptional.
 10. Authorization is based on account-to-member or grant relationship, not possession of a public reference alone.
-
 ## Key Open Questions
 
 ### Where should member identity live?
@@ -183,7 +176,6 @@ Recovery should restore legitimate access without giving the enterprise a standi
 ### How should analytics work without exposing sensitive data?
 
 Homomorphic encryption or other privacy-preserving methods may be explored later. This is a research direction, not a current implementation claim.
-
 ## Relationship to MockCo Architecture
 
 The Member Portal is one application inside MockCo. It should not share the SecApp's databases, triage workflows, or vulnerability-ingestion trust paths.

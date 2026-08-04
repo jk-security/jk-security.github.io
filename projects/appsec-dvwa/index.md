@@ -3,6 +3,7 @@ layout: page
 title: AppSec DVWA
 subtitle: Exploit Validation and Secure Remediation Lab
 status: Work in progress
+toc: true
 permalink: /projects/appsec-dvwa/
 ---
 
@@ -17,6 +18,7 @@ test exploit -> scan -> remediate in code -> rebuild -> validate remediation
 ```
 
 This project is older than my current MockCo and agentic development governance work (I started work on it in early 2025, then returned to it in 2026 - perhaps an annual refresh, of sorts), but it fits well within the goals of "Technical Upskilling", as it's intended for both me and others (teams that I've worked with who have existing security experience, want to get into application security, and don't know where to start or what the "day to day" work will be).
+{% include page-toc.html %}
 
 ## Purpose
 
@@ -42,7 +44,6 @@ The intended learning outcomes are
 1. better understanding of DevSecOps workflows
 2. better developer perspective
 3. stronger AppSec judgment.
-
 ## Core Thesis
 
 > Validated remediation proves understanding of an exploit.
@@ -54,7 +55,6 @@ The intended learning outcomes are
 - At an advanced level, an analyst can remediate the vulnerability in code, rebuild the application, re-test the exploit path, and explain why the fix works.
 
 This project is designed around that full loop.
-
 ## Development Context
 
 This project was developed primarily in GitHub Codespaces, as the lab is intended to be a reproducible training environment, which learners could clone to their own contexts and run at their pace, rather than a local personal lab. The development goal was to make it possible for a learner to:
@@ -78,7 +78,6 @@ Other non-functional requirements included:
 - giving learners a framework for notes, journaling, and progress tracking.
 
 In the broader technical residency, this is an example of an early V0-style development pattern: human-led development with ChatGPT used for design support, troubleshooting, code review, and explanation, but with the human developer applying and validating changes directly.
-
 ## Why DVWA?
 
 DVWA is useful because it is intentionally vulnerable, familiar, and small enough to reason about directly.
@@ -101,7 +100,6 @@ Important differences from stock DVWA include:
 - Supporting services are being added where DVWA alone cannot demonstrate realistic cross-boundary behavior, including an Observer service and future WebWolf-style attacker/user simulation components.
 
 The result is closer to a miniature AppSec remediation environment than a traditional vulnerable-app playground.
-
 ## Training Philosophy
 
 The project is built around several AppSec principles.
@@ -151,7 +149,6 @@ Examples:
 - SQL injection is best addressed by parameterized queries, not string filtering.
 - File inclusion should not allow user input to control executable include paths.
 - File upload security requires breaking the exploit chain, not trusting one extension or MIME check.
-
 ## Repository Shape
 
 The repository is structured as a self-contained training environment.
@@ -168,7 +165,6 @@ The repository is structured as a self-contained training environment.
 | `Makefile` | Convenience commands for bring-up, reset, logs, and future validation workflows. |
 
 A key design decision was to vendor DVWA directly into the repository rather than relying on a submodule or separate fork. That makes the learner workflow simpler: fork the training repo, open Codespaces, edit DVWA code directly, scan, validate, and commit changes in one place.
-
 ## Runtime Model
 
 The current runtime uses Docker Compose.
@@ -193,7 +189,6 @@ Observer service
 The DVWA source is mounted into the web container rather than baked into the image. This supports fast iteration: a learner can edit source files and immediately test behavior without rebuilding the whole image for every code-only change.
 
 The project also includes reset behavior for returning the environment to a known state. This is important because AppSec labs often mutate application state while testing exploits.
-
 ## Dockerized Training Infrastructure
 
 A significant part of the project was not only modifying DVWA, but making DVWA usable as a training environment.
@@ -225,7 +220,6 @@ spend two hours fixing local PHP, Apache, MySQL, Docker, and path issues
 The environment is not perfect, but the infrastructure direction is correct: reduce setup variance so learners can focus on application behavior and remediation.
 
 A future version of this will likely include vulnerabilities in IaC, but that's out of scope for now, as it's not built into DVWA, and these vulns would have to be coded new, rather than inherited from that project.
-
 ## DVWA Mode Redesign
 
 Stock DVWA uses multiple security levels: Low, Medium, High, and Impossible.
@@ -252,7 +246,6 @@ a defensible reference implementation
 ```
 
 The goal is not to preserve every DVWA teaching level. The goal is to create a cleaner remediation-focused AppSec lab.
-
 ## Curated Vulnerability Baseline
 
 Another major part of the work was cleaning up the vulnerable baseline.
@@ -280,7 +273,6 @@ How do I exploit it?
 How do I fix it?
 How do I prove the fix worked?
 ```
-
 ## Student Guidance
 
 The project includes early learner-facing and instructor-facing guidance.
@@ -303,7 +295,6 @@ The intended student journey is:
 14. Commit the change with a short explanation.
 
 Some of this guidance remains work in progress. The direction is clear, but the public learner path should eventually be consolidated into cleaner exercise instructions. This should feel like a professional training, not something the student has to wrestle with every step of the way. We want them to struggle with the right things.
-
 ## The Observer Service
 
 The Observer is a supporting service that makes external behavior visible.
@@ -330,7 +321,6 @@ This matters for vulnerability classes like:
 The Observer is not intended to be an exploit framework. Its purpose is evidentiary: show what happened, when it happened, and how the application behaved across a boundary.
 
 Observer is also a staging space for external exploit / recon activities. _(Future State)_ The application should support DAST scanning (likely OWASP ZAP) from outside DVWA, which should identify some unique, exploitable vulnerabilities.
-
 ## Learning Workflow
 
 A typical exercise should work like this:
@@ -351,7 +341,6 @@ A typical exercise should work like this:
 ```
 
 The important part is that the learner can explain what changed and why the system is safer.
-
 ## Vulnerability State Model
 
 The lab uses a simple state model for each vulnerability.
@@ -365,7 +354,6 @@ The lab uses a simple state model for each vulnerability.
 Status is intentionally simple and student-controlled. It is informational rather than enforced. Changes in state are reflected in the UI of DVWA to show student progress. Automated validation of remediation is _not_ a component of this project (i.e., if the student doesn't fix something, but changes the state to "Secure", it'll show "Secure").
 
 The point is to reinforce ownership. Security remediation should be visible and intentional, not implied.
-
 ## Vulnerability Modules
 
 The current project documentation covers several core vulnerability classes.
@@ -380,7 +368,6 @@ The current project documentation covers several core vulnerability classes.
 | SQL Injection | If user input controls SQL semantics, the application is vulnerable; prepared statements remove that control. |
 
 These are foundational AppSec topics, but the lab treats them as engineering problems rather than trivia.
-
 ## Example: Command Injection
 
 The command injection module is a strong example of the intended teaching style.
@@ -409,7 +396,6 @@ The lesson is:
 ```text
 do not harden shells when you can avoid the shell entirely
 ```
-
 ## Example: SQL Injection
 
 The SQL injection module focuses on attacker control over query semantics.
@@ -423,7 +409,6 @@ The lesson is:
 > If user input controls SQL structure, the application is compromised.
 
 This module also reinforces a practical AppSec point: static analysis may flag dataflow, but runtime testing confirms data exposure and loss of isolation.
-
 ## Example: File Upload
 
 The file upload module demonstrates that upload vulnerabilities are chains, not single checks.
@@ -449,7 +434,6 @@ The secure reference breaks the chain through multiple controls:
 The lesson is:
 
 > If uploaded content can execute, the application is compromised. Breaking the execution chain is the fix.
-
 ## Example: Brute Force
 
 The brute force module is useful because it is not primarily about an obvious dangerous sink.
@@ -469,7 +453,6 @@ The lesson is:
 > Some serious vulnerabilities are invisible to static analysis.
 
 This is especially important for analysts who are used to treating scanner results as the complete picture.
-
 ## Example: CSRF
 
 The CSRF module demonstrates abuse of ambient browser authentication.
@@ -481,7 +464,6 @@ The secure design adds anti-CSRF tokens, re-authentication, and cleaner request 
 The lesson is:
 
 > Authentication is not authorization, and authorization is not user intent.
-
 ## Tooling Model
 
 The project currently has the strongest coverage around SAST.
@@ -510,7 +492,6 @@ The fix changes B.
 The re-test proves C.
 Remaining limitations are D.
 ```
-
 ## What This Project Demonstrates
 
 This project demonstrates several technical and leadership-relevant skills.
@@ -542,7 +523,6 @@ The project required making a vulnerable application usable in a repeatable host
 ### Evidence-driven AppSec
 
 The Observer system and runtime validation model push the learner to collect proof of behavior rather than rely on assumption.
-
 ## Current Status
 
 This is an older project that has been revisited several times. The last major work was around January 2026.
@@ -565,7 +545,6 @@ Current status:
 | Threat modeling workflow | Planned | Useful for teaching abuse-case reasoning beyond scanner findings. |
 | Automated tests | Planned | A test profile would improve repeatability before and after remediation. |
 | Instructor workflow | Partially documented | Project notes exist, but could be consolidated into cleaner public-facing instructor material. |
-
 ## Known Limitations
 
 This project is interesting, but not yet accessible, fully useful, or complete.
@@ -589,7 +568,6 @@ The project vendors DVWA intentionally, but upstream commit/tag metadata should 
 ### The lab is intentionally insecure
 
 The runtime must remain clearly scoped to local training only. It should not be presented as production-safe infrastructure. (Not unlike DVWA itself).
-
 ## Planned Improvements
 
 Likely next improvements include:
@@ -605,7 +583,6 @@ Likely next improvements include:
 9. Complete DVWA upstream metadata.
 10. Add screenshots or short walkthrough videos for selected modules.
 11. Add a before/after remediation example with commits.
-
 ## Relationship to the Technical Residency
 
 This project fits the residency because it develops hands-on AppSec depth.

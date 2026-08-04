@@ -1,0 +1,64 @@
+flowchart TB
+    subgraph internet[Internet]
+        direction TB
+        endpoint[Endpoint agents]
+        cve[External CVE source]
+    end
+
+    subgraph dmz_zone[DMZ]
+        direction TB
+        inv_ingress[DMZ inventory ingress]
+        cve_ingress[DMZ CVE ingress]
+        dmz[(dmz_postgres)]
+    end
+
+    subgraph prod_zone[Production]
+        direction TB
+
+        subgraph prod_promoters[Production Promotion Service]
+            direction TB
+            lease[Production claim / lease]
+            promoters[Inventory and CVE promoters]
+            accept[Revalidation / acceptance]
+        end
+
+        prod[(prod-secapp-postgres<br/>accepted state + source references)]
+
+        subgraph correlation_engine[Correlation Engine]
+            direction TB
+            correlation[Correlation engine<br/>explainable exposure findings]
+        end
+
+        panel[Security Operations Panel<br/>workflow and governance]
+    end
+
+    cve --> cve_ingress
+    endpoint --> inv_ingress
+
+    cve_ingress --> dmz
+    inv_ingress --> dmz
+
+    dmz -->|staged records claimed by Production| lease
+    lease --> promoters
+    promoters --> accept
+    accept --> prod
+    prod --> correlation
+    correlation --> panel
+
+    scheduler[Scheduler]:::planned -.-> promoters
+    provider[Live provider integration]:::planned -.-> cve_ingress
+    rbac[Enterprise identity / RBAC]:::planned -.-> panel
+    retention[Retention management]:::planned -.-> prod
+    admin[Full Admin controls]:::planned -.-> panel
+
+    classDef implemented fill:#f6f3ee,stroke:#8b0000,stroke-width:2px,color:#222;
+    classDef planned fill:#f5f5f5,stroke:#7a7a7a,stroke-width:1.5px,stroke-dasharray:6 4,color:#444;
+    classDef datastore fill:#f1ede7,stroke:#8b0000,stroke-width:2px,color:#222;
+    classDef zone fill:#fbfbfb,stroke:#b8b8b8,stroke-width:1.5px,color:#222;
+    classDef implementedGroup fill:#fffde8,stroke:#b7ad45,stroke-width:1.5px,color:#222;
+
+    class cve_ingress,inv_ingress,lease,promoters,accept,correlation,panel implemented;
+    class scheduler,provider,rbac,retention,admin planned;
+    class dmz,prod datastore;
+    class internet,dmz_zone,prod_zone zone;
+    class prod_promoters,correlation_engine implementedGroup;
