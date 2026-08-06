@@ -1745,19 +1745,25 @@ html {
 /* JKS-021 SecApp relationship traversal evidence */
 .secapp-evidence-sequence {
   display: grid;
-  gap: 2rem;
-  margin: 1.75rem 0 2.5rem;
+  gap: 1rem;
+  margin: 0.75rem 0 1.25rem;
 }
 
-.secapp-evidence-step {
-  margin: 0;
+.secapp-evidence-step,
+.runtime-evidence-step {
+  margin: 0 0 1rem;
   padding: 1rem;
   border: 1px solid rgba($color-text, 0.14);
   border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.72);
 }
 
-.secapp-evidence-step__label {
+.secapp-evidence-sequence .secapp-evidence-step {
+  margin-bottom: 0;
+}
+
+.secapp-evidence-step__label,
+.runtime-evidence-step__label {
   margin-bottom: 0.75rem;
   color: $color-accent;
   font-size: 0.85rem;
@@ -1766,18 +1772,21 @@ html {
   text-transform: uppercase;
 }
 
-.secapp-evidence-step a {
+.secapp-evidence-step a,
+.runtime-evidence-step a {
   display: block;
 }
 
-.secapp-evidence-step img {
+.secapp-evidence-step img,
+.runtime-evidence-step img {
   display: block;
   width: 100%;
   height: auto;
   border: 1px solid rgba($color-text, 0.12);
 }
 
-.secapp-evidence-step figcaption {
+.secapp-evidence-step figcaption,
+.runtime-evidence-step figcaption {
   margin-top: 0.75rem;
   color: $color-text-muted;
   font-size: 0.9rem;

@@ -1,0 +1,22 @@
+<figure class="runtime-evidence-step">
+  {% if include.label %}
+    <div class="runtime-evidence-step__label">{{ include.label }}</div>
+  {% endif %}
+
+  <a
+    href="{{ include.src | relative_url }}"
+    target="_blank"
+    rel="noopener"
+    aria-label="Open {{ include.alt }} at full resolution"
+  >
+    <img
+      src="{{ include.src | relative_url }}"
+      alt="{{ include.alt }}"
+      loading="lazy"
+    >
+  </a>
+
+  {% if include.caption %}
+    <figcaption>{{ include.caption }}</figcaption>
+  {% endif %}
+</figure>
