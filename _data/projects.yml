@@ -1,0 +1,115 @@
+- id: secapp
+  latest_milestone: "Production-controlled promotion and the exposure-management workflow are documented as the current architectural baseline."
+  name: SecApp
+  subtitle: Security Operations and Exposure Management Platform
+  route: /projects/mockco/security-operations-platform/
+  status: Active
+  repository_url: ""
+  summary: >-
+    SecApp is MockCo's exposure-management platform for turning endpoint,
+    software, vulnerability, and contextual evidence into explainable security
+    findings and analyst decisions. Its architecture separates externally
+    influenced staging from authoritative Production state, preserving
+    provenance and explicit trust transitions as data moves into correlation
+    and workflow.
+  tags:
+    - Security operations
+    - Exposure management
+    - Data promotion
+    - Correlation
+  image: ""
+  image_alt: SecApp workflow showing reviewed vulnerability and inventory records becoming correlated security findings
+  image_caption: Reviewed inputs are promoted, correlated, and converted into explainable findings.
+  featured: true
+
+- id: member-portal
+  latest_milestone: "The encrypted-envelope model and intended browser-side plaintext boundary are documented; browser key handling remains deferred."
+  name: Member Portal
+  subtitle: Secure Member-Facing Application and Protected Data Architecture
+  route: /projects/mockco/member-portal/
+  status: Active
+  repository_url: ""
+  summary: >-
+    Member Portal is MockCo's secure member-facing application for exercising
+    identity, authorization, delegated access, account-security workflows, and
+    protected-data delivery across multiple trust zones. Its architecture
+    minimizes routine plaintext exposure by carrying protected content through
+    intermediary services and bounding decryption to explicitly authorized
+    endpoints.
+  tags:
+    - Secure architecture
+    - Protected data
+    - Trust boundaries
+    - Authorization
+  image: ""
+  image_alt: Member Portal data flow showing protected records crossing security zones while remaining encrypted
+  image_caption: Protected records remain encrypted across intermediary trust zones.
+  featured: false
+
+- id: logq
+  latest_milestone: "The V3.0 local ingestion foundation is implemented with Unix datagrams, append-only JSONL segments, and reconciliation evidence."
+  name: LogQ
+  subtitle: Append-Only Observability for AI Coding Agents
+  route: /projects/agentic-development/logq/
+  status: Complete
+  repository_url: ""
+  summary: >-
+    LogQ is an observability system for measuring how AI coding agents behave
+    across development runs. It captures lifecycle, workflow, validation, and
+    intervention events as structured operational evidence, using a lightweight
+    append-only event path designed to keep telemetry off the agent execution
+    critical path.
+  tags:
+    - Observability
+    - Event streams
+    - Reconciliation
+    - Agent telemetry
+  image: ""
+  image_alt: LogQ event flow from coding agents through local collection into closed append-only JSONL segments
+  image_caption: Agent events are collected, persisted, closed into segments, and reconciled.
+  featured: true
+- id: agent-harness
+  latest_milestone: "The V3 operating model is active with bounded work lanes, explicit Human Lead authority, and LogQ-backed observability."
+  name: Agent Harness
+  subtitle: Multi-Agent Development Governance and Observability
+  route: /projects/agentic-development/agent-harness/
+  status: Active
+  repository_url: ""
+  summary: >-
+    Agent Harness is an operating model for governed multi-agent software
+    development. It defines agent roles, bounded authority, work allocation,
+    validation requirements, stop conditions, and Human Lead control, with LogQ
+    providing the telemetry needed to measure whether those controls are
+    effective.
+  tags:
+    - Agent governance
+    - Bounded autonomy
+    - Validation evidence
+    - Development workflow
+  image: ""
+  image_alt: Agent Harness workflow showing bounded agents producing validated work for Human Lead review
+  image_caption: Bounded agent workstreams converge on validation and Human Lead acceptance.
+  featured: false
+
+- id: appsec-dvwa
+  latest_milestone: "Six remediation labs have completed the exploit, correction, rebuild, and security re-test cycle."
+  name: AppSec DVWA
+  subtitle: Exploit Validation and Secure Remediation Lab
+  route: /projects/appsec-dvwa/
+  status: Paused
+  repository_url: ""
+  summary: >-
+    AppSec DVWA is a hands-on application-security remediation lab for
+    practicing the full path from exploit confirmation to secure code
+    correction. Each exercise reproduces a vulnerability, traces it to the
+    implementation, changes the application, rebuilds it, and verifies that
+    the original exploit no longer succeeds.
+  tags:
+    - Application security
+    - Exploit validation
+    - Secure remediation
+    - Regression testing
+  image: ""
+  image_alt: DVWA remediation lifecycle from exploit reproduction through source correction, rebuild, and security re-test
+  image_caption: Each lab moves from confirmed exploit to corrected code and failed re-test.
+  featured: false

@@ -1,179 +1,88 @@
 ---
 layout: page
 title: LogQ
+subtitle: Append-Only Observability for AI Coding Agents
+status: Work in progress
+toc: true
 permalink: /projects/agentic-development/logq/
 description: >-
-  A local append-only event stream for observing, measuring, and analyzing
+  A local append-only event stream for observing and measuring
   AI coding-agent activity.
 ---
 
-## Overview
+LogQ is the event-ingestion and observability layer for the V3 agentic development operating model.
 
-LogQ is the observability layer for the V3 agentic development operating model.
+It converts coding-agent activity into structured, append-only operational evidence that can later be reconciled, parsed, and analyzed across runs.
 
-It captures structured events from coding-agent runs and stores them as append-only JSONL segments for later parsing, analysis, and reporting.
+The current implementation is deliberately small: lightweight emitters send events through a local Unix datagram socket to a collector, which validates and persists them as append-only JSONL segments.
 
-The current event path is:
+{% include page-toc.html %}
+
+## Operational Problem
+
+Coding agents can produce detailed final summaries, but those summaries are retrospective, inconsistent between runs, and difficult to aggregate.
+
+They do not reliably establish:
+
+- which agent instance performed the work;
+- which workflow was selected;
+- which validation commands ran;
+- whether validation succeeded;
+- when Human Lead intervention occurred;
+- whether a run completed, failed, or aborted;
+- whether expected telemetry was actually persisted.
+
+LogQ provides a machine-readable event path alongside the human-readable final report.
+
+The design goal is to make agent behavior observable enough that governance decisions can eventually be based on measured behavior rather than additional reporting requirements.
+
+## Architecture
+
+{% include evidence-figure.html
+   src="/assets/diagrams/agent-emitter-to-durable-storage.png"
+   link="/assets/diagrams/agent-emitter-to-durable-storage.png"
+   alt="LogQ architecture showing multiple agent emitters sending events through a Unix datagram socket to a collector and append-only durable storage."
+   caption="Multiple agent processes emit compact telemetry through a local Unix datagram socket. The collector receives and validates events before batching them into append-only JSONL storage. Sender completion is intentionally separated from durable persistence."
+%}
+
+The implemented path is:
 
 ```text
-Codex / agent
+coding agent
   -> shell emitter
   -> Python emitter
   -> Unix datagram socket
   -> LogQ collector
   -> active .open.jsonl segment
   -> completed .closed.jsonl segment
-  -> future parser and analytics
 ```
 
-LogQ replaces the V2 approach where individual development lanes wrote human-readable Markdown task logs.
+The planned parser and analytics layer begins only after a segment has been closed. It is not part of the current V3.0 ingestion implementation.
 
-The change is important because Markdown logs were useful for review, but difficult to compare, query, validate, or measure consistently.
+## Current Implementation
 
-LogQ turns agent activity into structured operational evidence.
+| Capability | State |
+|---|---|
+| Bash event-emission wrapper | Implemented |
+| Python datagram emitter | Implemented |
+| Local Unix datagram socket | Implemented |
+| Collector process | Implemented |
+| Controlled event schema | Implemented |
+| Agent and run identity fields | Implemented |
+| Collector sequence and receive metadata | Implemented |
+| Valid-event normalization | Implemented |
+| Invalid-event preservation | Implemented |
+| Append-only JSONL persistence | Implemented |
+| Batched writes | Implemented |
+| Open and closed segment lifecycle | Implemented |
+| Rotation by age, count, or bytes | Implemented |
+| Graceful segment closure | Implemented |
+| Parser and normalized query model | Planned |
+| Analytics and longitudinal reporting | Planned |
 
-## Why LogQ Exists
+Current event types cover run lifecycle, workflow selection, validation, Human Lead intervention, and terminal state.
 
-The main problem is not that coding agents fail to produce summaries.
-
-The problem is that summaries are usually:
-
-- written after the work;
-- inconsistent between runs;
-- difficult to aggregate;
-- dependent on agent judgment;
-- hard to correlate with validation activity;
-- difficult to use for longitudinal analysis.
-
-A final summary may say that a task succeeded, but it does not reliably answer:
-
-- Which workflow was selected?
-- Which agent session performed the work?
-- What validation commands ran?
-- Which commands failed?
-- How often did the agent request Human Lead intervention?
-- How many runs ended successfully?
-- Which workflows produce the most rework?
-- Where are governance controls preventing mistakes?
-- Where are controls adding friction without measurable value?
-
-LogQ is intended to provide the evidence needed to answer those questions.
-
-## Design Goal
-
-The objective is not to create more process.
-
-The objective is to make agent activity observable enough that unnecessary process can be removed safely.
-
-The underlying hypothesis is:
-
-> Better evidence should permit simpler governance.
-
-Without evidence, the safest response to agent uncertainty is often more review, more reporting, and narrower autonomy.
-
-With reliable evidence, the operating model can instead be adjusted based on observed behavior.
-
-## Current Architecture
-
-### Event Emission
-
-Agents emit events through a lightweight shell wrapper:
-
-```bash
-.agents/tools/logq/src/logq_emit.sh <event_type> key=value key=value
-```
-
-The shell wrapper invokes a short-lived Python emitter that:
-
-1. parses the event type and fields;
-2. creates a compact JSON payload;
-3. sends the payload to the local Unix datagram socket;
-4. exits without waiting for the collector to persist the record.
-
-The expected socket path is:
-
-```text
-.agents/logging/run/logq.sock
-```
-
-### Collector
-
-The collector listens on the Unix datagram socket and processes incoming payloads.
-
-Its responsibilities include:
-
-- receiving event datagrams;
-- parsing JSON payloads;
-- performing shallow validation;
-- wrapping invalid events safely;
-- assigning collector sequence numbers;
-- adding receive timestamps;
-- buffering records;
-- writing append-only JSONL segments;
-- rotating completed segments;
-- closing the active segment during graceful shutdown.
-
-### Segment Writer
-
-The writer maintains two segment states.
-
-Active segments:
-
-```text
-.agents/logging/streams/events/open/*.open.jsonl
-```
-
-Completed segments:
-
-```text
-.agents/logging/streams/events/closed/*.closed.jsonl
-```
-
-The `.closed.jsonl` suffix is the completion marker.
-
-Future parsers and projectors should consume only completed segments.
-
-They must not assume that reaching EOF on an active `.open.jsonl` file means the writer is finished. The collector may append additional records later.
-
-## Delivery and Durability
-
-LogQ currently uses a Unix datagram socket.
-
-That provides a lightweight, local, non-blocking event path, but it does not provide end-to-end delivery guarantees.
-
-The stages are distinct:
-
-```text
-emission attempted
-  -> datagram sent
-  -> collector received
-  -> record buffered
-  -> JSONL appended
-  -> data flushed
-  -> file synchronized
-  -> segment closed
-  -> parser processed
-```
-
-A successful emitter exit means only that the sender completed its local send operation.
-
-It does not prove that:
-
-- the collector received the event;
-- the writer appended it;
-- the data was flushed;
-- the segment was closed;
-- the parser processed it.
-
-For the current design, durability begins after the collector writes the record to the JSONL stream.
-
-A completed `.closed.jsonl` segment is the durable handoff point for downstream processing.
-
-## Event Model
-
-LogQ records agent lifecycle, workflow, validation, intervention, and terminal-state events.
-
-Current event types include:
+Representative types include:
 
 ```text
 run_started
@@ -185,392 +94,301 @@ run_failed
 run_aborted
 ```
 
-The event schema is intentionally small.
+Events carry explicit correlation information rather than treating a work lane as durable identity.
 
-Agents must use only approved event types and fields. They should not invent new fields during ordinary implementation work because silent schema drift makes downstream analysis unreliable.
-
-## Agent Identity
-
-Work lanes such as `LEFT` and `RIGHT` remain useful for assigning bounded areas of responsibility.
-
-They are not durable agent identities.
-
-A useful event must distinguish:
+Relevant fields include:
 
 ```text
-agent instance
-agent role
-work lane
-task run
-selected workflow
+agent_instance_id
+agent_role
+work_lane
+run_id
+workflow.primary
+validation.command
+validation.exit_code
+result
 ```
 
-Expected identity and correlation fields include:
+This keeps the schema small enough to control while preserving the information needed to reconstruct a run.
 
-| Field | Purpose |
-|---|---|
-| `agent_instance_id` | Identifies the active coding-agent session. |
-| `agent_role` | Identifies the active persona, such as Designer, Builder, or Tester. |
-| `work_lane` | Identifies the Human Lead-assigned work area. |
-| `run_id` | Correlates events produced during one assigned task. |
-| `workflow.primary` | Identifies the selected primary workflow. |
+## Event and Storage Model
 
-Example run event:
+### Event emission
+
+Agents use a lightweight shell interface:
 
 ```bash
-.agents/tools/logq/src/logq_emit.sh run_started \
-  agent_instance_id=<runtime-identifier> \
-  agent_role=builder \
-  work_lane=LEFT \
-  run_id=<task-run-id>
+.agents/tools/logq/src/logq_emit.sh <event_type> key=value key=value
 ```
 
-Example workflow event:
+The shell wrapper invokes a short-lived Python emitter that constructs a compact JSON payload and sends it to:
 
-```bash
-.agents/tools/logq/src/logq_emit.sh workflow_selected \
-  agent_instance_id=<runtime-identifier> \
-  agent_role=builder \
-  work_lane=LEFT \
-  run_id=<task-run-id> \
-  workflow.primary=002-autonomous-build-work
+```text
+.agents/logging/run/logq.sock
 ```
 
-Example validation event:
+The emitter does not wait for the collector to durably persist the event.
 
-```bash
-.agents/tools/logq/src/logq_emit.sh validation_finished \
-  agent_instance_id=<runtime-identifier> \
-  agent_role=builder \
-  work_lane=LEFT \
-  run_id=<task-run-id> \
-  validation.command="python -m pytest" \
-  validation.exit_code=0 \
-  result=passed
+### Collector
+
+The collector owns the transition from transient telemetry to stored operational evidence.
+
+Its responsibilities include:
+
+- receiving event datagrams;
+- parsing and shallow validation;
+- normalizing valid events;
+- wrapping malformed input rather than silently dropping it;
+- assigning collector sequence numbers and receive timestamps;
+- buffering records;
+- appending JSONL records;
+- rotating segments;
+- closing the active segment during graceful shutdown.
+
+### Segment lifecycle
+
+The writer maintains an active segment:
+
+```text
+.agents/logging/streams/events/open/*.open.jsonl
 ```
 
-## Valid and Invalid Events
+Completed segments move to:
 
-The collector stores both valid and invalid inputs in the same append-only stream.
+```text
+.agents/logging/streams/events/closed/*.closed.jsonl
+```
 
-Valid events are normalized and stored with collector metadata.
+The filename state is part of the producer-consumer contract.
 
-Invalid payloads are wrapped rather than discarded silently.
+The collector owns `.open.jsonl` files. Downstream consumers should process only `.closed.jsonl` segments.
 
-Invalid-event records may include:
+An EOF observed on an open segment is temporary and does not imply that the producer has finished writing.
 
-- the parsing or validation error;
-- receive timestamp;
-- collector sequence number;
-- Base64-encoded raw payload;
-- enough context to diagnose the failure without placing unsafe binary content directly into JSON.
+## Delivery and Durability Semantics
 
-This design preserves evidence while preventing one malformed event from stopping the collector.
+LogQ separates several states that can easily be conflated:
 
-## Operational Behavior
+```text
+emission attempted
+  -> datagram sent
+  -> collector received
+  -> record buffered
+  -> JSONL appended
+  -> data flushed
+  -> segment closed
+  -> downstream processing
+```
 
-The collector rotates segments based on configurable thresholds such as:
+A successful emitter exit proves only that the sender completed its local send operation.
 
-- segment age;
-- record count;
-- byte count.
+It does not prove that the collector received the datagram or that the event became durable.
 
-Rotation moves the active file from the `open` directory into the `closed` directory using the completed filename convention.
+For the current implementation, the important handoff is the append-only stream produced by the collector. A completed `.closed.jsonl` segment provides the stable input boundary for future downstream processing.
 
-On graceful shutdown, the collector writes a final lifecycle event and closes the active segment.
+This distinction is intentional. LogQ favors low sender overhead and loose coupling over end-to-end delivery guarantees.
 
-Generated runtime artifacts are not normal source files.
+## Evidence
 
-They should not be committed unless event-stream evidence is explicitly required for a particular review.
+The current LogQ deployment is installed as a rootless user service and has been collecting telemetry during active agentic-development work.
 
-The Unix socket file must never be committed.
+### Collector and socket state
+
+{% include evidence-figure.html
+   src="/assets/images/logq/logq-operational-state.png"
+   link="/assets/images/logq/logq-operational-state.png"
+   alt="Terminal evidence showing the LogQ service active, Unix socket ready, accumulated closed segments, and the current collector-owned open segment."
+   caption="Operational evidence from the installed LogQ service. The collector is active, the Unix datagram socket is ready, and completed segments have accumulated during normal development activity."
+%}
+
+This demonstrates the live ingestion boundary: agents can emit to a ready local socket while the collector maintains the active append-only segment.
+
+### Real agent lifecycle
+
+{% include evidence-figure.html
+   src="/assets/images/logq/logq-real-run-lifecycle.png"
+   link="/assets/images/logq/logq-real-run-lifecycle.png"
+   alt="Terminal evidence showing a real LogQ agent run with run_started, validation_finished, and run_completed records."
+   caption="A real recorded run from agentic-development work. The event stream preserves run identity, role, work lane, workflow selection, validation outcome, and terminal run outcome."
+%}
+
+The run shows three distinct lifecycle observations:
+
+```text
+run_started
+validation_finished -> integration_test -> passed
+run_completed -> completed_with_gaps
+```
+
+The records are operational telemetry captured by LogQ rather than a synthetic demonstration generated for the portfolio.
+
+### Stored JSONL record
+
+{% include evidence-figure.html
+   src="/assets/images/logq/logq-jsonl-validation-record.png"
+   link="/assets/images/logq/logq-jsonl-validation-record.png"
+   alt="Terminal evidence showing one persisted LogQ validation_finished record with collector metadata, agent identity, workflow, validation result, and conformance data."
+   caption="One persisted validation record from the append-only JSONL stream. The stored record combines collector-assigned metadata with agent identity, run correlation, workflow context, validation outcome, and registry conformance information."
+%}
+
+This is the canonical stored representation rather than a reporting view. The JSONL segment remains the source record from which later parsers and analytical read models can be derived.
+
+### Append-only segment lifecycle
+
+{% include evidence-figure.html
+   src="/assets/images/logq/logq-segment-lifecycle.png"
+   link="/assets/images/logq/logq-segment-lifecycle.png"
+   alt="Terminal evidence showing the current LogQ open JSONL segment and recently completed closed JSONL segments with sequence ranges."
+   caption="The active collector owns an `.open.jsonl` segment while completed segments are published as `.closed.jsonl` files with explicit sequence ranges. Closed segments form the stable handoff boundary for downstream consumers."
+%}
+
+The file-state transition creates an explicit ownership protocol between the collector and future downstream readers. Readers do not need to interpret temporary EOF on a file that may still receive additional writes.
+
+Historical collector instances have also left rotation-only open segments. That behavior is retained as an operational limitation to address in stale-segment recovery and cleanup rather than hidden from the system model.
+
+### Invalid-event resilience
+
+{% include evidence-figure.html
+   src="/assets/images/logq/logq-invalid-event-resilience.png"
+   link="/assets/images/logq/logq-invalid-event-resilience.png"
+   alt="Terminal evidence showing a deliberately malformed JSON datagram sent to LogQ, persisted as an invalid event, followed by confirmation that the collector and Unix socket remained healthy."
+   caption="Failure-path evidence from the installed collector. A malformed Unix datagram is retained as an `invalid_event` with `invalid_json` diagnostic metadata and Base64 preservation metadata. The collector remains active and the socket remains ready afterward."
+%}
+
+Malformed telemetry is treated as observable evidence rather than silently discarded.
+
+The collector converts invalid JSON into a canonical record containing the receive sequence, timestamp, transport, validation error, and bounded metadata describing the preserved raw payload. Processing then continues for subsequent events.
+
+This keeps one malformed producer message from becoming a failure of the ingestion service.
+
+## Key Decisions
+
+### Keep telemetry off the agent critical path
+
+LogQ is designed so that agent execution does not wait for collector acknowledgement or durable persistence.
+
+Short-lived emitters submit telemetry through a local Unix datagram socket and then continue. This keeps persistence latency out of the agent execution path, allows multiple agents to emit independently, and reduces coordination between producers and the collector.
+
+The tradeoff is weaker delivery assurance. Successful emitter completion proves only that the local send operation completed; it does not prove that the collector received the datagram or that the event became durable.
+
+This creates a failure-correlated telemetry risk: overload or collector failure can cause the system to lose evidence at the same time that operational evidence is most valuable. LogQ therefore treats delivery semantics as an explicit limitation rather than presenting the telemetry stream as complete by construction.
+
+### Why append-only JSONL
+
+JSONL provides a simple durable representation with:
+
+- sequential writes;
+- human inspectability;
+- line-oriented recovery;
+- straightforward replay;
+- low implementation complexity;
+- compatibility with common analysis tooling.
+
+The source stream is optimized for reliable capture rather than complex querying.
+
+Future query models should therefore be derived from the event stream rather than replacing it as the authoritative record.
+
+### Why open and closed segments
+
+A continuously written file creates ambiguity for downstream readers: reaching EOF does not establish that the producer is finished.
+
+LogQ resolves this with explicit segment states.
+
+The collector owns active segments. Closure creates a stable handoff point for future parsers and projectors.
+
+This is a small coordination protocol that avoids requiring the writer and downstream consumer to share locks or transaction state.
+
+### Why invalid events are preserved
+
+Malformed events are evidence of emitter, schema, or integration failure.
+
+Discarding them silently would make the telemetry system appear healthier than it is.
+
+The collector therefore preserves invalid input in a safe wrapper containing diagnostic metadata and a bounded representation of the original payload.
+
+One malformed event should not stop ingestion for unrelated valid events.
+
+### Why the schema is controlled
+
+Allowing individual agents to invent event types or fields would move schema complexity downstream and make longitudinal analysis unreliable.
+
+LogQ therefore treats its event vocabulary as an interface contract.
+
+Schema changes should be deliberate changes to the observability model rather than incidental decisions made during an individual coding task.
 
 ## Security Boundaries
 
-LogQ is operational telemetry, not a general-purpose application log.
+LogQ is structured operational telemetry rather than an unrestricted application log.
 
-Events must not contain:
+Events must not contain secrets or arbitrary working context.
 
-- passwords;
-- tokens;
-- credentials;
+Excluded content includes:
+
+- passwords and credentials;
+- authentication tokens;
 - private keys;
-- plaintext data-encryption keys;
+- plaintext encryption keys;
 - `.env` contents;
-- real PHI or PII;
-- payment data;
+- real PHI, PII, or payment data;
 - production secrets;
-- full sensitive request or response bodies;
+- unrestricted request or response bodies;
 - unrestricted command output;
-- private repository content not intended for telemetry.
+- private prompt or repository content that is unnecessary for telemetry.
 
-Event payloads should contain only the minimum metadata needed for:
+Events should contain only the metadata needed for correlation, workflow analysis, validation evidence, intervention tracking, terminal-state analysis, and collector health.
 
-- run correlation;
-- workflow analysis;
-- validation evidence;
-- intervention tracking;
-- completion-state analysis;
-- collector health.
+Observability should not create a second uncontrolled data-exposure path.
 
-Structured observability is useful only when the telemetry itself does not create a new data-exposure path.
+## Boundaries and Tradeoffs
 
-## Relationship to Agent Reporting
+The current implementation is intentionally bounded:
 
-LogQ does not eliminate the final agent report.
+- telemetry is local to the development environment;
+- Unix datagrams do not provide end-to-end delivery guarantees;
+- emitter success is not evidence of persistence;
+- the collector performs shallow rather than comprehensive semantic validation;
+- JSONL is optimized for append and replay rather than analytical queries;
+- generated sockets and event streams are runtime artifacts rather than normal source files;
+- the parser, database read model, replay framework, and analytics layer are not yet implemented;
+- operational behavior has not yet been characterized across a large population of agent runs.
 
-The two serve different purposes.
+These limits keep the ingestion path simple enough to inspect while its event model and operational usefulness are being validated.
 
-### LogQ
+---
 
-LogQ provides machine-readable events during the run.
+## Next Milestone
+{: .toc-ignore }
 
-It is intended for:
+The next milestone is to add the first downstream consumer for completed LogQ segments.
 
-- correlation;
-- aggregation;
-- metrics;
-- trend analysis;
-- parser-driven reconstruction;
-- operational health analysis.
+The parser should:
 
-### Final Report
+1. consume only `.closed.jsonl` segments;
+2. validate stored records;
+3. preserve agent and run correlation;
+4. track processed segments;
+5. expose sequence gaps and invalid records;
+6. support deterministic replay;
+7. build a queryable derived model without mutating the source stream.
 
-The final report provides a human-readable reconciliation of the work.
+That work should be informed by real telemetry collected during MockCo development rather than by speculative analytics requirements.
 
-It should explain:
+## My Contribution
+{: .toc-ignore }
 
-- what changed;
-- what was validated;
-- what remains incomplete;
-- what risks remain;
-- whether LogQ was available;
-- whether expected events were emitted;
-- whether telemetry gaps exist.
+I defined the LogQ problem, event architecture, delivery and durability model, event schema constraints, identity model, segment lifecycle, invalid-event behavior, and validation expectations.
 
-The final report is not a second event store.
+I reviewed implementation decisions against those requirements and used the resulting system to explore how observable agent behavior can support a simpler and more evidence-driven governance model.
 
-It should summarize and reconcile the run rather than reproduce every event.
+AI coding agents implemented bounded portions of the emitters, collector, persistence path, tests, and supporting documentation. Architecture, requirements, review, validation strategy, and final acceptance remained Human Lead responsibilities.
 
-## Optional and Required Modes
+## Relationship to the Agent Harness
+{: .toc-ignore }
 
-LogQ may operate in one of two modes.
+LogQ is the observability subsystem for the [Agent Harness](/projects/agentic-development/agent-harness/).
 
-### Optional
+The Agent Harness defines how coding agents receive work, operate within bounded authority, validate changes, and report completion.
 
-When LogQ is optional and unavailable:
+LogQ provides the structured event stream needed to observe that operating model across runs.
 
-- the agent may continue within approved scope;
-- the agent must report the telemetry gap;
-- the agent must not claim events were emitted;
-- the agent must not create an ad hoc Markdown replacement log.
-
-### Required
-
-When LogQ is an explicit task requirement and unavailable:
-
-- the agent must stop;
-- the unmet requirement must be reported;
-- Human Lead direction is required before continuing.
-
-This avoids silently weakening an acceptance condition.
-
-## Current Capabilities
-
-The current V3.0 implementation includes:
-
-- Unix datagram socket ingestion;
-- Bash and Python emitters;
-- compact JSON event payloads;
-- collector-assigned sequence numbers;
-- collector receive timestamps;
-- valid-event normalization;
-- invalid-event capture;
-- Base64 preservation of invalid raw payloads;
-- batched JSONL writes;
-- active and completed segments;
-- rotation by age, record count, or byte count;
-- graceful shutdown;
-- agent identity guidance;
-- workflow and persona integration.
-
-## Planned Parser
-
-The next major stage is a parser that consumes completed segments:
-
-```text
-.closed.jsonl segments
-  -> parser
-  -> normalized event tables
-  -> parser checkpoints
-  -> replay support
-```
-
-Expected parser responsibilities include:
-
-- consume only completed segments;
-- validate stored records;
-- preserve agent and run identity;
-- track processed segments;
-- detect sequence gaps;
-- report invalid records;
-- support replay;
-- load normalized events into a queryable database;
-- avoid mutating source segments.
-
-The parser database will be a derived read model.
-
-The completed JSONL segments remain the source of truth.
-
-## Planned Analytics
-
-The longer-term goal is to build materialized views and reports over normalized events.
-
-Potential views include:
-
-```text
-runs by workflow
-runs by agent instance
-runs by work lane
-completion and failure rates
-validation failure rates
-human intervention counts
-telemetry completeness
-sequence-gap reporting
-collector health
-budget pressure by workflow
-recovery-state freshness
-segment-processing checkpoints
-```
-
-Potential output formats include:
-
-```text
-DuckDB
-Parquet
-CSV
-Markdown
-```
-
-The purpose is not to create a dashboard for its own sake.
-
-The purpose is to measure whether the operating model is helping agents produce useful, safe, reviewable work.
-
-## Questions LogQ Is Intended to Answer
-
-The most important future questions are operational:
-
-- Which workflows complete successfully most often?
-- Which workflows produce the most validation failures?
-- Which tasks require repeated Human Lead intervention?
-- Which work lanes experience the most rework?
-- Which validation commands fail repeatedly?
-- How often is telemetry unavailable or incomplete?
-- How frequently do agents terminate without a corresponding terminal event?
-- Which governance requirements correlate with better outcomes?
-- Which requirements add cost without reducing failure?
-- Can autonomy be safely expanded for particular task categories?
-- Where should stronger stop conditions remain?
-
-These questions turn agent governance from a static ruleset into an observable system.
-
-## Design Tradeoffs
-
-### Why Unix Datagrams
-
-Unix datagrams provide:
-
-- low sender overhead;
-- local-only communication;
-- a simple implementation;
-- loose coupling between agents and collector;
-- no requirement for every sender to maintain a persistent process.
-
-The tradeoff is weaker delivery assurance.
-
-That is acceptable for the current experimental stage, provided the limitation is explicit and measured.
-
-### Why Append-Only JSONL
-
-JSONL provides:
-
-- simple writes;
-- easy inspection;
-- line-oriented recovery;
-- straightforward replay;
-- compatibility with many analysis tools;
-- low implementation complexity.
-
-The tradeoff is that raw JSONL is not ideal for complex queries.
-
-That is why the future parser and database are derived from the immutable source stream.
-
-### Why Closed Segments
-
-Completed segments provide a clear producer-consumer boundary.
-
-The writer owns `.open.jsonl`.
-
-Downstream readers own only `.closed.jsonl`.
-
-This avoids coordination problems where a parser mistakes temporary EOF for completion or reads a record while the collector is still appending.
-
-## Lessons So Far
-
-Several early design lessons are already clear.
-
-### Observability is not durability
-
-Sending an event and persisting an event are separate operations.
-
-The system must not treat emitter success as proof of durable evidence.
-
-### Identity must be explicit
-
-A work lane such as `LEFT` or `RIGHT` is an assignment boundary, not a session identity.
-
-Repeated and concurrent runs require a separate `agent_instance_id` and `run_id`.
-
-### Schemas must remain controlled
-
-Allowing agents to invent fields casually would make analysis inconsistent and force the parser to support uncontrolled variations.
-
-### Runtime evidence should remain separate from source
-
-Generated socket and stream files are operational artifacts.
-
-Committing them by default would create noise, repository growth, and possible telemetry exposure.
-
-### Observability should reduce reporting burden
-
-LogQ would have failed its purpose if it merely added structured events on top of every V2 reporting requirement.
-
-The long-term value comes from replacing manual process with reliable evidence.
-
-## Current Status
-
-LogQ V3.0 is implemented as a local event-ingestion foundation.
-
-The immediate next step is operational use during real MockCo development runs.
-
-That phase will test:
-
-- whether agents emit the expected events consistently;
-- whether the identity model is sufficient;
-- whether event fields are useful in practice;
-- whether telemetry gaps are visible;
-- whether the collector behaves reliably under repeated sessions;
-- which parser requirements are genuinely necessary;
-- which governance requirements can eventually be simplified.
-
-The design remains intentionally modest.
-
-The first goal is a trustworthy event path that makes agent behavior easier to inspect and measure, rather than a comprehensive analytics platform.
-
-## Related Pages
-
-- [Agentic Development Overview](/projects/agentic-development/)
-- [Operating Model](/projects/agentic-development/operating-model/)
-- [Measurement Roadmap](/projects/agentic-development/measurement-roadmap/)
-- [Lessons Learned](/projects/agentic-development/lessons-learned/)
-- [MockCo](/projects/mockco/)
+The long-term objective is to use that evidence to determine which controls prevent meaningful failures, which controls create unnecessary friction, and where agent autonomy can safely increase.

@@ -16,8 +16,8 @@ The central architecture principle is:
 
 That principle appears in two different ways:
 
-1. The Public Member Portal uses a DMZ presentation layer, a Production broker/backend, and Crown-Jewel protected storage for sensitive member data.
-2. The Security Operations Platform stages externally influenced data in the DMZ, but Production owns acceptance, normalization, correlation, and analyst-facing operational truth.
+1. The Member Portal uses a DMZ presentation layer, a Production broker/backend, and Crown-Jewel protected storage for sensitive member data.
+2. The SecApp stages externally influenced data in the DMZ, but Production owns acceptance, normalization, correlation, and analyst-facing operational truth.
 
 The architecture does not assume that a firewall or network segment alone makes data safe. Data becomes trusted only after it has passed through an explicit validation and acceptance path.
 
@@ -126,7 +126,7 @@ MockCo has been rebuilt several times. The most complete implementation state an
 
 | Area | Most mature prior state | Current target direction |
 |---|---|---|
-| Public Member Portal | Early UI/backend concepts and prototype flows. | DMZ UI, Production broker, Crown-Jewel encrypted bundles, browser-side plaintext boundary. |
+| Member Portal | Early UI/backend concepts and prototype flows. | DMZ UI, Production broker, Crown-Jewel encrypted bundles, browser-side plaintext boundary. |
 | Security Operations | Internal security tooling concept and architecture. | Exposure management platform with DMZ staging, Production promotion, correlation, and analyst triage. |
 | Architecture Documentation | Evolved across conversations and design docs. | Public-safe architecture pages with concise diagrams and explicit limitations. |
 | Identity | Mostly conceptual / deferred. | Account-user, member-subject, session, trusted-device, and delegated-access model. |

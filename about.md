@@ -3,180 +3,130 @@ layout: page
 title: About Jonathan Kelly
 permalink: /about/
 description: >-
-  Security engineering leader and practitioner focused on application
+  Security engineering leader and hands-on practitioner focused on application
   security, vulnerability management, secure software delivery, security
   automation, and governed AI-assisted development.
 ---
 
-I am a security engineering leader and hands-on technical practitioner based in Singapore.
+I am a security leader and hands-on technical practitioner based in Singapore.
 
-My work sits at the intersection of:
+My professional work focuses on building security as an engineering capability: integrated, where possible, into development and infrastructure workflows, supported by scalable platforms, measured through operational evidence, and intended to help software and technology teams make better, faster remediation decisions.
 
-- application security;
-- vulnerability management;
-- security engineering;
-- secure software delivery;
-- cloud and platform security;
-- operational automation;
-- engineering leadership;
-- AI-assisted development.
+[LinkedIn](https://www.linkedin.com/in/jonathanakelly/) · [GitHub](https://github.com/jk-security)
 
-I have led and built multinational security engineering functions across Singapore, Macau, and the United States, supporting distributed development organizations, hundreds of applications, hybrid infrastructure, and multiple software-development lifecycles.
+## Security Engineering Focus
 
-My professional is security as an engineering capability: integrated into development workflows, supported by scalable platforms, measurable through operational evidence, and designed to help remediating teams - both software and information technology - make better decisions earlier.
+My recent experience spans application security, vulnerability management, security engineering, cloud and platform security, secure software delivery, automation, and engineering leadership.
 
-[LinkedIn](https://www.linkedin.com/in/jonathanakelly/)
+I have led and built multinational security-engineering functions across Singapore, Macau, and the United States, supporting distributed development organizations, hundreds of applications, hybrid infrastructure, and multiple software-development lifecycles.
 
-## Professional Focus
-
-Much of my work has centered on building and modernizing security-engineering capabilities at enterprise scale.
-
-This includes:
-
-- building and scaling application-security and security-engineering teams;
-- integrating SAST, SCA, secret scanning, infrastructure-as-code scanning, DAST, fuzzing, IAST, and application-security posture management into developer workflows;
-- moving security testing from point-in-time assessment toward continuous, developer-integrated validation;
-- designing vulnerability-management workflows around exploitability, asset criticality, threat intelligence, and remediation ownership;
-- integrating security tooling through API-, webhook-, and CLI-driven security automation;
-- supporting migrations from legacy development platforms toward GitHub-based software delivery;
-- designing self-service security capabilities for developers;
-- improving operational metrics, release gating, escalation visibility, and remediation coordination;
-- preparing security operating models for increasingly automated and AI-assisted software-development environments.
-
-I am particularly interested in the systems around security tools:
+A recurring theme in that work is the system around the security tool:
 
 - how findings move between platforms;
-- where state should be stored;
-- how ownership is established;
-- how evidence is preserved;
-- how failure is detected;
-- how security controls affect developer behavior;
+- where finding state becomes authoritative;
+- how remediation ownership is established;
 - how automation changes operational assumptions;
-- how human authority should be preserved as machines perform more of the work.
+- how metrics influence behavior;
+- how security controls and reporting fit into operational development and information-technology paths rather than around or on top of them.
 
-## Why the Technical Residency Exists
+I believe that a systems view is increasingly important as software and IT delivery becomes more automated and AI systems participate directly in design, implementation, validation, and remediation.
 
-Security leaders can become detached from implementation.
+## Technical Residency
 
-The work increasingly happens through teams, platforms, vendors, governance processes, and executive decision-making. That scale is necessary, but it weakens direct contact with the technical systems being governed. This technical residency is my proactive response to that inevitability.
+Security leadership creates distance from implementation over time.
 
-It is a structured, long-running program of:
+Large programs depend on teams, platforms, vendors, governance, and executive decision-making. That scale is necessary, but it can weaken direct contact with the systems being governed.
+
+The technical residency is my effort to resist that drift—to not go gently into that good night.
+
+It is a long-running program of:
 
 - building software;
 - designing systems;
-- testing security controls;
 - debugging failures;
+- testing security controls;
 - reviewing implementation tradeoffs;
 - studying distributed systems and reliability;
 - experimenting with AI coding agents;
-- documenting what worked and what did not.
+- documenting technical decisions and lessons.
 
-The objective is not to become an individual contributor again or to treat every project as production software.
+The objective is to keep leadership judgment grounded in current engineering practice and ensure my technical capability remains sufficient to engage directly, when needed, with my teams and counterparts across engineering, infrastructure, and other technology functions.
 
-The objective is to keep leadership judgment grounded in current technical practice.
-
-## Current Residency Work
+## Current Work
 
 ### MockCo
 
-MockCo is a synthetic health-insurance enterprise used to practice secure architecture and development in a realistic multi-system environment.
+[MockCo](/projects/mockco/) is a synthetic health-insurance enterprise used as a systems lab for secure application architecture, trust-boundary design, security operations, and protected-data engineering.
 
-The project includes:
+The current portfolio work concentrates on two systems:
 
-- Internet, DMZ, Production, and Crown-Jewel trust zones;
-- a Public Member Portal;
-- a Security Operations Platform;
-- vulnerability-intelligence ingestion;
-- endpoint and software-inventory collection;
-- sensitive-data protection;
-- service-to-service security;
-- containerized infrastructure;
-- architecture and data-flow analysis.
+- the **Member Portal**, which explores protected-data handling across Internet, DMZ, Production, and Crown-Jewel boundaries;
+- **SecApp**, which explores how vulnerability intelligence and endpoint observations become trusted, explainable exposure-management state.
 
-[Explore MockCo](/projects/mockco/)
+The wider environment provides a place to work through trust boundaries, service responsibilities, encryption, recovery, data promotion, observability, and failure behavior.
 
-### Agentic Development
+### Agentic Development Systems
 
-This workstream treats AI-assisted development as an engineering and operating-model problem.
+[Agentic Development Systems](/projects/agentic-development/) treats AI-assisted development as an operating-model, observability, and systems-engineering problem.
 
-It explores:
+[Agent Harness](/projects/agentic-development/agent-harness/) defines the operating model for bounded autonomy, concurrent agent work, Human Lead authority, validation evidence, stop conditions, and Git authority.
 
-- bounded agent autonomy;
-- Human Lead authority;
-- workflow and persona design;
-- concurrent coding agents;
-- trust-boundary and dependency controls;
-- validation evidence;
-- Git authority;
-- structured agent observability;
-- measurement of agent behavior.
+[LogQ](/projects/agentic-development/logq/) provides structured observability through an append-only agent event stream, creating operational evidence about how agents actually behave within that model.
 
-The current V3 model introduces LogQ, an append-only event stream used to capture agent lifecycle and validation activity for later analysis.
+The underlying question is practical:
 
-[Explore Agentic Development](/projects/agentic-development/)
+> How much autonomy can be delegated while keeping authority, evidence, and failure behavior explicit?
 
 ### Application Security Practice
 
-The AppSec DVWA project uses a modified and containerized vulnerable application to practice the complete remediation lifecycle:
+[AppSec DVWA](/projects/appsec-dvwa/) is a paused application-security remediation lab based on a modified, containerized DVWA environment.
+
+The project focused on the complete remediation loop:
 
 ```text
-validate exploit
-  -> scan
-  -> inspect source
-  -> remediate
+reproduce exploit
+  -> inspect vulnerable behavior
+  -> change code
   -> rebuild
-  -> retest
-  -> document evidence
+  -> re-test
+  -> explain the result
 ```
 
-The emphasis is on understanding and correcting vulnerable behavior, not merely operating a scanner.
-
-[Explore AppSec DVWA](/projects/appsec-dvwa/)
+This remains part of the portfolio as an earlier hands-on application-security workstream rather than an active development project. I expect to revisit the remaining labs selectively as they become useful to the broader residency work.
 
 ## Technical Leadership Perspective
 
-My operating assumption is that security programs succeed when they become part of the engineering system.
+I believe systems and organizations exhibit many of the same design problems: boundaries, interfaces, ownership, state, feedback, and failure handling.
 
-That requires more than tools and policies.
+A mature program requires interfaces between teams and systems that preserve useful state, ownership, evidence, and feedback.
 
-It requires:
+In practice, this means paying close attention to:
 
-- clear ownership;
-- usable developer workflows;
-- reliable data movement;
-- meaningful prioritization;
-- explicit trust boundaries;
-- automation that preserves evidence;
-- metrics that reflect operational outcomes;
-- escalation paths that work at the speed of the system;
-- leaders who understand both organizational and technical constraints.
+- developer and IT experience
+- remediation ownership
+- authoritative data sources
+- evidence quality
+- prioritization logic
+- operational metrics
+- escalation paths
+- failure and retry behavior
+- automation safety and performance
 
-I am also interested in how these assumptions change as AI systems participate more directly in software design, implementation, validation, and remediation.
+The same reasoning applies to AI-assisted development.
 
-The important question is no longer whether AI can generate code.
-
-The important questions are:
-
-- What should an agent be allowed to decide?
-- What evidence should it produce?
-- How should its work be reviewed?
-- How do we detect scope drift or unsafe behavior?
-- Which controls can be removed when behavior becomes observable?
-- Which decisions must remain human?
-
-## Education
+## Education and Certifications
 
 I hold:
 
 - a Global Executive MBA from INSEAD;
 - a Bachelor of Science in Computer Engineering with a minor in Applied Computer Security from the University of Southern California.
 
-My professional certifications include CISSP, CCSP, CEH, EnCE, GCFA, and GCSA.
+Selected professional certifications include CISSP, CCSP, and GCFA, alongside earlier specialist certifications accumulated during more hands-on technical roles.
 
 ## Elsewhere
 
+- [Projects](/projects/)
+- [Reading](/reading/)
+- [Residency Notes](/notes/)
 - [LinkedIn](https://www.linkedin.com/in/jonathanakelly/)
 - [GitHub](https://github.com/jk-security)
-- [Projects](/projects/)
-- [Reading and Technical Reasoning](/reading/)
-- [Residency Notes](/notes/)

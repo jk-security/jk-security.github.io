@@ -1,0 +1,38 @@
+<section
+  class="residency-status"
+  aria-label="Technical residency status"
+>
+  <div class="layout-landing">
+    <dl class="residency-status__list">
+      <div class="residency-status__item">
+        <dt>Active since</dt>
+        <dd>{{ include.active_since }}</dd>
+      </div>
+
+      <div class="residency-status__item">
+        <dt>Current focus</dt>
+        <dd>
+          {% if include.current_focus_route %}
+            <a href="{{ include.current_focus_route | relative_url }}">
+              {{ include.current_focus }}
+            </a>
+          {% else %}
+            {{ include.current_focus }}
+          {% endif %}
+        </dd>
+      </div>
+
+      <div class="residency-status__item">
+        <dt>Environment</dt>
+        <dd>{{ include.environment }}</dd>
+      </div>
+
+      <div class="residency-status__item">
+        <dt>Status</dt>
+        <dd>
+          {% include status-pill.html status=include.status %}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>

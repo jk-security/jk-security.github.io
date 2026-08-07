@@ -1,4 +1,4 @@
-title: JK Security Technical Portfolio
+title: Jonathan Kelly
 description: >-
   A technical portfolio covering security architecture, application security,
   software systems, distributed systems, and governed AI-assisted development.
@@ -40,3 +40,10 @@ exclude:
   - .bundle/
   - .jekyll-cache/
   - .sass-cache/
+sass:
+  style: expanded
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions

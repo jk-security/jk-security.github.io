@@ -1,0 +1,9 @@
+<aside class="technical-decision" aria-labelledby="{{ include.id }}-title">
+  <h3 id="{{ include.id }}-title">
+    {{ include.title }}
+  </h3>
+
+  <div class="technical-decision__body">
+    {{ include.body | markdownify }}
+  </div>
+</aside>

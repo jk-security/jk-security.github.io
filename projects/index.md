@@ -1,41 +1,30 @@
 ---
-layout: page
-title: Projects
+layout: project-directory
+title: Security Engineering Projects
 permalink: /projects/
+introduction: >-
+  Implementation-focused systems work across secure application architecture,
+  exposure management, governed agentic development, application security,
+  and supporting observability.
+introduction_secondary: >-
+  Each project page records the system purpose, current architecture,
+  implementation state, technical decisions, accepted tradeoffs, and latest
+  milestone. The work ranges from MockCo enterprise systems to agent-development
+  infrastructure and hands-on application-security remediation.
+introduction_tertiary: >-
+  This directory provides a durable entry point into those case studies and
+  related engineering work. It is designed for direct review from LinkedIn,
+  GitHub, or a resume without requiring readers to reconstruct the portfolio
+  hierarchy from the homepage.
 ---
 
-This section contains the hands-on workstreams for the technical residency.
+{% assign featured_projects = site.data.projects | where: "featured", true %}
+{% assign standard_projects = site.data.projects | where: "featured", false %}
 
-These projects are intentionally iterative. Some related repositories are private, some artifacts are still rough, and some work is being developed in stages. The goal is to maintain a useful public record of technical practice, design reasoning, and lessons learned without exposing raw experimental work or sensitive implementation details.
+{% for project in featured_projects %}
+  {% include project-card.html project=project show_milestone=true %}
+{% endfor %}
 
-## Current Projects
-
-### MockCo Development Work
-
-MockCo is a simulated company environment used to reason through practical security engineering problems in a realistic enterprise context.
-
-The work includes secure system design, internal security tooling, vulnerability management workflows, remediation patterns, architecture documentation, and operational tradeoff analysis.
-
-[View project](/projects/mockco/)
-
-### Agentic Development Operating Model
-
-This workstream explores how AI-assisted and agentic development can be structured as an engineering system: assigned work, bounded autonomy, workflow selection, validation evidence, agent observability, and human authority.
-
-The current focus is not adding more governance. V1 over-scoped controls, V2 pushed toward simpler concurrent agents, and V3 introduces LogQ as a structured event stream for measuring and reviewing agent activity.
-
-[View project](/projects/agentic-development-governance/)
-
-### AppSec Practice: DVWA Scan, Fix, Re-Scan
-
-This project uses DVWA and related tooling to practice the full application security remediation loop: identify vulnerabilities, scan, validate findings, remediate issues, re-scan, and document the outcome.
-
-The goal is to strengthen practical AppSec judgment: understanding findings, validating exploitability, fixing underlying issues, and documenting evidence of remediation.
-
-[View project](/projects/appsec-dvwa/)
-
-## Publication Model
-
-The public pages in this section are summaries and selected writeups. Supporting repositories may remain private when they contain rough work, experimental agent instructions, noisy scan output, implementation details, or material that is not yet suitable for public release.
-
-As the work matures, selected diagrams, notes, design excerpts, and retrospectives may be published here.
+{% for project in standard_projects %}
+  {% include project-card.html project=project show_milestone=true %}
+{% endfor %}
