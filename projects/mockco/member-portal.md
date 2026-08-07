@@ -310,6 +310,8 @@ The relay, backend, and storage dependencies should be packaged into the intende
 
 The target runtime should expose only the browser entry point while keeping backend and database services inside their assigned trust zones.
 
+---
+
 ## Next Milestone
 {: .toc-ignore }
 

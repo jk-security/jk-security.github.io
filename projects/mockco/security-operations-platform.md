@@ -327,6 +327,8 @@ This capability has not yet been designed in detail. Its authority, confidence t
 
 The AI should support analyst judgment rather than silently establish authoritative exposure state or approve accepted risk.
 
+---
+
 ## Next Milestone
 {: .toc-ignore }
 

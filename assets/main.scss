@@ -1792,3 +1792,17 @@ html {
   font-size: 0.9rem;
   line-height: 1.5;
 }
+/* Article code-block contrast
+   Rouge token styles can override the inherited foreground color.
+   Keep fenced blocks on the portfolio code palette and preserve readability. */
+.post-content .highlighter-rouge .highlight,
+.post-content .highlighter-rouge pre.highlight {
+  color: $color-code-text;
+  background: $color-code-background;
+}
+
+.post-content .highlighter-rouge pre.highlight code,
+.post-content .highlighter-rouge pre.highlight code * {
+  color: $color-code-text;
+  background: transparent;
+}
