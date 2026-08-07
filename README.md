@@ -41,7 +41,7 @@ MockCo is a local systems lab. Its architecture, identities, workloads, data, an
 
 ### Agent Harness
 
-The [Agent Harness](https://jk-security.github.io/projects/agentic-development-governance/) explores how AI coding agents can perform meaningful engineering work while remaining bounded, observable, reviewable, and subordinate to human authority.
+The [Agent Harness](https://jk-security.github.io/projects/agentic-development/agent-harness/) explores how AI coding agents can perform meaningful engineering work while remaining bounded, observable, reviewable, and subordinate to human authority.
 
 The operating model has evolved through several iterations:
 

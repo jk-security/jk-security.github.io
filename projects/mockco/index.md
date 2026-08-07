@@ -1,27 +1,39 @@
 ---
 layout: page
 title: MockCo
+subtitle: Synthetic Enterprise Architecture and Security Engineering Lab
+status: Active
 toc: true
 permalink: /projects/mockco/
 ---
+
+MockCo is a synthetic health-insurance enterprise I use to practice secure architecture, security-tool development, sensitive-data protection, and enterprise application design.
+
+The project is intentionally architecture-first. Working software matters, but the primary objective is to reason clearly about trust boundaries, data movement, failure modes, operational evidence, and the security consequences of design choices before those choices become difficult to reverse.
+
 {% include page-toc.html %}
 
-## MockCo Architecture Lab
+## Operational Purpose
 
-MockCo is a synthetic health-insurance enterprise used to practice secure architecture, internal security-tool development, sensitive-data protection, and enterprise application design.
+MockCo provides a realistic system in which security decisions have architectural consequences.
 
-The project is intentionally architecture-first. The goal is not only to build working applications, but to understand why particular design choices matter:
+The environment is designed to force questions such as:
 
-- where trust boundaries belong;
-- how sensitive data should move between systems;
-- when sensitive data should not move at all;
-- how public-facing and internal services should be separated;
-- how security tooling should convert noisy external inputs into trusted operational state.
+- Which services should be internet-facing?
+- Where should sensitive data be decrypted?
+- Which systems should be allowed to persist plaintext?
+- How should external security data become trusted operational state?
+- How should services cross network and identity boundaries?
+- What evidence is required to explain a security decision later?
+- Which failures should be contained locally, and which require recovery across systems?
 
-Application development is performed primarily through Codex agents so that I can focus more of my own effort on architecture, requirements, security decisions, testing strategy, and review.
+Health insurance is a useful fictional domain because the workflows are understandable while the data is sensitive enough to make weak architecture visible.
 
-The operating model for that work is documented separately in [Agent Harness](/projects/agentic-development-governance/).
+The domain naturally introduces identity, claims, coverage, protected health information, document handling, recovery, audit, and security-operations concerns without depending on proprietary business context.
 
+## Enterprise Architecture
+
+MockCo is organized around explicit trust zones rather than a flat application network.
 
 <figure class="architecture-figure architecture-figure--wide">
   <a
@@ -39,306 +51,193 @@ The operating model for that work is documented separately in [Agent Harness](/p
     MockCo enterprise architecture showing the Member Portal and SecApp across Internet, DMZ, Production, and Crown-Jewel trust zones. Select the diagram to open the full-resolution image.
   </figcaption>
 </figure>
-## Applications and Goals
 
-MockCo will likely include six to ten major applications or service families over time. The current public writeup focuses on the most developed design areas.
+The current zone model is:
 
-| Area | Current status | Link | Concepts demonstrated |
-|---|---|---|---|
-| Member Portal | In development | [Member Portal](/projects/mockco/member-portal/) | DMZ presentation, Production broker, Crown-Jewel encrypted storage, browser-side plaintext boundary |
-| SecApp | In development | [SecApp](/projects/mockco/security-operations-platform/) | Exposure management, endpoint inventory, vulnerability intelligence, Production-controlled correlation |
-| Identity and Access | Planned | | Account-user versus member-subject separation, session control, step-up authentication, delegated access |
-| Key Management and Recovery | Planned | | Wrapped DEKs, recovery grants, audited re-wrapping, no routine enterprise plaintext access |
-| Observability Platform | Planned | | Service health, traceability, operational signals, failure-mode visibility |
-| Simulated Endpoints | Partially implemented | | Endpoint trust levels, software inventory collection, internal and external user behavior simulation |
-| Analytics Platform | Planned | | Homomorphic encryption or related approaches for analytics on regulated data without routine plaintext exposure |
-## Core Thesis
+```text
+Internet
+  -> DMZ
+  -> Production
+  -> Crown Jewel
+```
 
-MockCo starts from a security-first architecture position:
+Each boundary changes the assumptions a service may make about callers, data, and downstream authority.
 
-> Breach-impact reduction, data minimization, and trust-boundary discipline should be primary design constraints, not controls added after the application is already convenient to build.
+The architecture is documented in more detail in the [MockCo architecture overview](/projects/mockco/architecture/).
 
-See the [MockCo architecture overview](/projects/mockco/architecture/) for the zone model, trust boundaries, current-state architecture, target-state architecture, and design principles.
+## Current Systems
 
-This creates deliberate friction. Some designs are more complex than a normal minimum viable product. That is intentional.
+The public portfolio currently concentrates on the two most developed MockCo applications.
 
-MockCo explores what happens when:
+| System | Current focus | Case study |
+|---|---|---|
+| Member Portal | Protected member-data handling across Internet, DMZ, Production, and Crown-Jewel boundaries | [Member Portal](/projects/mockco/member-portal/) |
+| SecApp | Promotion, normalization, correlation, and triage of vulnerability and endpoint data | [SecApp](/projects/mockco/security-operations-platform/) |
 
-- sensitive-data protection;
-- adversary impact analysis;
-- auditability;
-- system boundaries;
-- recovery behavior;
-- operational evidence;
+Additional service families remain planned or partially implemented, including identity and access, key management and recovery, simulated endpoints, service observability, and analytics.
 
-are treated as load-bearing parts of the architecture rather than controls added later.
+The project is deliberately incremental. New systems are added when they create a useful architecture problem to solve rather than to make the environment appear larger.
 
-The strongest example is the Crown-Jewel data model.
+## Member Portal
 
-The intended architecture avoids storing convenience plaintext for highly sensitive member data, even in the Crown-Jewel database. Instead, protected data is modeled through:
+The Member Portal explores how a public application should handle highly sensitive member data while limiting the blast radius of intermediary-system or database compromise.
+
+The design separates responsibilities across the trust zones:
+
+```text
+Browser
+  -> DMZ presentation layer
+  -> Production broker
+  -> Crown-Jewel protected-data services
+```
+
+A central design principle is that highly sensitive records should remain encrypted through intermediary systems wherever practical.
+
+The intended protected-data model uses:
 
 - encrypted data bundles;
 - wrapped data-encryption keys;
-- key metadata;
-- recovery grants;
-- audited access paths.
+- explicit key metadata;
+- controlled recovery grants;
+- audited access and re-wrapping paths.
 
-The long-term objective is that a database dump alone should not expose the entire member population's sensitive records.
+This creates deliberate tradeoffs. Endpoint compromise becomes more consequential for the affected user, recovery workflows become more important, analytics become harder, and troubleshooting requires better evidence.
 
-That design creates other tradeoffs:
+Those costs are part of the design exercise. The objective is to understand what follows when breach-impact reduction and data minimization are treated as primary constraints.
 
-- a user endpoint that can decrypt its own data becomes a higher-value target for that user;
-- recovery and key re-wrapping workflows become more important;
-- analytics become harder;
-- operational troubleshooting requires more deliberate evidence.
+## SecApp
 
-Those are explicit tradeoffs, not accidental consequences.
-## Why Health Insurance?
+SecApp explores a different systems problem: converting noisy or externally sourced security information into trusted, explainable operational state.
 
-Health insurance is a useful fictional domain because it is understandable while still forcing security-relevant decisions.
-
-A MockCo member portal naturally involves:
-
-- identity and session management;
-- personally identifiable information;
-- protected health information;
-- claims and coverage data;
-- documents and uploads;
-- billing and payment references;
-- support and recovery workflows;
-- strict expectations around audit, access control, and privacy.
-
-The domain is complex enough to require serious architecture decisions without requiring the reader to understand an obscure business model.
-## Version Model
-
-MockCo has gone through several development iterations: V0, V1, V2, and V3.
-
-The versions are not traditional product releases. They represent changes in development method, repository structure, agent operating model, and architectural maturity.
-
-The agent-specific changes are covered more directly in [Agent Harness](/projects/agentic-development-governance/).
-
-### V0 — Manual ChatGPT-Assisted Development
-
-V0 was the first build iteration.
-
-I worked directly in Visual Studio Code and used ChatGPT for:
-
-- code generation;
-- troubleshooting;
-- design review;
-- implementation guidance;
-- explanation of unfamiliar technologies.
-
-I applied and validated all changes manually.
-
-This version progressed furthest in some early implementation areas and helped establish the two primary MockCo applications:
-
-1. the Member Portal;
-2. the internal SecApp.
-
-Neither application was complete.
-
-V0 also included initial work on an endpoint agent for collecting software inventory from Linux and Windows systems, normalizing records toward CPE-style identities, and sending inventory to the SecApp ingress.
-
-### V1 — Concurrent Codex Agents
-
-V1 moved from chat-assisted development to direct agentic development.
-
-I used three CLI-based Codex instances working in parallel:
-
-| Instance | Role |
-|---|---|
-| LEFT | Bounded development agent |
-| RIGHT | Bounded development agent |
-| UNBOUND | More autonomous development agent |
-
-LEFT and RIGHT used smaller models with tighter scope controls. UNBOUND used a stronger model with broader authority to select and implement coherent work slices.
-
-This surfaced several practical problems:
-
-1. My understanding of the exact application state began to slip as agents continued development independently.
-2. Agent work needed clearer evidence, metrics, and retrospective review.
-3. Separate working copies were necessary to prevent concurrent agents from interfering with each other.
-4. The governance model was more restrictive and complex than the agents appeared to require.
-5. Rebuilding the project from the beginning consumed effort that did not always improve the application architecture.
-
-V1 demonstrated that concurrent agents could move a solo development project forward, but it also showed that agent throughput is not useful when the Human Lead loses architectural context.
-
-### V2 — Architecture-First Rebuild
-
-V2 rebuilt MockCo around a more deliberate architecture-first model.
-
-The main shift was that MockCo was no longer treated as a single application repository. It became an enterprise lab with:
-
-- explicit network zones;
-- multiple applications and services;
-- supporting infrastructure;
-- architecture documentation;
-- design records;
-- trust-boundary definitions;
-- data-classification expectations;
-- agent operating instructions.
-
-Development in V2 was driven primarily by written technical specifications.
-
-The general flow became:
+Representative inputs include:
 
 ```text
-Human Lead develops architecture and requirements
-    ->
-Specification is formalized with ChatGPT
-    ->
-LEFT or RIGHT implements an approved slice
-    ->
-Agent validates and reports
-    ->
-Human Lead reviews and integrates
+vulnerability intelligence
+endpoint inventory
+software observations
+asset context
 ```
 
-The Member Portal and SecApp were developed as separate workstreams, with each Codex instance operating in a separate working copy.
+The important boundary is not simply ingestion. External or endpoint-originated data should not automatically become authoritative Production state.
 
-V2 also simplified the agent model by removing the standing UNBOUND instance and making LEFT and RIGHT more autonomous.
+The SecApp work therefore emphasizes:
 
-### V3 — Continue Development with LogQ Observability
+- staging versus accepted state;
+- normalization;
+- promotion decisions;
+- provenance;
+- explainable correlation;
+- audit context;
+- analyst triage.
 
-V3 does not restart MockCo.
+The resulting exposure-management model treats findings as derived operational state with enough source and decision context to explain why a finding exists.
 
-Unlike the transitions from V0 to V1 and from V1 to V2, the application architecture and current implementation state carry forward. V3 picks up the existing Member Portal and SecApp work where V2 left off.
+## Core Design Principles
 
-The primary V3 change is to the agent operating environment rather than the MockCo application architecture.
+### Trust boundaries are load-bearing
 
-V3 introduces **LogQ**, a local event-stream logging process for Codex activity.
+Internet, DMZ, Production, and Crown-Jewel zones exist because different parts of the system have different exposure and authority.
+
+Crossing a boundary should be an explicit design event, not an incidental network call.
+
+### Sensitive data should move only when required
+
+The architecture favors reducing plaintext exposure and avoiding convenience copies of sensitive records.
+
+Where decryption is necessary, the design should make the decryption boundary and the actor receiving plaintext obvious.
+
+### External data is not trusted state
+
+Security telemetry, vulnerability intelligence, and endpoint observations require validation and promotion before they are treated as accepted operational truth.
+
+### Evidence is part of system behavior
+
+Logs, provenance, promotion decisions, correlation context, and validation results are part of the system model because future operators need to reconstruct why the system reached a particular state.
+
+### Failure behavior should be designed
+
+A secure happy path is insufficient. MockCo is also used to reason about partial failure, stale state, unavailable dependencies, retries, recovery, and the difference between temporary and durable system state.
+
+## Development Model
+
+MockCo has evolved through several development methods, but the application architecture now carries forward rather than restarting with every change in tooling.
+
+The current pattern is:
 
 ```text
-Codex agent
-    ->
-LogQ emitter
-    ->
-Unix datagram socket
-    ->
-LogQ collector
-    ->
-open JSONL event segment
-    ->
-closed JSONL event segment
-    ->
-future parser and analytics
+Human Lead
+  -> architecture and requirements
+  -> bounded agent implementation
+  -> validation
+  -> Human Lead review
 ```
 
-This replaces the V2 model where LEFT and RIGHT wrote human-readable Markdown logs into separate log roots.
+Concurrent AI coding agents operate through the separate [Agent Harness](/projects/agentic-development/agent-harness/) workstream.
 
-The purpose is to capture structured evidence about:
+That harness defines agent scope, working-copy isolation, stop conditions, validation expectations, Git authority, and Human Lead decision boundaries.
 
-- agent identity;
-- work lane;
-- selected workflow;
-- run lifecycle;
-- validation results;
-- human intervention;
-- failure and completion states.
+[LogQ](/projects/agentic-development/logq/) provides structured telemetry for the agentic development process. It is intentionally separate from future observability for the MockCo applications themselves.
 
-LogQ is not an application observability platform for MockCo services. It is observability for the agentic development process itself.
+## Public Artifact Model
 
-The expected benefit is that agent behavior can later be measured without adding more manual reporting or restarting the application project.
+The portfolio is not a mirror of every working file in the development repository.
 
-V3 should help answer questions such as:
-
-- How often do agents complete assigned work successfully?
-- Which workflows create the most rework?
-- How frequently do agents require Human Lead intervention?
-- Which validation commands fail most often?
-- How much useful work is produced per agent session?
-- Where can governance or reporting requirements be reduced safely?
-
-The V3 development objective remains unchanged:
-
-> Continue building MockCo from its current state while improving the evidence available about how the agents perform the work.
-## What This Project Is Meant to Achieve
-
-MockCo is intended to improve architecture and engineering judgment.
-
-The project should demonstrate that I can reason from:
-
-```text
-threat model
-    ->
-architecture
-    ->
-trust boundaries
-    ->
-data flow
-    ->
-service responsibilities
-    ->
-API and persistence choices
-    ->
-operational and security tradeoffs
-```
-
-It should also demonstrate the reverse path:
-
-```text
-implementation behavior
-    ->
-operational evidence
-    ->
-security consequence
-    ->
-architecture review
-    ->
-design correction
-```
-
-For the Member Portal, the main design question is:
-
-> How should a customer-facing application handle sensitive health-insurance data if the enterprise wants to minimize the blast radius of database compromise?
-
-For the SecApp, the main design question is:
-
-> How should internal security tooling convert external vulnerability intelligence and endpoint-originated inventory into trusted, explainable, and auditable exposure findings?
-
-These are different problems.
-
-The Member Portal emphasizes protection of sensitive customer data and controlled decryption boundaries.
-
-The SecApp emphasizes normalization, correlation, trust establishment, explainability, and analyst workflows.
-
-MockCo is useful because it contains both.
-## Public and Private Artifact Model
-
-Some MockCo design documents are working materials. They are useful for implementation planning and Codex sessions, but they are not necessarily polished public artifacts.
-
-The public pages focus on:
+Public MockCo artifacts are selected to show:
 
 - architectural intent;
-- design reasoning;
-- trust-boundary decisions;
-- public-safe diagrams;
-- selected implementation summaries;
-- specific limitations;
-- deferred questions;
-- lessons from agentic development.
+- trust-boundary reasoning;
+- data-flow decisions;
+- implementation evidence;
+- operational tradeoffs;
+- limitations and deferred work.
 
-Private or unpublished materials may include:
+Working implementation prompts, raw agent telemetry, incomplete scaffolding, noisy design alternatives, and security-sensitive details may remain outside the public site.
 
-- rough generated design documents;
-- implementation prompts;
-- incomplete scaffolding;
-- noisy design alternatives;
-- security-sensitive implementation details;
-- experimental agent instructions;
-- raw LogQ event streams;
-- artifacts useful for building but not useful for public review.
+The objective is to make the reasoning and implemented behavior reviewable without publishing every intermediate artifact.
 
-The goal is not to expose every working file.
+## Current Boundaries and Tradeoffs
 
-The goal is to show reasoning quality, technical progression, and the relationship between architecture intent and implementation.
-## Planned Public Diagrams
+MockCo remains an active engineering lab rather than a finished enterprise platform.
 
-Planned diagrams include:
+Current limitations include:
 
-1. **Enterprise zone model** — Internet, DMZ, Production, and Crown-Jewel zones, with internal-user context where useful.
-2. **Member Portal encrypted data flow** — browser, DMZ portal, Production broker, Crown-Jewel encrypted store, wrapped DEK, and key-metadata handling.
-3. **Security Operations collection and correlation flow** — endpoint inventory, vulnerability intelligence, DMZ staging, Production retrieval, normalization, correlation, and analyst triage.
-4. **Current versus target-state application map** — what exists today compared with the intended long-term MockCo environment.
-5. **Agentic development relationship** — Human Lead, LEFT and RIGHT working copies, Git review boundary, and LogQ agent-event flow.
+- only a subset of the intended application families has substantial implementation depth;
+- identity, recovery, observability, and analytics remain incomplete;
+- several target-state designs intentionally precede their full implementation;
+- the Member Portal's browser-side key handling remains deferred;
+- SecApp continues to evolve from ingestion and promotion foundations toward broader exposure-management workflows;
+- operational behavior is demonstrated selectively rather than through production-scale load or availability targets;
+- agentic-development observability through LogQ should not be confused with application observability for MockCo services.
+
+These boundaries are useful because they keep architectural claims tied to the actual maturity of the system.
+
+---
+
+## Next Milestone
+{: .toc-ignore }
+
+The next MockCo milestones are application-specific rather than another repository-wide rebuild.
+
+For the Member Portal, the important remaining work is to continue closing the gap between the protected-envelope architecture and complete endpoint authorization and key-handling behavior.
+
+For SecApp, the next work is to deepen the exposure-management path from accepted inputs through correlation, triage, and explainable operational findings.
+
+The broader MockCo environment can then expand around those systems where a new service introduces a concrete architecture problem worth exercising.
+
+## My Contribution
+{: .toc-ignore }
+
+I use MockCo as the primary architecture and implementation lab for the technical residency.
+
+My role is to define the system boundaries, security requirements, technical specifications, threat and failure assumptions, validation expectations, and integration decisions. AI coding agents perform substantial implementation work inside those boundaries, while I retain architectural, security, review, and publication authority.
+
+The project is therefore both a systems-engineering exercise and a practical test of how technical leadership changes when implementation throughput increasingly comes from autonomous tools.
+
+## Related Pages
+{: .toc-ignore }
+
+- [MockCo Architecture](/projects/mockco/architecture/)
+- [Member Portal](/projects/mockco/member-portal/)
+- [SecApp](/projects/mockco/security-operations-platform/)
+- [Agent Harness](/projects/agentic-development/agent-harness/)
+- [LogQ](/projects/agentic-development/logq/)

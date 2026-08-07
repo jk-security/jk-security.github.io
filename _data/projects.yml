@@ -6,10 +6,12 @@
   status: Active
   repository_url: ""
   summary: >-
-    Builds a controlled path from externally sourced vulnerability and endpoint
-    data to accepted operational state. SecApp promotes reviewed records,
-    correlates software exposure against inventory, and produces explainable
-    findings for triage while preserving source, decision, and audit context.
+    SecApp is MockCo's exposure-management platform for turning endpoint,
+    software, vulnerability, and contextual evidence into explainable security
+    findings and analyst decisions. Its architecture separates externally
+    influenced staging from authoritative Production state, preserving
+    provenance and explicit trust transitions as data moves into correlation
+    and workflow.
   tags:
     - Security operations
     - Exposure management
@@ -28,10 +30,12 @@
   status: Active
   repository_url: ""
   summary: >-
-    Examines how a public member application should handle sensitive records
-    across internet, DMZ, production, and crown-jewel boundaries. The design
-    keeps protected data encrypted through intermediary systems and restricts
-    plaintext access to explicitly authorized endpoints and workflows.
+    Member Portal is MockCo's secure member-facing application for exercising
+    identity, authorization, delegated access, account-security workflows, and
+    protected-data delivery across multiple trust zones. Its architecture
+    minimizes routine plaintext exposure by carrying protected content through
+    intermediary services and bounding decryption to explicitly authorized
+    endpoints.
   tags:
     - Secure architecture
     - Protected data
@@ -50,10 +54,11 @@
   status: Complete
   repository_url: ""
   summary: >-
-    Captures coding-agent lifecycle, tool, workflow, and validation events as
-    append-only JSONL records. LogQ closes durable event segments, reconciles
-    attempted and persisted records, and provides durable evidence for evaluating agent
-    behavior, failures, throughput, and governance overhead.
+    LogQ is an observability system for measuring how AI coding agents behave
+    across development runs. It captures lifecycle, workflow, validation, and
+    intervention events as structured operational evidence, using a lightweight
+    append-only event path designed to keep telemetry off the agent execution
+    critical path.
   tags:
     - Observability
     - Event streams
@@ -63,19 +68,19 @@
   image_alt: LogQ event flow from coding agents through local collection into closed append-only JSONL segments
   image_caption: Agent events are collected, persisted, closed into segments, and reconciled.
   featured: true
-
 - id: agent-harness
   latest_milestone: "The V3 operating model is active with bounded work lanes, explicit Human Lead authority, and LogQ-backed observability."
   name: Agent Harness
   subtitle: Multi-Agent Development Governance and Observability
-  route: /projects/agentic-development-governance/
+  route: /projects/agentic-development/agent-harness/
   status: Active
   repository_url: ""
   summary: >-
-    Defines how multiple coding agents operate within bounded workstreams while
-    a Human Lead retains architectural and Git authority. The harness makes
-    roles, allowed actions, validation evidence, stop conditions, and handoffs
-    explicit so autonomy can increase without removing reviewability.
+    Agent Harness is an operating model for governed multi-agent software
+    development. It defines agent roles, bounded authority, work allocation,
+    validation requirements, stop conditions, and Human Lead control, with LogQ
+    providing the telemetry needed to measure whether those controls are
+    effective.
   tags:
     - Agent governance
     - Bounded autonomy
@@ -94,10 +99,11 @@
   status: Paused
   repository_url: ""
   summary: >-
-    Uses a modified, containerized DVWA environment to practice the complete
-    remediation lifecycle: reproduce an exploit, inspect the vulnerable path,
-    change the implementation, rebuild the application, and re-test the result.
-    Six vulnerability labs have completed that cycle, with further modules underway.
+    AppSec DVWA is a hands-on application-security remediation lab for
+    practicing the full path from exploit confirmation to secure code
+    correction. Each exercise reproduces a vulnerability, traces it to the
+    implementation, changes the application, rebuilds it, and verifies that
+    the original exploit no longer succeeds.
   tags:
     - Application security
     - Exploit validation

@@ -20,6 +20,7 @@
         {% include residency-status.html
           active_since=page.residency.active_since
           current_focus=page.residency.current_focus
+          current_focus_route=page.residency.current_focus_route
           environment=page.residency.environment
           status=page.residency.status
         %}
@@ -48,8 +49,11 @@
           </h2>
 
           <p class="portfolio-technical-decisions__intro">
-            Selected architecture choices, their constraints, and the tradeoffs
-            accepted during implementation.
+            Selected architecture decisions from the systems in this portfolio, including
+            the constraints that shaped them, the tradeoffs I accepted, and the failure
+            or security properties they were intended to preserve. These are the decisions
+            where implementation detail materially changes the system model rather than
+            simply changing how the code is organized.
           </p>
 
           <div class="portfolio-technical-decisions__list">

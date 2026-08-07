@@ -219,6 +219,14 @@ The decrypt outcome is client-reported. The backend records the sanitized event 
 
 ## Key Decisions
 
+### Keep routine plaintext at the authorized endpoint
+
+The target architecture minimizes where protected content is decrypted. In a conventional enterprise application, application or middleware services often decrypt sensitive records in order to process or present them. The Member Portal design instead aims to keep protected content encrypted across storage and intermediary service boundaries and make the authorized endpoint the routine plaintext boundary.
+
+The implemented lab validates only part of that model: the relay and backend return a protected-document envelope without decrypting it, and supported synthetic fixtures are decrypted in browser memory with Web Crypto. The current runtime does not include live Crown-Jewel storage, production key custody, or a production recovery path.
+
+A production design would still require controlled break-glass or recovery mechanisms for exceptional access. Those paths should be explicit, strongly authorized, auditable, and separated from the normal request path rather than creating a standing enterprise-wide decrypt capability.
+
 ### The DMZ relays explicit routes; it does not expose a generic proxy
 
 A generic forwarding endpoint would expand the backend surface whenever Production added a route.
@@ -343,4 +351,4 @@ The [SecApp platform](/projects/mockco/security-operations-platform/) explores h
 
 Member Portal explores external identity, member-scoped authority, encrypted content delivery, delegated access, and browser plaintext boundaries.
 
-Both applications are developed through the [Agent Harness](/projects/agentic-development-governance/), with architecture, security decisions, validation expectations, review, and final acceptance remaining Human Lead responsibilities.
+Both applications are developed through the [Agent Harness](/projects/agentic-development/agent-harness/), with architecture, security decisions, validation expectations, review, and final acceptance remaining Human Lead responsibilities.

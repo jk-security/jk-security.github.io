@@ -12,9 +12,13 @@
       <div class="residency-status__item">
         <dt>Current focus</dt>
         <dd>
-          <a href="#selected-systems-work">
+          {% if include.current_focus_route %}
+            <a href="{{ include.current_focus_route | relative_url }}">
+              {{ include.current_focus }}
+            </a>
+          {% else %}
             {{ include.current_focus }}
-          </a>
+          {% endif %}
         </dd>
       </div>
 

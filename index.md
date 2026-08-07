@@ -1,42 +1,45 @@
 ---
 layout: portfolio-home
-title: Security Engineering Leadership, Grounded in Implementation
+title: "Technical Portfolio: Secure System Engineering"
 introduction: >-
-  Hands-on work across secure systems, application security,
-  platform workflows, and governed agent-assisted development.
+  Current technical work and deliberate upskilling across secure systems
+  engineering, application security, distributed systems, cloud-native
+  infrastructure, and governed AI-assisted development.
 primary_action:
   label: Explore Projects
   route: /projects/
 secondary_action:
-  label: View Technical Residency
-  route: /about/
+  label: About the Technical Residency
+  route: /about/#technical-residency
 technical_decisions:
   - project: Member Portal
-    title: Encrypted envelopes and a browser-side plaintext boundary
+    title: Keep routine plaintext at the authorized endpoint
     summary: >-
-      Protected member data remains encrypted through Crown-Jewel storage,
-      Production brokerage, and the DMZ relay. The intended plaintext boundary
-      is the authorized browser, reducing broad enterprise-side plaintext
-      exposure while introducing endpoint key-handling and recovery risk.
-    route: /projects/mockco/member-portal/#encrypted-envelope-flow
+      The target architecture keeps protected content encrypted across storage
+      and intermediary services, making the authorized endpoint the routine
+      plaintext boundary. The current lab validates the relay/backend no-decrypt
+      contract and bounded browser decryption, while production key custody,
+      recovery, and break-glass access remain future design work.
+    route: /projects/mockco/member-portal/#key-decisions
   - project: SecApp
     title: Production-controlled promotion
     summary: >-
       Lower-trust vulnerability and inventory records are staged in the DMZ.
       Production initiates retrieval, validates and normalizes the evidence, and
       explicitly accepts or rejects it before it becomes authoritative state.
-    route: /projects/mockco/security-operations-platform/#production-controlled-promotion
+    route: /projects/mockco/security-operations-platform/#key-decisions
   - project: LogQ
-    title: Unix datagrams for concurrent agent telemetry
+    title: Keep telemetry off the agent critical path
     summary: >-
-      Multiple agents emit compact events through a local Unix datagram socket
-      without waiting for persistence. This keeps sender overhead low and
-      separates emission from collection, while deliberately accepting that
-      delivery is not end-to-end durable.
-    route: /projects/agentic-development/logq/#why-unix-datagrams
+      Agents emit telemetry without waiting for collector acknowledgement or
+      durable persistence, keeping observability off the execution critical path
+      and allowing producers to operate independently. The tradeoff is weaker
+      delivery assurance and the possibility of failure-correlated telemetry loss.
+    route: /projects/agentic-development/logq/#key-decisions
 residency:
   active_since: May 2026
-  current_focus: Selected systems work
+  current_focus: CKA study
+  current_focus_route: /cka-study/
   environment: Synthetic enterprise lab
   status: Active
 ---

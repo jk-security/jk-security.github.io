@@ -231,11 +231,13 @@ The runtime capture below shows the repository revision, the live SecApp readine
 
 ## Key Decisions
 
-### Production pulls; the DMZ does not push
+### Production-controlled promotion
 
 Allowing DMZ services to write authoritative Production state would collapse the most important trust boundary in the design.
 
-Production therefore controls which records are retrieved, which identity retrieves them, whether they are accepted, and when the staged record is acknowledged.
+Externally influenced inventory and vulnerability records can be staged durably in the DMZ, but staging does not make them authoritative. Production initiates retrieval through narrow authenticated interfaces, revalidates each record, and explicitly accepts, rejects, or identifies duplicates before updating authoritative state.
+
+This keeps the trust transition under Production control: lower-trust systems can supply evidence, but they cannot establish Production truth simply by pushing data across the boundary.
 
 ### Accepted state retains safe provenance, not unrestricted raw payloads
 
@@ -360,4 +362,4 @@ The [Member Portal](/projects/mockco/member-portal/) explores protected customer
 
 SecApp explores how an internal security platform establishes trust in externally influenced data, derives explainable exposure state, and preserves analyst decisions as durable operational evidence.
 
-Both applications are developed through the [Agent Harness](/projects/agentic-development-governance/), with architecture, requirements, security decisions, validation expectations, review, and final acceptance remaining Human Lead responsibilities.
+Both applications are developed through the [Agent Harness](/projects/agentic-development/agent-harness/), with architecture, requirements, security decisions, validation expectations, review, and final acceptance remaining Human Lead responsibilities.

@@ -263,16 +263,15 @@ This keeps one malformed producer message from becoming a failure of the ingesti
 
 ## Key Decisions
 
-### Why Unix datagrams
-{: #why-unix-datagrams}
+### Keep telemetry off the agent critical path
 
-Unix datagrams keep the event path local and lightweight.
+LogQ is designed so that agent execution does not wait for collector acknowledgement or durable persistence.
 
-They allow short-lived emitters to submit telemetry without maintaining a persistent connection or waiting for disk persistence.
+Short-lived emitters submit telemetry through a local Unix datagram socket and then continue. This keeps persistence latency out of the agent execution path, allows multiple agents to emit independently, and reduces coordination between producers and the collector.
 
-The tradeoff is weaker delivery assurance. There is no acknowledgement chain from emitter through durable storage.
+The tradeoff is weaker delivery assurance. Successful emitter completion proves only that the local send operation completed; it does not prove that the collector received the datagram or that the event became durable.
 
-That limitation is acceptable for the current experimental operating model because delivery semantics are explicit rather than hidden behind an assumption of reliability.
+This creates a failure-correlated telemetry risk: overload or collector failure can cause the system to lose evidence at the same time that operational evidence is most valuable. LogQ therefore treats delivery semantics as an explicit limitation rather than presenting the telemetry stream as complete by construction.
 
 ### Why append-only JSONL
 
@@ -386,7 +385,7 @@ AI coding agents implemented bounded portions of the emitters, collector, persis
 ## Relationship to the Agent Harness
 {: .toc-ignore }
 
-LogQ is the observability subsystem for the [Agent Harness](/projects/agentic-development-governance/).
+LogQ is the observability subsystem for the [Agent Harness](/projects/agentic-development/agent-harness/).
 
 The Agent Harness defines how coding agents receive work, operate within bounded authority, validate changes, and report completion.
 

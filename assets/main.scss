@@ -413,7 +413,7 @@ textarea:focus-visible {
 }
 
 .portfolio-hero h1 {
-  max-width: $width-article;
+  max-width: 900px;
   margin-bottom: $space-4;
   font-size: $font-size-display;
 }
@@ -1027,7 +1027,7 @@ textarea:focus-visible {
 }
 
 .portfolio-hero h1 {
-  max-width: 18ch;
+  max-width: 24ch;
   font-size: clamp(2.25rem, 3.9vw, 3.3rem);
   line-height: 1.08;
 }
@@ -1250,7 +1250,7 @@ textarea:focus-visible {
 }
 
 .portfolio-technical-decisions__intro {
-  max-width: 68ch;
+  max-width: none;
   margin-bottom: $space-5;
   color: $color-text-muted;
 }
@@ -1263,7 +1263,7 @@ textarea:focus-visible {
 
 .technical-decision-stripe {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, auto);
   gap: $space-5;
   align-items: start;
   padding: $space-4 $space-5;
@@ -1294,7 +1294,7 @@ textarea:focus-visible {
 
 .technical-decision-stripe__summary {
   margin: 0;
-  max-width: 95ch;
+  max-width: none;
   color: $color-text-muted;
   line-height: 1.6;
 }
@@ -1303,7 +1303,7 @@ textarea:focus-visible {
   display: flex;
   align-items: start;
   justify-content: end;
-  min-width: 14rem;
+  min-width: 11rem;
   padding-top: $space-1;
 }
 
@@ -1650,10 +1650,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.post-content h2 {
-  scroll-margin-top: 6rem;
-}
-
 @media screen and (max-width: 1280px) {
   .page-toc--desktop {
     display: none;
@@ -1796,13 +1792,34 @@ html {
    Rouge token styles can override the inherited foreground color.
    Keep fenced blocks on the portfolio code palette and preserve readability. */
 .post-content .highlighter-rouge .highlight,
-.post-content .highlighter-rouge pre.highlight {
+.post-content .highlighter-rouge pre.highlight,
+.page-content .highlighter-rouge .highlight,
+.page-content .highlighter-rouge pre.highlight {
   color: $color-code-text;
   background: $color-code-background;
 }
 
 .post-content .highlighter-rouge pre.highlight code,
-.post-content .highlighter-rouge pre.highlight code * {
+.post-content .highlighter-rouge pre.highlight code *,
+.page-content .highlighter-rouge pre.highlight code,
+.page-content .highlighter-rouge pre.highlight code * {
+  color: $color-code-text;
+  background: transparent;
+}
+
+/* Plain pre/code contrast
+   HTML-authored pages such as CKA Study do not necessarily pass through
+   Rouge, so normalize direct pre/code blocks to the portfolio code palette. */
+.post-content pre,
+.page-content pre {
+  color: $color-code-text;
+  background: $color-code-background;
+}
+
+.post-content pre code,
+.post-content pre code *,
+.page-content pre code,
+.page-content pre code * {
   color: $color-code-text;
   background: transparent;
 }

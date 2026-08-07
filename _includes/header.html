@@ -73,7 +73,7 @@
       <details class="nav-menu nav-menu--more">
         <summary
           class="page-link nav-menu__toggle"
-          {% if page.url contains '/reading/' or page.url contains '/notes/' %}
+          {% if page.url contains '/reading/' or page.url contains '/notes/' or page.url contains '/cka-study/' %}
             aria-current="page"
           {% endif %}
         >
@@ -93,6 +93,13 @@
             {% if page.url contains '/notes/' %}aria-current="page"{% endif %}
           >
             Notes
+          </a>
+
+          <a
+            href="{{ '/cka-study/' | relative_url }}"
+            {% if page.url contains '/cka-study/' %}aria-current="page"{% endif %}
+          >
+            CKA Study
           </a>
 
           <a

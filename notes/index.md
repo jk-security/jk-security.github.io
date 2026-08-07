@@ -4,56 +4,81 @@ title: Notes
 permalink: /notes/
 ---
 
-This section contains dated notes, short reflections, and progress updates from the technical residency.
+This section is reserved for dated technical-residency notes: short records of changes in direction, lessons from implementation, and decisions that are useful to preserve outside the larger project pages.
 
-These notes are intentionally lighter-weight than the project pages. They are meant to capture movement over time: what changed, what I learned, what I am currently questioning, and where the work is going next.
+The notes are intentionally lighter-weight than case studies. Their purpose is to capture change over time without pretending that every working thought is a finished technical article.
 
-This security engineering upskilling work is a long-running technical residency effort that began in May 2026. The end-of-year goal is tracked primarily through time spent in deliberate technical practice rather than a fixed completion metric.
+## Publication State
 
-As of the end of June 2026, I had completed 88 of 450 planned sessions, representing approximately 130 hours of work.
+The repository currently contains three dated note placeholders, but those files do not yet contain substantive note content.
 
-## Current Notes
+Rather than link to blank pages, this index records their intended subjects and publication state explicitly.
 
-### 2026-05 — Technical Residency Start
+| Period | Intended note | Status |
+|---|---|---|
+| May 2026 | Technical Residency Start | Draft placeholder |
+| June 2026 | Agentic Development V1 and V2 | Draft placeholder |
+| July 2026 | Agentic Development V3 and LogQ | Draft placeholder |
 
-Initial framing for the residency: why it exists, which workstreams are included, and how the public/private artifact model should work.
+These notes will be linked from this page when they contain material worth publishing.
 
-This period also included the initial ChatGPT-assisted development model, where ChatGPT acted as a design partner, troubleshooting assistant, and code reviewer while I applied changes manually.
+## Residency Timeline
 
-[Read note](/notes/2026-05-technical-residency-start/)
+### May 2026 — Technical Residency Start
 
-### 2026-06 — Agentic Development V1 and V2
+The first note is intended to capture the reason for the residency, the initial workstreams, and the distinction between public portfolio artifacts and private working material.
 
-Reflection on the move from manual ChatGPT-assisted development toward concurrent Codex agents and a more deliberate operating model.
+The early development model was human-led: ChatGPT supported design, troubleshooting, code review, and explanation while implementation changes were applied and validated manually.
 
-This note covers the intentionally restrictive V1 model, the resulting governance overhead, and the V2 shift toward fewer personas, simpler workflows, and more autonomous LEFT and RIGHT development instances.
+### June 2026 — Agentic Development V1 and V2
 
-[Read note](/notes/2026-06-agentic-development-v1-v2/)
+The second note is intended to capture the move from manual assisted development to concurrent Codex agents.
 
-### 2026-07 — Agentic Development V3 and LogQ
+The main lesson was the cost of over-governance.
 
-V3 introduces LogQ, a local event-stream logging process for Codex agent activity.
+V1 used a larger persona and control model because concurrent autonomous development was new territory. V2 simplified that structure around bounded LEFT and RIGHT work lanes, clearer workflow routing, and a smaller Designer / Builder / Tester responsibility model.
 
-The primary change is the replacement of per-agent Markdown log roots with structured events emitted through a Unix datagram socket and persisted as append-only JSONL segments.
+### July 2026 — Agentic Development V3 and LogQ
 
-The objective is to improve observability and measurement so that future versions can reduce unnecessary reporting and process while allowing agents to operate more autonomously.
+The third note is intended to document the shift from Markdown session logs to structured agent telemetry.
 
-[Read note](/notes/2026-07-agentic-development-v3-logq/)
+V3 introduced [LogQ](/projects/agentic-development/logq/), which records agent activity through a Unix datagram collector and append-only JSONL segments.
 
-## Note Categories
+The purpose of that change was to make agent behavior measurable enough that governance could eventually become lighter and more evidence-driven.
 
-Notes may cover:
+## What Belongs Here
 
-- project progress;
-- technical decisions;
-- design tradeoffs;
-- reading reflections;
-- AppSec remediation lessons;
-- agentic development workflow changes;
-- agent observability and metrics;
-- public/private artifact decisions;
-- open questions worth revisiting.
+A residency note should capture a meaningful transition that would otherwise be lost inside a large project page.
+
+Useful subjects include:
+
+- a change in architecture direction;
+- a development-method transition;
+- an implementation lesson that changed later work;
+- a failed assumption worth preserving;
+- a security or reliability tradeoff;
+- a reading insight applied to a project;
+- a retrospective on a completed or paused workstream.
+
+Routine progress updates and raw working logs do not need to become public notes.
 
 ## Publication Standard
 
-Notes should be safe to make public, clearly separated from employer or client work, and written in a way that is useful without exposing raw implementation details, credentials, sensitive data, or private experimental artifacts.
+A published note should be:
+
+- technically useful without requiring private chat context;
+- clear about what was implemented versus planned;
+- explicit about uncertainty and limitations;
+- safe to publish;
+- free of credentials, sensitive data, raw private prompts, or employer/client material;
+- concise enough that the main lesson is easy to identify.
+
+The public site is a curated record of technical judgment, not an append-only dump of every intermediate thought.
+
+## Related Pages
+
+- [Projects](/projects/)
+- [MockCo](/projects/mockco/)
+- [Agent Harness](/projects/agentic-development/agent-harness/)
+- [LogQ](/projects/agentic-development/logq/)
+- [Reading](/reading/)

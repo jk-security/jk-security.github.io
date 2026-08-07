@@ -68,28 +68,35 @@
     return scrollBottom >= documentHeight - 2;
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (isAtPageBottom()) {
-        setActive(lastHeading.id);
-        return;
-      }
-
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-
-      if (visible.length > 0) {
-        setActive(visible[0].target.id);
-      }
-    },
-    {
-      rootMargin: "-18% 0px -68% 0px",
-      threshold: 0
+  const updateActiveFromScroll = () => {
+    if (isAtPageBottom()) {
+      setActive(lastHeading.id);
+      return;
     }
-  );
 
-  headings.forEach((heading) => observer.observe(heading));
+    const activationOffset = 112;
+    let activeHeading = headings[0];
+
+    for (const heading of headings) {
+      if (heading.getBoundingClientRect().top <= activationOffset) {
+        activeHeading = heading;
+      } else {
+        break;
+      }
+    }
+
+    setActive(activeHeading.id);
+  };
+
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      setActive(link.dataset.tocTarget);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(updateActiveFromScroll);
+      });
+    });
+  });
 
   let scrollFramePending = false;
 
@@ -103,15 +110,28 @@
       scrollFramePending = true;
 
       window.requestAnimationFrame(() => {
-        if (isAtPageBottom()) {
-          setActive(lastHeading.id);
-        }
-
+        updateActiveFromScroll();
         scrollFramePending = false;
       });
     },
     { passive: true }
   );
 
-  setActive(isAtPageBottom() ? lastHeading.id : headings[0].id);
+  window.addEventListener("hashchange", () => {
+    const targetId = decodeURIComponent(window.location.hash.slice(1));
+
+    if (headings.some((heading) => heading.id === targetId)) {
+      setActive(targetId);
+    }
+
+    window.requestAnimationFrame(updateActiveFromScroll);
+  });
+
+  const initialTarget = decodeURIComponent(window.location.hash.slice(1));
+
+  if (headings.some((heading) => heading.id === initialTarget)) {
+    setActive(initialTarget);
+  } else {
+    updateActiveFromScroll();
+  }
 })();
